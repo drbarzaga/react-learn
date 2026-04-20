@@ -3,6 +3,7 @@ import { efectos } from "./efectos"
 import { rendimiento } from "./rendimiento"
 import { concurrencia } from "./concurrencia"
 import { composicion } from "./composicion"
+import { entrevistas } from "./entrevistas"
 import type { Category, Concept } from "./types"
 
 export type { Concept, Category, Section } from "./types"
@@ -13,6 +14,7 @@ export const allConcepts: Concept[] = [
   ...rendimiento,
   ...concurrencia,
   ...composicion,
+  ...entrevistas,
 ]
 
 export const conceptIndex: Record<string, Concept> = Object.fromEntries(
@@ -49,5 +51,18 @@ export const categories: Category[] = [
     kicker: "V",
     title: "Composición",
     conceptIds: ["useContext", "createPortal", "lazy", "useId", "useFormStatus"],
+  },
+  {
+    id: "entrevistas",
+    kicker: "VI",
+    title: "Entrevistas",
+    conceptIds: [
+      "virtual-dom",
+      "controlado-vs-no-controlado",
+      "prop-drilling",
+      "hoc",
+      "render-props",
+      "componentes-puros",
+    ],
   },
 ]
