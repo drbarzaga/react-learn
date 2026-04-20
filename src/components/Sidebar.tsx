@@ -6,12 +6,14 @@ import {
   Component,
   Dumbbell,
   MessageCircleQuestion,
+  Brain,
 } from "lucide-react"
 import type { ComponentType } from "react"
 import { cn } from "@/lib/utils"
 import { navigate } from "@/hooks/useHashRoute"
 import { categories, conceptIndex } from "@/content/concepts"
 import { allExercises, type Difficulty } from "@/content/exercises"
+import { allQuizzes } from "@/content/quiz"
 
 interface SidebarProps {
   current: string
@@ -110,6 +112,50 @@ export function Sidebar({ current }: SidebarProps) {
           </section>
         )
       })}
+
+      {/* Quiz */}
+      <section className="mb-6 px-3">
+        <h3 className="mb-2 flex items-center gap-2 px-3 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+          <Brain
+            className="h-[13px] w-[13px] text-[var(--color-fg-dim)]"
+            strokeWidth={1.8}
+          />
+          <span>Quiz</span>
+        </h3>
+        <ul className="space-y-[1px]">
+          {allQuizzes.map((quiz) => {
+            const active = current === `quiz/${quiz.id}`
+            return (
+              <li key={quiz.id}>
+                <a
+                  href={`#quiz/${quiz.id}`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    navigate(`quiz/${quiz.id}`)
+                  }}
+                  className={cn(
+                    "group relative flex items-center rounded-md py-[5px] pl-3 pr-3 text-[14px] transition-colors",
+                    active
+                      ? "bg-[var(--color-bg-hover)] text-[var(--color-fg)]"
+                      : "text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-raise)] hover:text-[var(--color-fg)]",
+                  )}
+                >
+                  {active && (
+                    <span
+                      aria-hidden
+                      className="absolute left-0 top-1/2 h-[14px] w-[2px] -translate-y-1/2 rounded-full bg-[var(--color-fg)]"
+                    />
+                  )}
+                  <span className="truncate">{quiz.label}</span>
+                  <span className="ml-auto pl-2 font-mono text-[11px] text-[var(--color-fg-faint)]">
+                    {quiz.questions.length}
+                  </span>
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
 
       {/* Práctica */}
       <section className="mb-6 px-3">
