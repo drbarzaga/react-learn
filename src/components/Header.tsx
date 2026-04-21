@@ -1,9 +1,14 @@
 import { useRef, useState } from "react"
+import { Search } from "lucide-react"
 import { useTheme } from "@/hooks/useTheme"
 import { useEditorTheme, EDITOR_THEMES_META, type EditorThemeId } from "@/hooks/useEditorTheme"
 import { Logo } from "@/components/Logo"
 
-export function Header() {
+interface HeaderProps {
+  onSearchOpen?: () => void
+}
+
+export function Header({ onSearchOpen }: HeaderProps) {
   const { theme, toggle } = useTheme()
   const { editorTheme, setEditorTheme } = useEditorTheme()
   const [pickerOpen, setPickerOpen] = useState(false)
@@ -32,6 +37,20 @@ export function Header() {
       </a>
 
       <div className="flex items-center gap-5">
+        {/* Search trigger */}
+        <button
+          type="button"
+          onClick={onSearchOpen}
+          className="hidden sm:flex items-center gap-2.5 rounded-lg border border-[var(--color-line-strong)] bg-[var(--color-bg-raise)] px-4 py-2 text-[13px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-faint)] hover:text-[var(--color-fg)]"
+        >
+          <Search className="h-[14px] w-[14px]" strokeWidth={1.8} />
+          <span>Buscar…</span>
+          <span className="ml-2 flex items-center gap-0.5">
+            <kbd className="rounded border border-[var(--color-line-strong)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--color-fg-dim)]">⌘</kbd>
+            <kbd className="rounded border border-[var(--color-line-strong)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--color-fg-dim)]">K</kbd>
+          </span>
+        </button>
+
         <a
           href="https://react.dev"
           target="_blank"
