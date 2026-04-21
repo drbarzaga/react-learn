@@ -41,14 +41,23 @@ export function Header({ onSearchOpen }: HeaderProps) {
         <button
           type="button"
           onClick={onSearchOpen}
-          className="hidden sm:flex items-center gap-2.5 rounded-lg border border-[var(--color-line-strong)] bg-[var(--color-bg-raise)] px-4 py-2 text-[13px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-faint)] hover:text-[var(--color-fg)]"
+          className="hidden sm:flex w-52 items-center gap-2 rounded-md py-1 pl-3 pr-2 text-[12px] transition-colors"
+          style={theme === "light"
+            ? { background: "#fff", border: "1px solid rgba(0,0,0,0.15)", color: "#a29f97" }
+            : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#5c5c61" }
+          }
         >
-          <Search className="h-[14px] w-[14px]" strokeWidth={1.8} />
-          <span>Buscar…</span>
-          <span className="ml-2 flex items-center gap-0.5">
-            <kbd className="rounded border border-[var(--color-line-strong)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--color-fg-dim)]">⌘</kbd>
-            <kbd className="rounded border border-[var(--color-line-strong)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--color-fg-dim)]">K</kbd>
-          </span>
+          <Search className="h-[12px] w-[12px] shrink-0" strokeWidth={1.8} />
+          <span className="flex-1 text-left">Buscar…</span>
+          <kbd
+            className="shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px]"
+            style={theme === "light"
+              ? { background: "rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.1)", color: "#a29f97" }
+              : { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", color: "#5c5c61" }
+            }
+          >
+            ⌘K
+          </kbd>
         </button>
 
         <a
