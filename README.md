@@ -1,4 +1,6 @@
-![React Dojo](./public/og-image.png)
+<p align="center">
+  <img src="./public/og-image.png" alt="React Dojo" width="600" />
+</p>
 
 # React Dojo
 
@@ -6,20 +8,20 @@ Learn React by doing.
 
 Each concept includes a clear explanation, an interactive playground, and real-world coding exercises — no shortcuts, just practice.
 
-👉 https://react-dojo.vercel.app
+https://react-dojo.vercel.app
 
 ---
 
-## ✨ Features
+## Features
 
-- 📚 Clear, focused explanations of core React concepts  
-- 🧪 Interactive playgrounds powered by Sandpack  
-- 💻 Hands-on exercises with real code  
-- ⚡ Fast and minimal experience — no distractions  
+- Clear, focused explanations of core React concepts  
+- Interactive playgrounds powered by Sandpack  
+- Hands-on exercises with real code  
+- Fast, minimal experience  
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - React 19 + TypeScript  
 - Vite  
@@ -28,7 +30,7 @@ Each concept includes a clear explanation, an interactive playground, and real-w
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 npm install
