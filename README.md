@@ -25,5 +25,10 @@ npm run dev
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Build de producción |
 
-## Star us
-[![Stargazers repo roster for @drbarzaga/react-dojo](https://reporoster.com/stars/dark/notext/drbarzaga/react-dojo)](https://github.com/drbarzaga/react-dojo/stargazers)
+## ⭐ Support
+
+If you like this project, consider giving it a star ⭐
+
+![GitHub stars](https://img.shields.io/github/stars/drbarzaga/react-dojo?style=social)
+
+[![Stargazers repo roster for @drbarzaga/react-dojo](https://reporoster.com/stars/drbarzaga/react-dojo)](https://github.com/drbarzaga/react-dojo/stargazers)
