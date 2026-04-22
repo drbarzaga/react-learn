@@ -26,4 +26,4 @@ npm run dev
 | `npm run build` | Build de producción |
 
 ## Star us
-[![Stargazers repo roster for @drbarzaga/react-dojo](https://reporoster.com/stars/dark/drbarzaga/react-dojo)](https://github.com/drbarzaga/react-dojo/stargazers)
+[![Stargazers repo roster for @drbarzaga/react-dojo](https://reporoster.com/stars/dark/notext/drbarzaga/react-dojo)](https://github.com/drbarzaga/react-dojo/stargazers)
