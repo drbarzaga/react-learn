@@ -179,9 +179,16 @@ export default function App() {
     ],
     playground: (
       <Playground
-        dependencies={{ react: "^19.0.0", "react-dom": "^19.0.0" }}
+        showConsole
         files={{
-          "/App.js": `import { useState, useEffect, experimental_useEffectEvent as useEffectEvent } from "react";
+          "/App.js": `import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
+
+// Polyfill de useEffectEvent: misma semántica que la API experimental
+function useEffectEvent(fn) {
+  const ref = useRef(fn);
+  useLayoutEffect(() => { ref.current = fn; });
+  return useCallback((...args) => ref.current(...args), []);
+}
 
 function createConnection(url) {
   return {
