@@ -36,32 +36,6 @@ bun start
 
 ---
 
-## Structure
-
-```
-src/
-├── app/                    # Next.js App Router pages
-│   ├── [concept]/          # Concept pages (useState, useEffect, …)
-│   ├── learn/[exercise]/   # Exercise pages
-│   ├── quiz/[id]/          # Quiz pages
-│   ├── layout.tsx          # Root layout
-│   └── globals.css         # Global styles
-├── components/             # UI components
-│   ├── ui/                 # shadcn/ui primitives
-│   ├── ConceptPage.tsx
-│   ├── ExercisePage.tsx
-│   ├── Playground.tsx      # Sandpack wrapper
-│   └── …
-├── content/                # All concepts, exercises and quizzes
-│   ├── concepts.ts
-│   ├── efectos.tsx
-│   ├── exercises/
-│   └── quiz.ts
-└── hooks/                  # Custom React hooks
-```
-
----
-
 ## Contribute
 
 Contributions are welcome. If you find a bug or want to add a concept, exercise, or quiz:
@@ -75,13 +49,7 @@ For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issue
 
 ---
 
-## License
-
-MIT © [Dayan Perez](https://github.com/drbarzaga)
-
----
-
-## Contributors
+## All Thanks To Our Contributors
 
 <a href="https://github.com/drbarzaga/react-dojo/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" alt="Contributors" />
@@ -94,3 +62,9 @@ MIT © [Dayan Perez](https://github.com/drbarzaga)
 <a href="https://star-history.com/#drbarzaga/react-dojo&Date">
   <img src="https://api.star-history.com/svg?repos=drbarzaga/react-dojo&type=Date&theme=dark" alt="Star History Chart" />
 </a>
+
+## License
+
+MIT - created by [Dayan Perez](https://github.com/drbarzaga)
+
+---
