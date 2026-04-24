@@ -302,8 +302,8 @@ export function Playground({
   const { editorTheme } = useEditorTheme()
 
   const [maximized, setMaximized] = useState(false)
-  const [windowHeight, setWindowHeight] = useState(() => window.innerHeight)
-  const editorHeight = maximized ? windowHeight - 48 - 40 - 64 : height
+  const [windowHeight, setWindowHeight] = useState(0)
+  const editorHeight = maximized && windowHeight > 0 ? windowHeight - 48 - 40 - 64 : height
 
   useEffect(() => {
     if (!maximized) return
