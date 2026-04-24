@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import confetti from "canvas-confetti"
 import { cn } from "@/lib/utils"
@@ -53,6 +53,8 @@ export function QuizPage({ quiz }: QuizPageProps) {
   const [score, setScore] = useState(initial.score)
   const [finished, setFinished] = useState(initial.finished)
 
+  const wasFinishedOnMount = useRef(initial.finished)
+
   const { saveQuizScore } = useProgress()
   const question = quiz.questions[currentIndex]
   const total = quiz.questions.length
@@ -94,7 +96,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
   }
 
   useEffect(() => {
-    if (!finished) return
+    if (!finished || wasFinishedOnMount.current) return
     const pct = Math.round((score / total) * 100)
     saveQuizScore(quiz.id, pct)
     if (pct >= 80) {
