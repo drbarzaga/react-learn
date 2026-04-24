@@ -129,6 +129,7 @@ export function Sidebar() {
 
   useEffect(() => {
     if (activeCatId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpenCats((prev) => (prev.has(activeCatId) ? prev : new Set([...prev, activeCatId])))
     }
   }, [activeCatId])

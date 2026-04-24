@@ -302,15 +302,13 @@ export function Playground({
   const { editorTheme } = useEditorTheme()
 
   const [maximized, setMaximized] = useState(false)
-  const [editorHeight, setEditorHeight] = useState(height)
+  const [windowHeight, setWindowHeight] = useState(() => window.innerHeight)
+  const editorHeight = maximized ? windowHeight - 48 - 40 - 64 : height
 
   useEffect(() => {
-    if (!maximized) {
-      setEditorHeight(height)
-      return
-    }
+    if (!maximized) return
 
-    const updateHeight = () => setEditorHeight(window.innerHeight - 48 - 40 - 64)
+    const updateHeight = () => setWindowHeight(window.innerHeight)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMaximized(false)
     }
@@ -326,7 +324,7 @@ export function Playground({
       window.removeEventListener("keydown", onKey)
       document.body.style.overflow = prevOverflow
     }
-  }, [maximized, height])
+  }, [maximized])
 
   // appTheme intentionally excluded — ThemeSync handles CSS updates imperatively
   const initialFiles = useMemo(

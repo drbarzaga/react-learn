@@ -45,7 +45,9 @@ export function QuizPage({ quiz }: QuizPageProps) {
   const router = useRouter()
   const initial = loadSession(quiz.id)
   const [browsing, setBrowsing] = useState(true)
-  const [hasProgress, setHasProgress] = useState(false)
+  const [hasProgress, setHasProgress] = useState(
+    initial.currentIndex > 0 || initial.selected !== null || initial.finished
+  )
   const [currentIndex, setCurrentIndex] = useState(initial.currentIndex)
   const [selected, setSelected] = useState<number | null>(initial.selected)
   const [score, setScore] = useState(initial.score)
@@ -55,11 +57,6 @@ export function QuizPage({ quiz }: QuizPageProps) {
   const question = quiz.questions[currentIndex]
   const total = quiz.questions.length
   const answered = selected !== null
-
-  useEffect(() => {
-    const session = loadSession(quiz.id)
-    setHasProgress(session.currentIndex > 0 || session.selected !== null || session.finished)
-  }, [quiz.id])
 
   useEffect(() => {
     saveSession(quiz.id, { currentIndex, selected, score, finished })
