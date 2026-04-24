@@ -1,8 +1,14 @@
 "use client"
 
 import {
-  Boxes, Brain, Check, ChevronDown, Component,
-  Dumbbell, Gauge, Hourglass, MessageCircleQuestion, RefreshCw,
+  Boxes,
+  Check,
+  ChevronDown,
+  Component,
+  Gauge,
+  Hourglass,
+  MessageCircleQuestion,
+  RefreshCw,
 } from "lucide-react"
 import type { ComponentType } from "react"
 import { useState, useEffect } from "react"
@@ -16,16 +22,32 @@ import { useProgress } from "@/hooks/useProgress"
 type IconC = ComponentType<{ className?: string; strokeWidth?: number }>
 
 function QuizRing({ score }: { score: number }) {
-  const r    = 5.5
+  const r = 5.5
   const circ = 2 * Math.PI * r
   const offset = circ * (1 - score / 100)
-  const color  = score >= 80 ? "#34d399" : score >= 50 ? "#fbbf24" : "#f87171"
+  const color = score >= 80 ? "#34d399" : score >= 50 ? "#fbbf24" : "#f87171"
   return (
     <svg width="15" height="15" viewBox="0 0 16 16" className="shrink-0 -rotate-90">
-      <circle cx="8" cy="8" r={r} fill="none" stroke="currentColor" strokeWidth="1.8"
-        className="text-sidebar-foreground/10" />
-      <circle cx="8" cy="8" r={r} fill="none" stroke={color} strokeWidth="1.8"
-        strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={offset} />
+      <circle
+        cx="8"
+        cy="8"
+        r={r}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        className="text-sidebar-foreground/10"
+      />
+      <circle
+        cx="8"
+        cy="8"
+        r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeDasharray={circ}
+        strokeDashoffset={offset}
+      />
     </svg>
   )
 }
@@ -40,14 +62,14 @@ const categoryIcon: Record<string, IconC> = {
 }
 
 const difficultyDot: Record<Difficulty, string> = {
-  "básico":     "bg-emerald-400/60",
-  "intermedio": "bg-amber-400/60",
-  "avanzado":   "bg-rose-400/60",
+  básico: "bg-emerald-400/60",
+  intermedio: "bg-amber-400/60",
+  avanzado: "bg-rose-400/60",
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-4 pb-1 pt-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/30 first:pt-2">
+    <div className="text-sidebar-foreground/30 px-4 pt-4 pb-1 text-[10px] font-semibold tracking-[0.18em] uppercase first:pt-2">
       {children}
     </div>
   )
@@ -72,7 +94,7 @@ function NavItem({
     <button
       onClick={onClick}
       className={[
-        "flex w-full min-w-0 items-center gap-2 rounded-md px-3 py-[5px] text-[13px] text-left transition-colors",
+        "flex w-full min-w-0 items-center gap-2 rounded-md px-3 py-[5px] text-left text-[13px] transition-colors",
         mono ? "font-mono" : "",
         active
           ? "bg-sidebar-accent text-sidebar-accent-foreground"
@@ -82,7 +104,7 @@ function NavItem({
       <span className="flex-1 truncate">{label}</span>
       {indicator}
       {badge && (
-        <span className="ml-1 shrink-0 font-mono text-[10px] tabular-nums text-sidebar-foreground/30">
+        <span className="text-sidebar-foreground/30 ml-1 shrink-0 font-mono text-[10px] tabular-nums">
           {badge}
         </span>
       )}
@@ -95,8 +117,8 @@ export function Sidebar() {
   const router = useRouter()
   const current = pathname === "/" ? "" : pathname.slice(1)
   const isExerciseRoute = current.startsWith("learn/")
-  const isQuizRoute    = current.startsWith("quiz/")
-  const activeExId     = isExerciseRoute ? current.slice(6) : null
+  const isQuizRoute = current.startsWith("quiz/")
+  const activeExId = isExerciseRoute ? current.slice(6) : null
   const { visitedConcepts, completedExercises, quizScores } = useProgress()
 
   const activeCatId = categories.find((c) => c.conceptIds.includes(current))?.id ?? null
@@ -107,26 +129,24 @@ export function Sidebar() {
 
   useEffect(() => {
     if (activeCatId) {
-      setOpenCats((prev) =>
-        prev.has(activeCatId) ? prev : new Set([...prev, activeCatId])
-      )
+      setOpenCats((prev) => (prev.has(activeCatId) ? prev : new Set([...prev, activeCatId])))
     }
   }, [activeCatId])
 
   const toggle = (id: string) =>
     setOpenCats((prev) => {
       const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
       return next
     })
 
   return (
     <ShadcnSidebar
       collapsible="offcanvas"
-      className="border-r border-sidebar-border top-12! h-[calc(100svh-3rem)]!"
+      className="border-sidebar-border top-12! h-[calc(100svh-3rem)]! border-r"
     >
       <SidebarContent className="gap-0 py-1">
-
         {/* ── CONCEPTOS ─────────────────────── */}
         <SectionLabel>Conceptos</SectionLabel>
 
@@ -135,34 +155,37 @@ export function Sidebar() {
             const Icon = categoryIcon[cat.id]
             const isOpen = openCats.has(cat.id)
             const visited = cat.conceptIds.filter((id) => visitedConcepts.has(id)).length
-            const total   = cat.conceptIds.length
+            const total = cat.conceptIds.length
 
             return (
               <div key={cat.id}>
                 {/* Category header */}
                 <button
                   onClick={() => toggle(cat.id)}
-                  className="group flex w-full items-center gap-2 rounded-md px-3 py-[6px] transition-colors hover:bg-sidebar-accent/60"
+                  className="group hover:bg-sidebar-accent/60 flex w-full items-center gap-2 rounded-md px-3 py-[6px] transition-colors"
                 >
                   {Icon && (
                     <Icon
-                      className="h-[11px] w-[11px] shrink-0 text-sidebar-foreground/35 group-hover:text-sidebar-foreground/55"
+                      className="text-sidebar-foreground/35 group-hover:text-sidebar-foreground/55 h-[11px] w-[11px] shrink-0"
                       strokeWidth={2}
                     />
                   )}
-                  <span className="flex-1 truncate text-left text-[11px] font-semibold uppercase tracking-[0.1em] text-sidebar-foreground/45 group-hover:text-sidebar-foreground/65">
+                  <span className="text-sidebar-foreground/45 group-hover:text-sidebar-foreground/65 flex-1 truncate text-left text-[11px] font-semibold tracking-[0.1em] uppercase">
                     {cat.title}
                   </span>
                   {visited > 0 && visited < total && (
-                    <span className="font-mono text-[9px] text-sidebar-foreground/25">
+                    <span className="text-sidebar-foreground/25 font-mono text-[9px]">
                       {visited}/{total}
                     </span>
                   )}
                   {visited === total && (
-                    <Check className="h-[9px] w-[9px] shrink-0 text-emerald-400/60" strokeWidth={3} />
+                    <Check
+                      className="h-[9px] w-[9px] shrink-0 text-emerald-400/60"
+                      strokeWidth={3}
+                    />
                   )}
                   <ChevronDown
-                    className="h-[10px] w-[10px] shrink-0 text-sidebar-foreground/20 transition-transform duration-200"
+                    className="text-sidebar-foreground/20 h-[10px] w-[10px] shrink-0 transition-transform duration-200"
                     style={{ transform: isOpen ? "rotate(0deg)" : "rotate(-90deg)" }}
                   />
                 </button>
@@ -176,12 +199,12 @@ export function Sidebar() {
                   }}
                 >
                   <div style={{ overflow: "hidden", minHeight: 0 }}>
-                    <div className="pb-1 pl-2 pr-0">
+                    <div className="pr-0 pb-1 pl-2">
                       {cat.conceptIds.map((id) => {
                         const concept = conceptIndex[id]
                         if (!concept) return null
                         const active = !isExerciseRoute && !isQuizRoute && current === id
-                        const seen   = visitedConcepts.has(id)
+                        const seen = visitedConcepts.has(id)
                         return (
                           <NavItem
                             key={id}
@@ -192,7 +215,7 @@ export function Sidebar() {
                             indicator={
                               seen ? (
                                 <Check
-                                  className="h-[9px] w-[9px] shrink-0 text-sidebar-foreground/20"
+                                  className="text-sidebar-foreground/20 h-[9px] w-[9px] shrink-0"
                                   strokeWidth={3}
                                 />
                               ) : null
@@ -209,13 +232,13 @@ export function Sidebar() {
         </div>
 
         {/* ── QUIZ ──────────────────────────── */}
-        <div className="mx-3 mt-3 h-px bg-sidebar-border" />
+        <div className="bg-sidebar-border mx-3 mt-3 h-px" />
         <SectionLabel>Quiz</SectionLabel>
 
         <div className="px-2">
           {allQuizzes.map((quiz) => {
-            const active     = current === `quiz/${quiz.id}`
-            const bestScore  = quizScores[quiz.id]
+            const active = current === `quiz/${quiz.id}`
+            const bestScore = quizScores[quiz.id]
             return (
               <NavItem
                 key={quiz.id}
@@ -230,10 +253,10 @@ export function Sidebar() {
         </div>
 
         {/* ── PRÁCTICA ──────────────────────── */}
-        <div className="mx-3 mt-3 h-px bg-sidebar-border" />
+        <div className="bg-sidebar-border mx-3 mt-3 h-px" />
         <SectionLabel>
           <span>Práctica</span>
-          <span className="ml-2 font-mono font-normal text-sidebar-foreground/20">
+          <span className="text-sidebar-foreground/20 ml-2 font-mono font-normal">
             {completedExercises.size}/{allExercises.length}
           </span>
         </SectionLabel>
@@ -244,14 +267,16 @@ export function Sidebar() {
             if (!exs.length) return null
             return (
               <div key={level} className="mb-1">
-                <div className="flex items-center gap-2 px-3 pb-1 pt-2">
-                  <span className={`h-[5px] w-[5px] shrink-0 rounded-full ${difficultyDot[level]}`} />
-                  <span className="text-[10px] uppercase tracking-[0.1em] text-sidebar-foreground/30">
+                <div className="flex items-center gap-2 px-3 pt-2 pb-1">
+                  <span
+                    className={`h-[5px] w-[5px] shrink-0 rounded-full ${difficultyDot[level]}`}
+                  />
+                  <span className="text-sidebar-foreground/30 text-[10px] tracking-[0.1em] uppercase">
                     {level}
                   </span>
                 </div>
                 {exs.map((ex) => {
-                  const active    = isExerciseRoute && activeExId === ex.id
+                  const active = isExerciseRoute && activeExId === ex.id
                   const completed = completedExercises.has(ex.id)
                   return (
                     <NavItem
@@ -274,7 +299,6 @@ export function Sidebar() {
             )
           })}
         </div>
-
       </SidebarContent>
     </ShadcnSidebar>
   )

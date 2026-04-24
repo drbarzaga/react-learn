@@ -23,8 +23,10 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
     const el = bottomRef.current
     if (!el) return
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) markConceptVisited(concept.id) },
-      { threshold: 0.5 },
+      ([entry]) => {
+        if (entry.isIntersecting) markConceptVisited(concept.id)
+      },
+      { threshold: 0.5 }
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -34,25 +36,24 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
     <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
       {/* Kicker */}
       <div className="mb-4">
-        <Badge variant="outline" className="font-mono text-[11px] tracking-widest text-[var(--color-fg-dim)] border-[var(--color-line-strong)]">
+        <Badge
+          variant="outline"
+          className="border-[var(--color-line-strong)] font-mono text-[11px] tracking-widest text-[var(--color-fg-dim)]"
+        >
           {concept.kicker}
         </Badge>
       </div>
 
       {/* Hook name */}
-      <h1 className="font-mono text-[32px] font-medium leading-none text-[var(--color-fg)]">
+      <h1 className="font-mono text-[32px] leading-none font-medium text-[var(--color-fg)]">
         {concept.label}
       </h1>
 
       {/* Tagline */}
-      <p className="mt-3 text-[15px] font-medium text-[var(--color-fg-muted)]">
-        {concept.title}
-      </p>
+      <p className="mt-3 text-[15px] font-medium text-[var(--color-fg-muted)]">{concept.title}</p>
 
       {/* Lede */}
-      <p className="mt-6 text-[17px] leading-[1.65] text-[var(--color-fg-muted)]">
-        {concept.lede}
-      </p>
+      <p className="mt-6 text-[17px] leading-[1.65] text-[var(--color-fg-muted)]">{concept.lede}</p>
 
       <Separator className="mt-12 bg-[var(--color-line)]" />
 
@@ -61,7 +62,7 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
         {concept.sections.map((s, i) => (
           <section key={i}>
             {s.heading && (
-              <h2 className="mb-3 text-[13px] font-semibold uppercase tracking-[0.1em] text-[var(--color-fg)]">
+              <h2 className="mb-3 text-[13px] font-semibold tracking-[0.1em] text-[var(--color-fg)] uppercase">
                 {s.heading}
               </h2>
             )}
@@ -71,22 +72,22 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
       </div>
 
       {/* Playground */}
-      <div className="mt-12 -mx-8 md:-mx-12 lg:-mx-24">{concept.playground}</div>
+      <div className="-mx-8 mt-12 md:-mx-12 lg:-mx-24">{concept.playground}</div>
 
       {/* Pitfalls */}
       {concept.pitfalls && concept.pitfalls.length > 0 && (
         <section className="mt-14">
-          <h2 className="mb-4 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+          <h2 className="mb-4 flex items-center gap-1.5 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
             <TriangleAlert className="h-[13px] w-[13px] text-yellow-400" strokeWidth={2} />
             Tropiezos comunes
           </h2>
-          <ul className="rounded-lg border border-[var(--color-line)] overflow-hidden">
+          <ul className="overflow-hidden rounded-lg border border-[var(--color-line)]">
             {concept.pitfalls.map((p, i) => (
               <li
                 key={i}
                 className="flex gap-4 px-5 py-4 text-[14px] leading-[1.65] text-[var(--color-fg-muted)] [&:not(:last-child)]:border-b [&:not(:last-child)]:border-[var(--color-line)]"
               >
-                <span className="mt-[1px] shrink-0 font-mono text-[11px] text-[var(--color-fg-faint)] w-4 text-right">
+                <span className="mt-[1px] w-4 shrink-0 text-right font-mono text-[11px] text-[var(--color-fg-faint)]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span>{p}</span>
@@ -97,27 +98,40 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
       )}
 
       {/* Footer nav */}
-      <nav ref={bottomRef} className="mt-24 flex items-start justify-between gap-8 border-t border-[var(--color-line)] pt-8 text-[14px]">
+      <nav
+        ref={bottomRef}
+        className="mt-24 flex items-start justify-between gap-8 border-t border-[var(--color-line)] pt-8 text-[14px]"
+      >
         {prev ? (
           <a
             href={`/${prev.id}`}
-            onClick={(e) => { e.preventDefault(); router.push(`/${prev.id}`) }}
-            className="group flex flex-col gap-1 text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors"
+            onClick={(e) => {
+              e.preventDefault()
+              router.push(`/${prev.id}`)
+            }}
+            className="group flex flex-col gap-1 text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
             <span className="text-[12px] text-[var(--color-fg-dim)]">← anterior</span>
             <span className="font-mono text-[var(--color-fg)]">{prev.label}</span>
           </a>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
         {next ? (
           <a
             href={`/${next.id}`}
-            onClick={(e) => { e.preventDefault(); router.push(`/${next.id}`) }}
-            className="group flex flex-col items-end gap-1 text-right text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors"
+            onClick={(e) => {
+              e.preventDefault()
+              router.push(`/${next.id}`)
+            }}
+            className="group flex flex-col items-end gap-1 text-right text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
             <span className="text-[12px] text-[var(--color-fg-dim)]">siguiente →</span>
             <span className="font-mono text-[var(--color-fg)]">{next.label}</span>
           </a>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
       </nav>
     </article>
   )

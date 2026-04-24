@@ -259,7 +259,8 @@ const avanzadoQuestions: QuizQuestion[] = [
   },
   {
     id: "qa4",
-    question: "¿Por qué pasar un nuevo objeto como value a un Context en cada render es problemático?",
+    question:
+      "¿Por qué pasar un nuevo objeto como value a un Context en cada render es problemático?",
     options: [
       "Viola las reglas de los Hooks",
       "Hace que todos los consumidores del Context se re-rendericen aunque los datos no hayan cambiado",
@@ -311,7 +312,8 @@ const avanzadoQuestions: QuizQuestion[] = [
   },
   {
     id: "qa8",
-    question: "¿Qué ocurre con el estado de un componente cuando React lo desmonta y lo vuelve a montar?",
+    question:
+      "¿Qué ocurre con el estado de un componente cuando React lo desmonta y lo vuelve a montar?",
     options: [
       "El estado se preserva porque React lo guarda en el Virtual DOM",
       "El estado se resetea completamente — React destruye y recrea la instancia",
@@ -377,6 +379,4 @@ export const allQuizzes: Quiz[] = [
   },
 ]
 
-export const quizIndex: Record<string, Quiz> = Object.fromEntries(
-  allQuizzes.map((q) => [q.id, q]),
-)
+export const quizIndex: Record<string, Quiz> = Object.fromEntries(allQuizzes.map((q) => [q.id, q]))

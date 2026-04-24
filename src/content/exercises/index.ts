@@ -34,5 +34,5 @@ export const allExercises: Exercise[] = [
 ]
 
 export const exerciseIndex: Record<string, Exercise> = Object.fromEntries(
-  allExercises.map((e) => [e.id, e]),
+  allExercises.map((e) => [e.id, e])
 )

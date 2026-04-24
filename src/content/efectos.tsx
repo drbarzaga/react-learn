@@ -13,7 +13,9 @@ export const efectos: Concept[] = [
         heading: "El bucle setup → cleanup",
         body: (
           <p>
-            Cada vez que las dependencias cambian, React corre el cleanup del efecto anterior y luego el setup del nuevo. Por eso devolver una función de limpieza importa: es lo que cancela suscripciones, timers o requests obsoletas.
+            Cada vez que las dependencias cambian, React corre el cleanup del efecto anterior y
+            luego el setup del nuevo. Por eso devolver una función de limpieza importa: es lo que
+            cancela suscripciones, timers o requests obsoletas.
           </p>
         ),
       },
@@ -21,7 +23,9 @@ export const efectos: Concept[] = [
         heading: "Las dependencias",
         body: (
           <p>
-            El array <code>[]</code> declara qué <em>valores reactivos</em> usa el efecto. Omitir uno provoca cierres viejos; añadir cosas que no usas dispara renders innecesarios. Trata el linter como un compañero estricto pero correcto.
+            El array <code>[]</code> declara qué <em>valores reactivos</em> usa el efecto. Omitir
+            uno provoca cierres viejos; añadir cosas que no usas dispara renders innecesarios. Trata
+            el linter como un compañero estricto pero correcto.
           </p>
         ),
       },
@@ -91,7 +95,9 @@ export default function App() {
         heading: "El caso real",
         body: (
           <p>
-            Tooltips que se reposicionan según su tamaño, animaciones que necesitan posición inicial calculada, ajustes de scroll después de insertar contenido. Si usas <code>useEffect</code> en estos casos, verás un parpadeo.
+            Tooltips que se reposicionan según su tamaño, animaciones que necesitan posición inicial
+            calculada, ajustes de scroll después de insertar contenido. Si usas{" "}
+            <code>useEffect</code> en estos casos, verás un parpadeo.
           </p>
         ),
       },
@@ -99,7 +105,9 @@ export default function App() {
         heading: "Coste",
         body: (
           <p>
-            Bloquea la pintura. Si el trabajo es pesado, perjudica el frame rate. La regla: <em>useEffect por defecto</em>, useLayoutEffect solo cuando midas y mutes el DOM en el mismo turno.
+            Bloquea la pintura. Si el trabajo es pesado, perjudica el frame rate. La regla:{" "}
+            <em>useEffect por defecto</em>, useLayoutEffect solo cuando midas y mutes el DOM en el
+            mismo turno.
           </p>
         ),
       },
@@ -164,7 +172,9 @@ export default function App() {
         heading: "El problema",
         body: (
           <p>
-            Un efecto que abre una conexión no debe re-abrirla cada vez que cambia el mensaje de log — pero si usas el log dentro del efecto, React exige que lo incluyas en las dependencias y eso causa reconexiones innecesarias.
+            Un efecto que abre una conexión no debe re-abrirla cada vez que cambia el mensaje de log
+            — pero si usas el log dentro del efecto, React exige que lo incluyas en las dependencias
+            y eso causa reconexiones innecesarias.
           </p>
         ),
       },
@@ -172,7 +182,9 @@ export default function App() {
         heading: "La solución",
         body: (
           <p>
-            Envuelve la lógica no reactiva en un <code>useEffectEvent</code>. La función resultante puede llamarse desde el efecto sin ser una dependencia de él. Aún experimental en React 19: importar como <code>experimental_useEffectEvent</code>.
+            Envuelve la lógica no reactiva en un <code>useEffectEvent</code>. La función resultante
+            puede llamarse desde el efecto sin ser una dependencia de él. Aún experimental en React
+            19: importar como <code>experimental_useEffectEvent</code>.
           </p>
         ),
       },

@@ -13,7 +13,9 @@ export const concurrencia: Concept[] = [
         heading: "Urgente vs transición",
         body: (
           <p>
-            Tipear en un input es urgente: el carácter debe aparecer al instante. Recalcular una lista filtrada de 10.000 items es transición: puede esperar un par de frames sin que se sienta.
+            Tipear en un input es urgente: el carácter debe aparecer al instante. Recalcular una
+            lista filtrada de 10.000 items es transición: puede esperar un par de frames sin que se
+            sienta.
           </p>
         ),
       },
@@ -21,7 +23,9 @@ export const concurrencia: Concept[] = [
         heading: "El patrón",
         body: (
           <p>
-            <code>const [isPending, startTransition] = useTransition()</code>. Envuelve <em>solo</em> el setState lento dentro de <code>startTransition(() =&gt; ...)</code>. Lo demás permanece urgente.
+            <code>const [isPending, startTransition] = useTransition()</code>. Envuelve{" "}
+            <em>solo</em> el setState lento dentro de <code>startTransition(() =&gt; ...)</code>. Lo
+            demás permanece urgente.
           </p>
         ),
       },
@@ -85,7 +89,9 @@ export default function App() {
         heading: "Cuándo usarlo",
         body: (
           <p>
-            Cuando recibes un valor que cambia rápido y lo pasas a un componente caro. El input se mantiene fluido porque el componente caro re-renderiza con el valor diferido, no con el actual.
+            Cuando recibes un valor que cambia rápido y lo pasas a un componente caro. El input se
+            mantiene fluido porque el componente caro re-renderiza con el valor diferido, no con el
+            actual.
           </p>
         ),
       },
@@ -93,7 +99,8 @@ export default function App() {
         heading: "Vs useTransition",
         body: (
           <p>
-            useTransition controla el <em>setState</em>; useDeferredValue controla un <em>valor recibido</em>. A menudo intercambiables — elige según dónde tengas el control.
+            useTransition controla el <em>setState</em>; useDeferredValue controla un{" "}
+            <em>valor recibido</em>. A menudo intercambiables — elige según dónde tengas el control.
           </p>
         ),
       },
@@ -166,7 +173,9 @@ export default function App() {
         heading: "Quién suspende",
         body: (
           <p>
-            Cualquier componente que lea de un recurso aún no resuelto: un <code>lazy()</code> sin descargar, un <code>use(promesa)</code> aún pendiente, o frameworks como Next/Relay que envuelven sus loaders.
+            Cualquier componente que lea de un recurso aún no resuelto: un <code>lazy()</code> sin
+            descargar, un <code>use(promesa)</code> aún pendiente, o frameworks como Next/Relay que
+            envuelven sus loaders.
           </p>
         ),
       },
@@ -174,7 +183,8 @@ export default function App() {
         heading: "Composición",
         body: (
           <p>
-            Puedes anidar Suspense en cascada para que distintas regiones de la UI carguen a su propio ritmo, sin bloquear toda la pantalla con un único spinner gigante.
+            Puedes anidar Suspense en cascada para que distintas regiones de la UI carguen a su
+            propio ritmo, sin bloquear toda la pantalla con un único spinner gigante.
           </p>
         ),
       },
@@ -243,7 +253,8 @@ export default function App() {
         heading: "Una API, dos casos",
         body: (
           <p>
-            <code>use(promesa)</code> espera el resultado o suspende. <code>use(contexto)</code> es como useContext pero puede llamarse condicionalmente — cosa que useContext no permite.
+            <code>use(promesa)</code> espera el resultado o suspende. <code>use(contexto)</code> es
+            como useContext pero puede llamarse condicionalmente — cosa que useContext no permite.
           </p>
         ),
       },
@@ -251,7 +262,8 @@ export default function App() {
         heading: "Reemplaza patrones viejos",
         body: (
           <p>
-            En lugar de <em>useState + useEffect + setData</em> para cargar, pasas la promesa al componente y use() la consume. Más declarativo, menos estados intermedios.
+            En lugar de <em>useState + useEffect + setData</em> para cargar, pasas la promesa al
+            componente y use() la consume. Más declarativo, menos estados intermedios.
           </p>
         ),
       },

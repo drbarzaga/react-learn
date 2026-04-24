@@ -3,7 +3,7 @@ name: Contribution
 about: Propose a concept, exercise, quiz question, or improvement
 title: "[contrib] "
 labels: contribution
-assignees: ''
+assignees: ""
 ---
 
 ## What do you want to contribute?

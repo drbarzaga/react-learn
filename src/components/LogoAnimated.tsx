@@ -8,8 +8,8 @@ export function LogoAnimated({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="rdg" x1="100" y1="10" x2="100" y2="192" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stopColor="#7fd46c" />
-          <stop offset="55%"  stopColor="#42b03c" />
+          <stop offset="0%" stopColor="#7fd46c" />
+          <stop offset="55%" stopColor="#42b03c" />
           <stop offset="100%" stopColor="#247a23" />
         </linearGradient>
 
@@ -112,59 +112,52 @@ export function LogoAnimated({ className }: { className?: string }) {
 
         {/* ── Left pages (fan from spine) ───────────────────────── */}
         <g className="rdl-pl">
-          <path d="M 100,136   Q  91,133  80,135"  strokeWidth="2.4" />
-          <path d="M 100,136.5 Q  77,131  53,137"  strokeWidth="3.2" />
-          <path d="M 100,137   Q  62,129  31,148"  strokeWidth="4.2" />
-          <path d="M 100,137.5 Q  45,127  10,160"  strokeWidth="5.5" />
+          <path d="M 100,136   Q  91,133  80,135" strokeWidth="2.4" />
+          <path d="M 100,136.5 Q  77,131  53,137" strokeWidth="3.2" />
+          <path d="M 100,137   Q  62,129  31,148" strokeWidth="4.2" />
+          <path d="M 100,137.5 Q  45,127  10,160" strokeWidth="5.5" />
         </g>
 
         {/* ── Right pages (mirror) ──────────────────────────────── */}
         <g className="rdl-pr">
-          <path d="M 100,136   Q 109,133 120,135"  strokeWidth="2.4" />
-          <path d="M 100,136.5 Q 123,131 147,137"  strokeWidth="3.2" />
-          <path d="M 100,137   Q 138,129 169,148"  strokeWidth="4.2" />
-          <path d="M 100,137.5 Q 155,127 190,160"  strokeWidth="5.5" />
+          <path d="M 100,136   Q 109,133 120,135" strokeWidth="2.4" />
+          <path d="M 100,136.5 Q 123,131 147,137" strokeWidth="3.2" />
+          <path d="M 100,137   Q 138,129 169,148" strokeWidth="4.2" />
+          <path d="M 100,137.5 Q 155,127 190,160" strokeWidth="5.5" />
         </g>
 
         {/* ── Base arc ──────────────────────────────────────────── */}
         <path className="rdl-base" d="M 10,160 Q 100,178 190,160" strokeWidth="5.5" />
 
         {/* ── Page turn 1 (sweeps right → left) ────────────────── */}
-        <path className="rdl-t1" d="M 100,136.5 Q 123,131 147,137"  strokeWidth="3.2" />
+        <path className="rdl-t1" d="M 100,136.5 Q 123,131 147,137" strokeWidth="3.2" />
 
         {/* ── Page turn 2 ───────────────────────────────────────── */}
-        <path className="rdl-t2" d="M 100,137   Q 138,129 169,148"  strokeWidth="4.2" />
+        <path className="rdl-t2" d="M 100,137   Q 138,129 169,148" strokeWidth="4.2" />
 
         {/* ── Atom — three orbits ───────────────────────────────── */}
-        <ellipse
-          className="rdl-o1"
-          cx="100" cy="74"
-          rx="60" ry="19"
-          strokeWidth="5.5"
-        />
+        <ellipse className="rdl-o1" cx="100" cy="74" rx="60" ry="19" strokeWidth="5.5" />
         <ellipse
           className="rdl-o2"
-          cx="100" cy="74"
-          rx="60" ry="19"
+          cx="100"
+          cy="74"
+          rx="60"
+          ry="19"
           strokeWidth="5.5"
           transform="rotate(60, 100, 74)"
         />
         <ellipse
           className="rdl-o3"
-          cx="100" cy="74"
-          rx="60" ry="19"
+          cx="100"
+          cy="74"
+          rx="60"
+          ry="19"
           strokeWidth="5.5"
           transform="rotate(120, 100, 74)"
         />
 
         {/* ── Nucleus ───────────────────────────────────────────── */}
-        <circle
-          className="rdl-nuc"
-          cx="100" cy="74"
-          r="10"
-          fill="url(#rdg)"
-          stroke="none"
-        />
+        <circle className="rdl-nuc" cx="100" cy="74" r="10" fill="url(#rdg)" stroke="none" />
       </g>
     </svg>
   )

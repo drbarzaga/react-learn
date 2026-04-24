@@ -1,28 +1,21 @@
 "use client"
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react"
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react"
 
 export type EditorThemeId = "auto" | "dracula" | "nightOwl" | "githubLight" | "monokai"
 
 export interface EditorThemeMeta {
   label: string
   bg: string
-  colors: [string, string, string]  // keyword, string, definition
+  colors: [string, string, string] // keyword, string, definition
 }
 
 export const EDITOR_THEMES_META: Record<EditorThemeId, EditorThemeMeta> = {
-  auto:        { label: "Auto",         bg: "#0f0f11", colors: ["#c4956a", "#87a89d", "#8babcc"] },
-  dracula:     { label: "Dracula",      bg: "#282A36", colors: ["#ff79c6", "#f1fa8c", "#50fa7b"] },
-  nightOwl:    { label: "Night Owl",    bg: "#011627", colors: ["#c792ea", "#ecc48d", "#82aaff"] },
+  auto: { label: "Auto", bg: "#0f0f11", colors: ["#c4956a", "#87a89d", "#8babcc"] },
+  dracula: { label: "Dracula", bg: "#282A36", colors: ["#ff79c6", "#f1fa8c", "#50fa7b"] },
+  nightOwl: { label: "Night Owl", bg: "#011627", colors: ["#c792ea", "#ecc48d", "#82aaff"] },
   githubLight: { label: "GitHub Light", bg: "#ffffff", colors: ["#cf222e", "#0a3069", "#8250df"] },
-  monokai:     { label: "Monokai",      bg: "#272822", colors: ["#f92672", "#e6db74", "#a6e22e"] },
+  monokai: { label: "Monokai", bg: "#272822", colors: ["#f92672", "#e6db74", "#a6e22e"] },
 }
 
 interface EditorThemeContextValue {
@@ -36,7 +29,9 @@ function getInitial(): EditorThemeId {
   try {
     const stored = localStorage.getItem("editorTheme")
     if (stored && stored in EDITOR_THEMES_META) return stored as EditorThemeId
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return "auto"
 }
 
@@ -45,7 +40,11 @@ export function EditorThemeProvider({ children }: { children: ReactNode }) {
 
   const setEditorTheme = useCallback((t: EditorThemeId) => {
     setEditorThemeState(t)
-    try { localStorage.setItem("editorTheme", t) } catch { /* ignore */ }
+    try {
+      localStorage.setItem("editorTheme", t)
+    } catch {
+      /* ignore */
+    }
   }, [])
 
   useEffect(() => {
@@ -56,11 +55,7 @@ export function EditorThemeProvider({ children }: { children: ReactNode }) {
     }
   })
 
-  return (
-    <Ctx.Provider value={{ editorTheme, setEditorTheme }}>
-      {children}
-    </Ctx.Provider>
-  )
+  return <Ctx.Provider value={{ editorTheme, setEditorTheme }}>{children}</Ctx.Provider>
 }
 
 export function useEditorTheme() {

@@ -13,7 +13,9 @@ export const estado: Concept[] = [
         heading: "La firma",
         body: (
           <p>
-            <code>const [estado, setEstado] = useState(inicial)</code>. El argumento puede ser un valor o una función — usa la función cuando el cálculo inicial es costoso, así solo corre en el primer render.
+            <code>const [estado, setEstado] = useState(inicial)</code>. El argumento puede ser un
+            valor o una función — usa la función cuando el cálculo inicial es costoso, así solo
+            corre en el primer render.
           </p>
         ),
       },
@@ -21,7 +23,9 @@ export const estado: Concept[] = [
         heading: "Actualización funcional",
         body: (
           <p>
-            Cuando el siguiente estado depende del anterior, pasa una función a <code>setEstado</code>. React te entrega el valor más reciente, evitando carreras al actualizar varias veces seguidas dentro del mismo evento.
+            Cuando el siguiente estado depende del anterior, pasa una función a{" "}
+            <code>setEstado</code>. React te entrega el valor más reciente, evitando carreras al
+            actualizar varias veces seguidas dentro del mismo evento.
           </p>
         ),
       },
@@ -78,7 +82,9 @@ export default function App() {
         heading: "Forma del reducer",
         body: (
           <p>
-            <code>(estado, acción) =&gt; nuevoEstado</code>. Mantén el reducer puro: sin fetch, sin mutación, sin <code>Math.random()</code>. Si necesitas efectos, dispárlos después del <code>dispatch</code>.
+            <code>(estado, acción) =&gt; nuevoEstado</code>. Mantén el reducer puro: sin fetch, sin
+            mutación, sin <code>Math.random()</code>. Si necesitas efectos, dispárlos después del{" "}
+            <code>dispatch</code>.
           </p>
         ),
       },
@@ -86,7 +92,9 @@ export default function App() {
         heading: "Cuándo prefiere a useState",
         body: (
           <p>
-            Cuando hay <em>varias formas</em> de modificar el mismo estado, cuando la lógica de transición se repite en varios eventos, o cuando quieres registrar/depurar cada cambio en un único punto.
+            Cuando hay <em>varias formas</em> de modificar el mismo estado, cuando la lógica de
+            transición se repite en varios eventos, o cuando quieres registrar/depurar cada cambio
+            en un único punto.
           </p>
         ),
       },
@@ -169,8 +177,15 @@ export default function App() {
         heading: "Dos usos honestos",
         body: (
           <>
-            <p><strong>Acceder al DOM:</strong> pásala a un nodo con <code>ref={"{miRef}"}</code> y lee <code>miRef.current</code> después del montaje.</p>
-            <p><strong>Guardar valores entre renders:</strong> contadores, IDs de timers, valores previos — cualquier cosa que necesitas recordar pero no quieres que dispare re-renders.</p>
+            <p>
+              <strong>Acceder al DOM:</strong> pásala a un nodo con <code>ref={"{miRef}"}</code> y
+              lee <code>miRef.current</code> después del montaje.
+            </p>
+            <p>
+              <strong>Guardar valores entre renders:</strong> contadores, IDs de timers, valores
+              previos — cualquier cosa que necesitas recordar pero no quieres que dispare
+              re-renders.
+            </p>
           </>
         ),
       },
@@ -178,7 +193,8 @@ export default function App() {
         heading: "Por qué no estado",
         body: (
           <p>
-            Si renderizar el valor no cambia el UI, no debe estar en el estado. Mantenerlo en una ref evita ciclos de render y mantiene el componente más rápido.
+            Si renderizar el valor no cambia el UI, no debe estar en el estado. Mantenerlo en una
+            ref evita ciclos de render y mantiene el componente más rápido.
           </p>
         ),
       },
@@ -238,7 +254,9 @@ export default function App() {
         heading: "La firma",
         body: (
           <p>
-            <code>{"const [optimisticState, addOptimistic] = useOptimistic(state, updateFn)"}</code>. <em>state</em> es el real; <em>updateFn</em> describe cómo calcular el estado provisional a partir de él y un valor temporal.
+            <code>{"const [optimisticState, addOptimistic] = useOptimistic(state, updateFn)"}</code>
+            . <em>state</em> es el real; <em>updateFn</em> describe cómo calcular el estado
+            provisional a partir de él y un valor temporal.
           </p>
         ),
       },
@@ -246,7 +264,8 @@ export default function App() {
         heading: "Cuándo usarlo",
         body: (
           <p>
-            Acciones que casi siempre tienen éxito: likes, votos, mensajes enviados, arrastrar y soltar. No lo uses cuando el fallo sea frecuente o costoso de deshacer visualmente.
+            Acciones que casi siempre tienen éxito: likes, votos, mensajes enviados, arrastrar y
+            soltar. No lo uses cuando el fallo sea frecuente o costoso de deshacer visualmente.
           </p>
         ),
       },
@@ -333,7 +352,9 @@ export default function App() {
         heading: "La firma",
         body: (
           <p>
-            <code>{"const [state, formAction, isPending] = useActionState(fn, initial)"}</code>. La <em>fn</em> recibe el estado anterior y el <code>FormData</code>, y retorna el nuevo estado — sync o async.
+            <code>{"const [state, formAction, isPending] = useActionState(fn, initial)"}</code>. La{" "}
+            <em>fn</em> recibe el estado anterior y el <code>FormData</code>, y retorna el nuevo
+            estado — sync o async.
           </p>
         ),
       },
@@ -341,7 +362,9 @@ export default function App() {
         heading: "Sin useState extra",
         body: (
           <p>
-            A diferencia del patrón clásico <em>onSubmit + useState</em>, useActionState centraliza el flujo: un solo lugar maneja lógica, estado y pending. Funciona con y sin JS habilitado (progressive enhancement).
+            A diferencia del patrón clásico <em>onSubmit + useState</em>, useActionState centraliza
+            el flujo: un solo lugar maneja lógica, estado y pending. Funciona con y sin JS
+            habilitado (progressive enhancement).
           </p>
         ),
       },

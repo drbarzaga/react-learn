@@ -97,7 +97,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       toggleExerciseCompleted,
       saveQuizScore,
     }),
-    [data, markConceptVisited, toggleExerciseCompleted, saveQuizScore],
+    [data, markConceptVisited, toggleExerciseCompleted, saveQuizScore]
   )
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

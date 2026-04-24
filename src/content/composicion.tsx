@@ -13,7 +13,9 @@ export const composicion: Concept[] = [
         heading: "Tres piezas",
         body: (
           <p>
-            <code>createContext(default)</code> crea el canal. Un <code>&lt;Ctx.Provider value=...&gt;</code> publica un valor. <code>useContext(Ctx)</code> lo lee en cualquier descendiente.
+            <code>createContext(default)</code> crea el canal. Un{" "}
+            <code>&lt;Ctx.Provider value=...&gt;</code> publica un valor.{" "}
+            <code>useContext(Ctx)</code> lo lee en cualquier descendiente.
           </p>
         ),
       },
@@ -21,7 +23,9 @@ export const composicion: Concept[] = [
         heading: "Costos a tener en cuenta",
         body: (
           <p>
-            Cuando el value cambia, todos los consumidores se re-renderizan. Si tu value es <code>{`{ user, setUser }`}</code> creado inline, cambia en cada render. Memoiza el value o sepáralo en varios contextos.
+            Cuando el value cambia, todos los consumidores se re-renderizan. Si tu value es{" "}
+            <code>{`{ user, setUser }`}</code> creado inline, cambia en cada render. Memoiza el
+            value o sepáralo en varios contextos.
           </p>
         ),
       },
@@ -96,7 +100,9 @@ export default function App() {
         heading: "Lo que conserva",
         body: (
           <p>
-            Aunque el DOM esté en otro sitio, el portal sigue dentro del árbol de React: contextos, eventos sintéticos burbujean hacia el padre lógico, y los efectos disparan como si estuvieran en su lugar.
+            Aunque el DOM esté en otro sitio, el portal sigue dentro del árbol de React: contextos,
+            eventos sintéticos burbujean hacia el padre lógico, y los efectos disparan como si
+            estuvieran en su lugar.
           </p>
         ),
       },
@@ -104,7 +110,9 @@ export default function App() {
         heading: "El destino",
         body: (
           <p>
-            Suele ser <code>document.body</code> o un nodo dedicado con id <code>modal-root</code>. Garantiza que el destino existe antes del render — montarlo en el index.html es lo más seguro.
+            Suele ser <code>document.body</code> o un nodo dedicado con id <code>modal-root</code>.
+            Garantiza que el destino existe antes del render — montarlo en el index.html es lo más
+            seguro.
           </p>
         ),
       },
@@ -180,7 +188,9 @@ export default function App() {
         heading: "Dónde brilla",
         body: (
           <p>
-            Vistas que no se ven hasta que el usuario navega, modales pesados que pocos abren, editores ricos, gráficos. Todo lo que infla el bundle inicial sin justificar su coste para el primer pintado.
+            Vistas que no se ven hasta que el usuario navega, modales pesados que pocos abren,
+            editores ricos, gráficos. Todo lo que infla el bundle inicial sin justificar su coste
+            para el primer pintado.
           </p>
         ),
       },
@@ -188,7 +198,8 @@ export default function App() {
         heading: "Suspense obligatorio",
         body: (
           <p>
-            Mientras el código se descarga, el componente suspende. Necesitas un <code>&lt;Suspense fallback=...&gt;</code> arriba o React lanza un error.
+            Mientras el código se descarga, el componente suspende. Necesitas un{" "}
+            <code>&lt;Suspense fallback=...&gt;</code> arriba o React lanza un error.
           </p>
         ),
       },
@@ -250,7 +261,9 @@ export default function App() {
         heading: "Por qué no Math.random()",
         body: (
           <p>
-            En SSR, el ID generado en el servidor debe coincidir con el del cliente para evitar errores de hidratación. <code>useId</code> garantiza esa correspondencia; los valores aleatorios no.
+            En SSR, el ID generado en el servidor debe coincidir con el del cliente para evitar
+            errores de hidratación. <code>useId</code> garantiza esa correspondencia; los valores
+            aleatorios no.
           </p>
         ),
       },
@@ -258,7 +271,9 @@ export default function App() {
         heading: "No para keys de lista",
         body: (
           <p>
-            useId entrega un ID por componente, no por elemento. Para keys de listas usa el ID de los datos. Para varios IDs en un mismo componente, concatena sufijos: <code>{`\`\${id}-name\``}</code>.
+            useId entrega un ID por componente, no por elemento. Para keys de listas usa el ID de
+            los datos. Para varios IDs en un mismo componente, concatena sufijos:{" "}
+            <code>{`\`\${id}-name\``}</code>.
           </p>
         ),
       },
@@ -314,7 +329,9 @@ export default function App() {
         heading: "Regla de uso",
         body: (
           <p>
-            Debe llamarse desde un componente <em>hijo</em> del <code>&lt;form&gt;</code>, no desde el mismo componente que lo renderiza. Es el patrón inverso a pasar <code>isPending</code> como prop.
+            Debe llamarse desde un componente <em>hijo</em> del <code>&lt;form&gt;</code>, no desde
+            el mismo componente que lo renderiza. Es el patrón inverso a pasar{" "}
+            <code>isPending</code> como prop.
           </p>
         ),
       },
@@ -322,7 +339,9 @@ export default function App() {
         heading: "Qué expone",
         body: (
           <p>
-            <code>{"{ pending, data, method, action }"}</code>. <em>pending</em> es el flag más usado. <em>data</em> es el <code>FormData</code> en vuelo — útil para mostrar un preview del valor mientras espera.
+            <code>{"{ pending, data, method, action }"}</code>. <em>pending</em> es el flag más
+            usado. <em>data</em> es el <code>FormData</code> en vuelo — útil para mostrar un preview
+            del valor mientras espera.
           </p>
         ),
       },

@@ -18,7 +18,7 @@ export const allConcepts: Concept[] = [
 ]
 
 export const conceptIndex: Record<string, Concept> = Object.fromEntries(
-  allConcepts.map((c) => [c.id, c]),
+  allConcepts.map((c) => [c.id, c])
 )
 
 export const categories: Category[] = [

@@ -28,13 +28,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [pathname])
 
   return (
-    <SidebarProvider defaultOpen className="h-svh! overflow-hidden flex-col!">
+    <SidebarProvider defaultOpen className="h-svh! flex-col! overflow-hidden">
       <Header onSearchOpen={() => setSearchOpen(true)} />
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <div className="flex flex-1 min-h-0">
+      <div className="flex min-h-0 flex-1">
         <Sidebar />
-        <SidebarInset className="flex flex-col overflow-hidden min-w-0">
-          <div id="scroll-area" className="flex-1 overflow-y-auto min-h-0">
+        <SidebarInset className="flex min-w-0 flex-col overflow-hidden">
+          <div id="scroll-area" className="min-h-0 flex-1 overflow-y-auto">
             <div key={pathname} className="page-enter">
               {children}
             </div>

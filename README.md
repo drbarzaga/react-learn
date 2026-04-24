@@ -10,7 +10,6 @@ React Dojo is an interactive reference for React. Each concept comes with a focu
 
 ---
 
-
 ## Installation
 
 ```bash

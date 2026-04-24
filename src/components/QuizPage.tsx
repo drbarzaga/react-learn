@@ -112,17 +112,19 @@ export function QuizPage({ quiz }: QuizPageProps) {
         {/* Header */}
         <div className="mb-2 flex items-start justify-between gap-4">
           <div>
-            <p className="mb-1 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">Quiz</p>
-            <h1 className="font-mono text-[28px] font-medium leading-none text-[var(--color-fg)]">
+            <p className="mb-1 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
+              Quiz
+            </p>
+            <h1 className="font-mono text-[28px] leading-none font-medium text-[var(--color-fg)]">
               {quiz.label}
             </h1>
           </div>
-          <span className="mt-1 shrink-0 font-mono text-[13px] tabular-nums text-[var(--color-fg-dim)]">
+          <span className="mt-1 shrink-0 font-mono text-[13px] text-[var(--color-fg-dim)] tabular-nums">
             {total} preguntas
           </span>
         </div>
 
-        <p className="mb-10 mt-4 text-[15px] leading-[1.6] text-[var(--color-fg-muted)]">
+        <p className="mt-4 mb-10 text-[15px] leading-[1.6] text-[var(--color-fg-muted)]">
           {quiz.description}
         </p>
 
@@ -175,23 +177,23 @@ export function QuizPage({ quiz }: QuizPageProps) {
     const pct = Math.round((score / total) * 100)
     return (
       <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
-        <div className="mb-4 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+        <div className="mb-4 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
           Quiz · {quiz.label}
         </div>
-        <h1 className="font-mono text-[32px] font-medium leading-none text-[var(--color-fg)]">
+        <h1 className="font-mono text-[32px] leading-none font-medium text-[var(--color-fg)]">
           Resultado
         </h1>
 
         <div className="mt-12 rounded-xl border border-[var(--color-line)] p-8 text-center">
-          <div className="font-mono text-[64px] font-medium leading-none text-[var(--color-fg)]">
+          <div className="font-mono text-[64px] leading-none font-medium text-[var(--color-fg)]">
             {score}/{total}
           </div>
           <div className="mt-3 text-[15px] text-[var(--color-fg-muted)]">
             {pct >= 80
               ? "Excelente — estás listo para la entrevista."
               : pct >= 50
-              ? "Bien, pero repasa los temas que fallaste."
-              : "Sigue practicando — vuelve a los conceptos."}
+                ? "Bien, pero repasa los temas que fallaste."
+                : "Sigue practicando — vuelve a los conceptos."}
           </div>
 
           <div className="mt-8 h-2 w-full overflow-hidden rounded-full bg-[var(--color-line)]">
@@ -240,7 +242,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
   return (
     <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
       <div className="mb-4 flex items-center justify-between">
-        <span className="text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+        <span className="text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
           Quiz · {quiz.label}
         </span>
         <div className="flex items-center gap-4">
@@ -264,7 +266,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
         />
       </div>
 
-      <h2 className="text-[22px] font-medium leading-[1.4] text-[var(--color-fg)]">
+      <h2 className="text-[22px] leading-[1.4] font-medium text-[var(--color-fg)]">
         {question.question}
       </h2>
 
@@ -292,7 +294,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
                     "border-red-500/40 bg-red-500/5 text-[var(--color-fg-muted)]",
                   state === "unanswered" &&
                     answered &&
-                    "border-[var(--color-line)] text-[var(--color-fg-faint)]",
+                    "border-[var(--color-line)] text-[var(--color-fg-faint)]"
                 )}
               >
                 <span className="mr-3 font-mono text-[12px] text-[var(--color-fg-dim)]">
@@ -307,7 +309,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
 
       {answered && (
         <div className="mt-6 rounded-lg border border-[var(--color-line)] bg-[var(--color-bg-raise)] px-5 py-4">
-          <div className="mb-1 text-[11px] uppercase tracking-[0.12em] text-[var(--color-fg-dim)]">
+          <div className="mb-1 text-[11px] tracking-[0.12em] text-[var(--color-fg-dim)] uppercase">
             {selected === question.correctIndex ? "Correcto" : "Incorrecto"}
           </div>
           <p className="text-[14px] leading-[1.65] text-[var(--color-fg-muted)]">

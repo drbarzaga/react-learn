@@ -15,8 +15,8 @@ export const entrevistas: Concept[] = [
           <p>
             <strong>Render →</strong> React genera un nuevo árbol de objetos JS.{" "}
             <strong>Diffing →</strong> Compara el árbol nuevo contra el anterior (algoritmo O(n)).{" "}
-            <strong>Commit →</strong> Solo las diferencias se aplican al DOM real.
-            El DOM es lento; los objetos JS son rápidos — ahí está la ganancia.
+            <strong>Commit →</strong> Solo las diferencias se aplican al DOM real. El DOM es lento;
+            los objetos JS son rápidos — ahí está la ganancia.
           </p>
         ),
       },
@@ -93,9 +93,9 @@ export default function App() {
         heading: "Controlado",
         body: (
           <p>
-            <code>value</code> viene del estado y <code>onChange</code> lo actualiza. React
-            controla cada pulsación. Ideal cuando necesitas validación en tiempo real,
-            transformar el input mientras el usuario escribe, o sincronizar varios campos.
+            <code>value</code> viene del estado y <code>onChange</code> lo actualiza. React controla
+            cada pulsación. Ideal cuando necesitas validación en tiempo real, transformar el input
+            mientras el usuario escribe, o sincronizar varios campos.
           </p>
         ),
       },
@@ -103,9 +103,9 @@ export default function App() {
         heading: "No controlado",
         body: (
           <p>
-            El DOM guarda el valor. Lo lees con <code>useRef</code> en el momento que
-            necesitas (por ejemplo, al hacer submit). Más simple para formularios donde no
-            importa el valor intermedio — como un upload de archivo.
+            El DOM guarda el valor. Lo lees con <code>useRef</code> en el momento que necesitas (por
+            ejemplo, al hacer submit). Más simple para formularios donde no importa el valor
+            intermedio — como un upload de archivo.
           </p>
         ),
       },
@@ -192,9 +192,9 @@ export default function App() {
         heading: "El problema",
         body: (
           <p>
-            Cada componente intermedio recibe un prop que no usa, quedando acoplado a
-            una decisión que no le pertenece. Si el dato cambia de forma, hay que
-            actualizar todos los eslabones de la cadena.
+            Cada componente intermedio recibe un prop que no usa, quedando acoplado a una decisión
+            que no le pertenece. Si el dato cambia de forma, hay que actualizar todos los eslabones
+            de la cadena.
           </p>
         ),
       },
@@ -202,11 +202,11 @@ export default function App() {
         heading: "Las soluciones",
         body: (
           <p>
-            <strong>Context API</strong> — para estado global que muchos componentes
-            necesitan (tema, usuario, idioma). <strong>Composición</strong> — pasar
-            componentes como <code>children</code> en vez de datos, evitando el túnel
-            completamente. <strong>Estado externo</strong> (Zustand, Redux) — cuando la
-            lógica de estado es compleja.
+            <strong>Context API</strong> — para estado global que muchos componentes necesitan
+            (tema, usuario, idioma). <strong>Composición</strong> — pasar componentes como{" "}
+            <code>children</code> en vez de datos, evitando el túnel completamente.{" "}
+            <strong>Estado externo</strong> (Zustand, Redux) — cuando la lógica de estado es
+            compleja.
           </p>
         ),
       },
@@ -301,10 +301,9 @@ export default function App() {
         heading: "La firma",
         body: (
           <p>
-            <code>const Mejorado = withAlgo(Componente)</code>. El HOC añade props,
-            envuelve en providers, inyecta comportamiento — sin que el componente original
-            sepa que está siendo envuelto. Por convención se nombran con prefijo{" "}
-            <code>with</code>.
+            <code>const Mejorado = withAlgo(Componente)</code>. El HOC añade props, envuelve en
+            providers, inyecta comportamiento — sin que el componente original sepa que está siendo
+            envuelto. Por convención se nombran con prefijo <code>with</code>.
           </p>
         ),
       },
@@ -312,10 +311,9 @@ export default function App() {
         heading: "HOC vs Hook",
         body: (
           <p>
-            Los hooks son más simples y componibles. Usa HOC cuando necesitas envolver
-            el árbol JSX del componente (error boundaries, providers) o cuando trabajas
-            con una librería que los requiere. Para lógica pura reutilizable, un hook
-            personalizado es la opción moderna.
+            Los hooks son más simples y componibles. Usa HOC cuando necesitas envolver el árbol JSX
+            del componente (error boundaries, providers) o cuando trabajas con una librería que los
+            requiere. Para lógica pura reutilizable, un hook personalizado es la opción moderna.
           </p>
         ),
       },
@@ -396,9 +394,8 @@ export default function App() {
         body: (
           <p>
             En lugar de que el componente decida su propio output, recibe una función{" "}
-            <code>render</code> (o <code>children</code> como función) y la invoca con
-            sus datos internos. El padre recibe esos datos y devuelve JSX — separando
-            lógica de presentación.
+            <code>render</code> (o <code>children</code> como función) y la invoca con sus datos
+            internos. El padre recibe esos datos y devuelve JSX — separando lógica de presentación.
           </p>
         ),
       },
@@ -406,10 +403,9 @@ export default function App() {
         heading: "Render Props vs hooks",
         body: (
           <p>
-            Los hooks resuelven el mismo problema (compartir lógica) de forma más
-            directa. Hoy el patrón render props aparece principalmente en librerías de
-            UI como Headless UI o Radix, donde la lógica de accesibilidad se separa
-            completamente de la presentación visual.
+            Los hooks resuelven el mismo problema (compartir lógica) de forma más directa. Hoy el
+            patrón render props aparece principalmente en librerías de UI como Headless UI o Radix,
+            donde la lógica de accesibilidad se separa completamente de la presentación visual.
           </p>
         ),
       },
@@ -487,10 +483,10 @@ export default function App() {
         heading: "React.memo",
         body: (
           <p>
-            <code>memo(Componente)</code> envuelve el componente y memoriza el último
-            output. En el siguiente render, si las props son iguales por referencia
-            (shallow equality), React reutiliza el resultado anterior sin llamar a la
-            función. Útil en hijos costosos que reciben props estables.
+            <code>memo(Componente)</code> envuelve el componente y memoriza el último output. En el
+            siguiente render, si las props son iguales por referencia (shallow equality), React
+            reutiliza el resultado anterior sin llamar a la función. Útil en hijos costosos que
+            reciben props estables.
           </p>
         ),
       },
@@ -498,10 +494,9 @@ export default function App() {
         heading: "La trampa de las referencias",
         body: (
           <p>
-            <code>memo</code> compara props con{" "}
-            <code>Object.is</code>. Si el padre pasa un objeto literal o función inline,
-            crea una nueva referencia en cada render — <code>memo</code> siempre ve props
-            "distintas" y nunca se salta el render. Por eso se combina con{" "}
+            <code>memo</code> compara props con <code>Object.is</code>. Si el padre pasa un objeto
+            literal o función inline, crea una nueva referencia en cada render — <code>memo</code>{" "}
+            siempre ve props "distintas" y nunca se salta el render. Por eso se combina con{" "}
             <code>useMemo</code> y <code>useCallback</code>.
           </p>
         ),

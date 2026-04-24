@@ -15,9 +15,9 @@ interface ExercisePageProps {
 }
 
 const difficultyColor: Record<string, string> = {
-  "básico":     "text-[var(--color-fg-dim)]",
-  "intermedio": "text-[var(--color-fg-muted)]",
-  "avanzado":   "text-[var(--color-fg)]",
+  básico: "text-[var(--color-fg-dim)]",
+  intermedio: "text-[var(--color-fg-muted)]",
+  avanzado: "text-[var(--color-fg)]",
 }
 
 export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
@@ -30,7 +30,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
     <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
       {/* Kicker */}
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+        <div className="flex items-center gap-3 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
           <span>práctica</span>
           <span className="h-px w-4 bg-[var(--color-fg-faint)]" />
           <span className={difficultyColor[exercise.difficulty] ?? "text-[var(--color-fg-dim)]"}>
@@ -43,7 +43,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
             "flex items-center gap-2 rounded-md border px-3 py-1.5 text-[12px] transition-colors",
             isCompleted
               ? "border-green-500/40 bg-green-500/5 text-green-600 dark:text-green-400"
-              : "border-[var(--color-line)] text-[var(--color-fg-muted)] hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]",
+              : "border-[var(--color-line)] text-[var(--color-fg-muted)] hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
           )}
         >
           {isCompleted ? (
@@ -56,7 +56,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
       </div>
 
       {/* Title */}
-      <h1 className="font-mono text-[32px] font-medium leading-none text-[var(--color-fg)]">
+      <h1 className="font-mono text-[32px] leading-none font-medium text-[var(--color-fg)]">
         {exercise.title}
       </h1>
 
@@ -65,17 +65,20 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         {exercise.lede}
       </p>
 
-      <hr className="mt-12 border-none border-t border-[var(--color-line)]" />
+      <hr className="mt-12 border-t border-none border-[var(--color-line)]" />
 
       {/* Objetivos */}
       <section className="mt-10">
-        <h2 className="mb-4 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+        <h2 className="mb-4 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
           Objetivos
         </h2>
         <ol className="space-y-2">
           {exercise.objectives.map((o, i) => (
-            <li key={i} className="flex items-start gap-3 text-[14px] leading-[1.65] text-[var(--color-fg-muted)]">
-              <span className="mt-[1px] shrink-0 font-mono text-[12px] text-[var(--color-fg-faint)] w-4 text-right">
+            <li
+              key={i}
+              className="flex items-start gap-3 text-[14px] leading-[1.65] text-[var(--color-fg-muted)]"
+            >
+              <span className="mt-[1px] w-4 shrink-0 text-right font-mono text-[12px] text-[var(--color-fg-faint)]">
                 {i + 1}.
               </span>
               <span>{o}</span>
@@ -91,10 +94,10 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
           <button
             onClick={() => setShowSolution((v) => !v)}
             className={cn(
-              "transition-colors text-[11px]",
+              "text-[11px] transition-colors",
               showSolution
                 ? "text-[var(--color-fg)]"
-                : "text-[var(--color-fg-dim)] hover:text-[var(--color-fg)]",
+                : "text-[var(--color-fg-dim)] hover:text-[var(--color-fg)]"
             )}
           >
             {showSolution ? "← volver al starter" : "ver solución →"}
@@ -120,7 +123,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
       {exercise.hint && (
         <section className="mt-8">
           <details className="group">
-            <summary className="cursor-pointer select-none text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)] hover:text-[var(--color-fg)] transition-colors list-none flex items-center gap-2">
+            <summary className="flex cursor-pointer list-none items-center gap-2 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase transition-colors select-none hover:text-[var(--color-fg)]">
               <Lightbulb className="h-[13px] w-[13px]" strokeWidth={1.8} />
               <span>Pista</span>
             </summary>
@@ -134,7 +137,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
       {/* Conceptos relacionados */}
       {exercise.relatedConcepts && exercise.relatedConcepts.length > 0 && (
         <section className="mt-10">
-          <h3 className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-dim)]">
+          <h3 className="mb-3 flex items-center gap-2 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
             <BookOpen className="h-[13px] w-[13px]" strokeWidth={1.8} />
             Conceptos relacionados
           </h3>
@@ -143,7 +146,10 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
               <a
                 key={id}
                 href={`/${id}`}
-                onClick={(e) => { e.preventDefault(); router.push(`/${id}`) }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  router.push(`/${id}`)
+                }}
                 className="inline-block rounded border border-[var(--color-line)] px-3 py-1 font-mono text-[13px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-line-strong)] hover:text-[var(--color-fg)]"
               >
                 {id}
@@ -158,23 +164,33 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         {prev ? (
           <a
             href={`/learn/${prev.id}`}
-            onClick={(e) => { e.preventDefault(); router.push(`/learn/${prev.id}`) }}
-            className="group flex flex-col gap-1 text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors"
+            onClick={(e) => {
+              e.preventDefault()
+              router.push(`/learn/${prev.id}`)
+            }}
+            className="group flex flex-col gap-1 text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
             <span className="text-[12px] text-[var(--color-fg-dim)]">← anterior</span>
             <span className="text-[var(--color-fg)]">{prev.label}</span>
           </a>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
         {next ? (
           <a
             href={`/learn/${next.id}`}
-            onClick={(e) => { e.preventDefault(); router.push(`/learn/${next.id}`) }}
-            className="group flex flex-col items-end gap-1 text-right text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors"
+            onClick={(e) => {
+              e.preventDefault()
+              router.push(`/learn/${next.id}`)
+            }}
+            className="group flex flex-col items-end gap-1 text-right text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
             <span className="text-[12px] text-[var(--color-fg-dim)]">siguiente →</span>
             <span className="text-[var(--color-fg)]">{next.label}</span>
           </a>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
       </nav>
     </article>
   )

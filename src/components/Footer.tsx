@@ -9,7 +9,12 @@ import { allQuizzes } from "@/content/quiz"
 
 function ReactIcon({ className }: { className?: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-11.5 -10.23174 23 20.46348" className={className} aria-hidden>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-11.5 -10.23174 23 20.46348"
+      className={className}
+      aria-hidden
+    >
       <circle cx="0" cy="0" r="2.05" fill="#61dafb" />
       <g stroke="#61dafb" strokeWidth="1" fill="none">
         <ellipse rx="11" ry="4.2" />
@@ -29,26 +34,39 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 const links = [
-  { label: "react.dev",      href: "https://react.dev",                                   Icon: ReactIcon  },
-  { label: "Reportar error", href: "https://github.com/drbarzaga/react-dojo/issues/new",  Icon: Bug        },
+  { label: "react.dev", href: "https://react.dev", Icon: ReactIcon },
+  {
+    label: "Reportar error",
+    href: "https://github.com/drbarzaga/react-dojo/issues/new",
+    Icon: Bug,
+  },
 ]
 
 export function Footer() {
   return (
-    <footer className="shrink-0 border-t border-[var(--color-line)] px-4 md:px-6 py-3">
+    <footer className="shrink-0 border-t border-[var(--color-line)] px-4 py-3 md:px-6">
       {/* Mobile: stack verticalmente */}
-      <div className="flex flex-col gap-2 sm:hidden text-[11px] text-[var(--color-fg-faint)]">
+      <div className="flex flex-col gap-2 text-[11px] text-[var(--color-fg-faint)] sm:hidden">
         <span className="flex items-center justify-center gap-1 select-none">
           Hecho con <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" /> por{" "}
-          <a href="https://github.com/drbarzaga" target="_blank" rel="noreferrer"
-            className="text-[var(--color-fg-dim)] underline decoration-[var(--color-fg-faint)] underline-offset-2">
+          <a
+            href="https://github.com/drbarzaga"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[var(--color-fg-dim)] underline decoration-[var(--color-fg-faint)] underline-offset-2"
+          >
             @drbarzaga
           </a>
         </span>
         <div className="flex items-center justify-center gap-4">
           {links.map(({ label, href, Icon }) => (
-            <a key={label} href={href} target="_blank" rel="noreferrer"
-              className="flex items-center gap-1 transition-colors hover:text-[var(--color-fg-muted)]">
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1 transition-colors hover:text-[var(--color-fg-muted)]"
+            >
               <Icon className="h-[12px] w-[12px]" strokeWidth={1.6} />
               {label}
             </a>
@@ -57,7 +75,7 @@ export function Footer() {
             href="https://github.com/drbarzaga/react-dojo"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--color-fg-muted)]"
+            className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase"
           >
             <GitHubIcon className="h-[12px] w-[12px]" />
             ¡Contribuye!
@@ -66,7 +84,7 @@ export function Footer() {
       </div>
 
       {/* Desktop: grid de 3 columnas iguales */}
-      <div className="hidden sm:grid sm:grid-cols-3 items-center text-[11px] text-[var(--color-fg-faint)]">
+      <div className="hidden items-center text-[11px] text-[var(--color-fg-faint)] sm:grid sm:grid-cols-3">
         {/* Izquierda: stats */}
         <div className="flex items-center gap-3">
           <span className="tabular">{allConcepts.length} conceptos</span>
@@ -79,26 +97,45 @@ export function Footer() {
         {/* Centro: atribución */}
         <span className="flex items-center justify-center gap-1 select-none">
           Hecho con <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" /> por{" "}
-          <a href="https://github.com/drbarzaga" target="_blank" rel="noreferrer"
-            className="text-[var(--color-fg-dim)] underline decoration-[var(--color-fg-faint)] underline-offset-2 hover:text-[var(--color-fg-muted)] transition-colors">
+          <a
+            href="https://github.com/drbarzaga"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[var(--color-fg-dim)] underline decoration-[var(--color-fg-faint)] underline-offset-2 transition-colors hover:text-[var(--color-fg-muted)]"
+          >
             @drbarzaga
           </a>
         </span>
 
         {/* Derecha: links */}
         <div className="flex items-center justify-end gap-2">
-          {links.map(({ label, href, Icon }: { label: string; href: string; Icon: React.ComponentType<{ className?: string; strokeWidth?: number }> }) => (
-            <a key={label} href={href} target="_blank" rel="noreferrer"
-              className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]">
-              <Icon className="h-[12px] w-[12px]" strokeWidth={1.6} />
-              {label}
-            </a>
-          ))}
+          {links.map(
+            ({
+              label,
+              href,
+              Icon,
+            }: {
+              label: string
+              href: string
+              Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>
+            }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+              >
+                <Icon className="h-[12px] w-[12px]" strokeWidth={1.6} />
+                {label}
+              </a>
+            )
+          )}
           <a
             href="https://github.com/drbarzaga/react-dojo"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+            className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
           >
             <GitHubIcon className="h-[12px] w-[12px]" />
             ¡Contribuye!

@@ -24,102 +24,175 @@ const font = {
   lineHeight: "22px",
 }
 
-const editorThemes: Record<EditorThemeId, { dark: SandpackThemeProp; light?: SandpackThemeProp }> = {
-  auto: {
-    dark: {
-      colors: {
-        surface1: "#0f0f11", surface2: "#131316", surface3: "#1c1c20",
-        clickable: "#64636e", base: "#ddd8d0", disabled: "#46454f",
-        hover: "#f0ece6", accent: "#c4956a", error: "#c98b82",
-        errorSurface: "rgba(201,139,130,0.07)",
+const editorThemes: Record<EditorThemeId, { dark: SandpackThemeProp; light?: SandpackThemeProp }> =
+  {
+    auto: {
+      dark: {
+        colors: {
+          surface1: "#0f0f11",
+          surface2: "#131316",
+          surface3: "#1c1c20",
+          clickable: "#64636e",
+          base: "#ddd8d0",
+          disabled: "#46454f",
+          hover: "#f0ece6",
+          accent: "#c4956a",
+          error: "#c98b82",
+          errorSurface: "rgba(201,139,130,0.07)",
+        },
+        syntax: {
+          plain: "#d4cfc8",
+          comment: { color: "#4e4d59", fontStyle: "italic" },
+          keyword: "#c4956a",
+          tag: "#c48878",
+          punctuation: "#5e5c68",
+          definition: "#e0dbd4",
+          property: "#8babcc",
+          static: "#b49aca",
+          string: "#87a89d",
+        },
+        font,
       },
-      syntax: {
-        plain: "#d4cfc8", comment: { color: "#4e4d59", fontStyle: "italic" },
-        keyword: "#c4956a", tag: "#c48878", punctuation: "#5e5c68",
-        definition: "#e0dbd4", property: "#8babcc", static: "#b49aca", string: "#87a89d",
+      light: {
+        colors: {
+          surface1: "#f5f3ee",
+          surface2: "#ede9e0",
+          surface3: "#e4e0d6",
+          clickable: "#72706a",
+          base: "#2e2b26",
+          disabled: "#b0ada6",
+          hover: "#1a1915",
+          accent: "#7a5a3d",
+          error: "#9e4530",
+          errorSurface: "rgba(158,69,48,0.08)",
+        },
+        syntax: {
+          plain: "#3a342d",
+          comment: { color: "#9e9b94", fontStyle: "italic" },
+          keyword: "#7a5a3d",
+          tag: "#8d5840",
+          punctuation: "#9c9890",
+          definition: "#1e1b16",
+          property: "#4a6880",
+          static: "#6b4a82",
+          string: "#3d6b60",
+        },
+        font,
       },
-      font,
     },
-    light: {
-      colors: {
-        surface1: "#f5f3ee", surface2: "#ede9e0", surface3: "#e4e0d6",
-        clickable: "#72706a", base: "#2e2b26", disabled: "#b0ada6",
-        hover: "#1a1915", accent: "#7a5a3d", error: "#9e4530",
-        errorSurface: "rgba(158,69,48,0.08)",
+    dracula: {
+      dark: {
+        colors: {
+          surface1: "#282A36",
+          surface2: "#1e2029",
+          surface3: "#2d2f3f",
+          clickable: "#6272a4",
+          base: "#f8f8f2",
+          disabled: "#6272a4",
+          hover: "#ffffff",
+          accent: "#bd93f9",
+          error: "#ff5555",
+          errorSurface: "rgba(255,85,85,0.1)",
+        },
+        syntax: {
+          plain: "#f8f8f2",
+          comment: { color: "#6272a4", fontStyle: "italic" },
+          keyword: "#ff79c6",
+          tag: "#ff79c6",
+          punctuation: "#f8f8f2",
+          definition: "#50fa7b",
+          property: "#8be9fd",
+          static: "#bd93f9",
+          string: "#f1fa8c",
+        },
+        font,
       },
-      syntax: {
-        plain: "#3a342d", comment: { color: "#9e9b94", fontStyle: "italic" },
-        keyword: "#7a5a3d", tag: "#8d5840", punctuation: "#9c9890",
-        definition: "#1e1b16", property: "#4a6880", static: "#6b4a82", string: "#3d6b60",
-      },
-      font,
     },
-  },
-  dracula: {
-    dark: {
-      colors: {
-        surface1: "#282A36", surface2: "#1e2029", surface3: "#2d2f3f",
-        clickable: "#6272a4", base: "#f8f8f2", disabled: "#6272a4",
-        hover: "#ffffff", accent: "#bd93f9", error: "#ff5555",
-        errorSurface: "rgba(255,85,85,0.1)",
+    nightOwl: {
+      dark: {
+        colors: {
+          surface1: "#011627",
+          surface2: "#010e1a",
+          surface3: "#0d2137",
+          clickable: "#607b96",
+          base: "#d6deeb",
+          disabled: "#496582",
+          hover: "#ffffff",
+          accent: "#7e57c2",
+          error: "#ef5350",
+          errorSurface: "rgba(239,83,80,0.1)",
+        },
+        syntax: {
+          plain: "#d6deeb",
+          comment: { color: "#637777", fontStyle: "italic" },
+          keyword: "#c792ea",
+          tag: "#7fdbca",
+          punctuation: "#d6deeb",
+          definition: "#82aaff",
+          property: "#addb67",
+          static: "#ffcb8b",
+          string: "#ecc48d",
+        },
+        font,
       },
-      syntax: {
-        plain: "#f8f8f2", comment: { color: "#6272a4", fontStyle: "italic" },
-        keyword: "#ff79c6", tag: "#ff79c6", punctuation: "#f8f8f2",
-        definition: "#50fa7b", property: "#8be9fd", static: "#bd93f9", string: "#f1fa8c",
-      },
-      font,
     },
-  },
-  nightOwl: {
-    dark: {
-      colors: {
-        surface1: "#011627", surface2: "#010e1a", surface3: "#0d2137",
-        clickable: "#607b96", base: "#d6deeb", disabled: "#496582",
-        hover: "#ffffff", accent: "#7e57c2", error: "#ef5350",
-        errorSurface: "rgba(239,83,80,0.1)",
+    githubLight: {
+      dark: {
+        colors: {
+          surface1: "#ffffff",
+          surface2: "#f6f8fa",
+          surface3: "#eaeef2",
+          clickable: "#57606a",
+          base: "#24292f",
+          disabled: "#8c959f",
+          hover: "#0969da",
+          accent: "#0969da",
+          error: "#cf222e",
+          errorSurface: "rgba(207,34,46,0.08)",
+        },
+        syntax: {
+          plain: "#24292f",
+          comment: { color: "#6e7781", fontStyle: "italic" },
+          keyword: "#cf222e",
+          tag: "#116329",
+          punctuation: "#24292f",
+          definition: "#8250df",
+          property: "#0550ae",
+          static: "#953800",
+          string: "#0a3069",
+        },
+        font,
       },
-      syntax: {
-        plain: "#d6deeb", comment: { color: "#637777", fontStyle: "italic" },
-        keyword: "#c792ea", tag: "#7fdbca", punctuation: "#d6deeb",
-        definition: "#82aaff", property: "#addb67", static: "#ffcb8b", string: "#ecc48d",
-      },
-      font,
     },
-  },
-  githubLight: {
-    dark: {
-      colors: {
-        surface1: "#ffffff", surface2: "#f6f8fa", surface3: "#eaeef2",
-        clickable: "#57606a", base: "#24292f", disabled: "#8c959f",
-        hover: "#0969da", accent: "#0969da", error: "#cf222e",
-        errorSurface: "rgba(207,34,46,0.08)",
+    monokai: {
+      dark: {
+        colors: {
+          surface1: "#272822",
+          surface2: "#1e1f1c",
+          surface3: "#2d2e28",
+          clickable: "#75715e",
+          base: "#f8f8f2",
+          disabled: "#75715e",
+          hover: "#ffffff",
+          accent: "#a6e22e",
+          error: "#f92672",
+          errorSurface: "rgba(249,38,114,0.1)",
+        },
+        syntax: {
+          plain: "#f8f8f2",
+          comment: { color: "#75715e", fontStyle: "italic" },
+          keyword: "#f92672",
+          tag: "#f92672",
+          punctuation: "#f8f8f2",
+          definition: "#a6e22e",
+          property: "#66d9e8",
+          static: "#ae81ff",
+          string: "#e6db74",
+        },
+        font,
       },
-      syntax: {
-        plain: "#24292f", comment: { color: "#6e7781", fontStyle: "italic" },
-        keyword: "#cf222e", tag: "#116329", punctuation: "#24292f",
-        definition: "#8250df", property: "#0550ae", static: "#953800", string: "#0a3069",
-      },
-      font,
     },
-  },
-  monokai: {
-    dark: {
-      colors: {
-        surface1: "#272822", surface2: "#1e1f1c", surface3: "#2d2e28",
-        clickable: "#75715e", base: "#f8f8f2", disabled: "#75715e",
-        hover: "#ffffff", accent: "#a6e22e", error: "#f92672",
-        errorSurface: "rgba(249,38,114,0.1)",
-      },
-      syntax: {
-        plain: "#f8f8f2", comment: { color: "#75715e", fontStyle: "italic" },
-        keyword: "#f92672", tag: "#f92672", punctuation: "#f8f8f2",
-        definition: "#a6e22e", property: "#66d9e8", static: "#ae81ff", string: "#e6db74",
-      },
-      font,
-    },
-  },
-}
+  }
 
 function getSandpackTheme(editorTheme: EditorThemeId, appTheme: Theme): SandpackThemeProp {
   const t = editorThemes[editorTheme]
@@ -134,17 +207,31 @@ function buildStyles(theme: Theme): string {
     theme === "dark"
       ? {
           colorScheme: "dark",
-          bg: "#0f0f11", surface1: "#141417", surface2: "#1c1c20",
-          fg: "#e8e3dc", fgMuted: "#8a8a8f", fgDim: "#5c5c61",
-          line: "rgba(255,255,255,0.06)", lineStrong: "rgba(255,255,255,0.14)",
-          lineHover: "rgba(255,255,255,0.24)", codeBg: "#141417", accent: "#c4956a",
+          bg: "#0f0f11",
+          surface1: "#141417",
+          surface2: "#1c1c20",
+          fg: "#e8e3dc",
+          fgMuted: "#8a8a8f",
+          fgDim: "#5c5c61",
+          line: "rgba(255,255,255,0.06)",
+          lineStrong: "rgba(255,255,255,0.14)",
+          lineHover: "rgba(255,255,255,0.24)",
+          codeBg: "#141417",
+          accent: "#c4956a",
         }
       : {
           colorScheme: "light",
-          bg: "#f5f3ee", surface1: "#ede9e0", surface2: "#e4e0d6",
-          fg: "#1a1915", fgMuted: "#6b6966", fgDim: "#a29f97",
-          line: "rgba(0,0,0,0.07)", lineStrong: "rgba(0,0,0,0.14)",
-          lineHover: "rgba(0,0,0,0.26)", codeBg: "#ede9e0", accent: "#7a5a3d",
+          bg: "#f5f3ee",
+          surface1: "#ede9e0",
+          surface2: "#e4e0d6",
+          fg: "#1a1915",
+          fgMuted: "#6b6966",
+          fgDim: "#a29f97",
+          line: "rgba(0,0,0,0.07)",
+          lineStrong: "rgba(0,0,0,0.14)",
+          lineHover: "rgba(0,0,0,0.26)",
+          codeBg: "#ede9e0",
+          accent: "#7a5a3d",
         }
 
   return `:root {
@@ -184,7 +271,10 @@ function ThemeSync({ appTheme }: { appTheme: Theme }) {
   const mounted = useRef(false)
 
   useEffect(() => {
-    if (!mounted.current) { mounted.current = true; return }
+    if (!mounted.current) {
+      mounted.current = true
+      return
+    }
     sandpack.updateFile("/styles.css", buildStyles(appTheme))
   }, [appTheme]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -215,10 +305,15 @@ export function Playground({
   const [editorHeight, setEditorHeight] = useState(height)
 
   useEffect(() => {
-    if (!maximized) { setEditorHeight(height); return }
+    if (!maximized) {
+      setEditorHeight(height)
+      return
+    }
 
     const updateHeight = () => setEditorHeight(window.innerHeight - 48 - 40 - 64)
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMaximized(false) }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMaximized(false)
+    }
 
     updateHeight()
     window.addEventListener("resize", updateHeight)
@@ -236,19 +331,27 @@ export function Playground({
   // appTheme intentionally excluded — ThemeSync handles CSS updates imperatively
   const initialFiles = useMemo(
     () => ({ "/styles.css": { code: buildStyles(appTheme), hidden: true }, ...files }),
-    [files], // eslint-disable-line react-hooks/exhaustive-deps
+    [files] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   return (
-    <div className={maximized ? "fixed top-12 bottom-10 left-0 right-0 z-50 md:left-[240px] flex flex-col bg-[var(--color-bg)] p-4" : "relative my-2"}>
+    <div
+      className={
+        maximized
+          ? "fixed top-12 right-0 bottom-10 left-0 z-50 flex flex-col bg-[var(--color-bg)] p-4 md:left-[240px]"
+          : "relative my-2"
+      }
+    >
       <div className="mb-1.5 flex items-center justify-end">
         <button
           onClick={() => setMaximized((v) => !v)}
-          className="cursor-pointer flex items-center gap-1.5 text-[11px] text-[var(--color-fg-dim)] transition-colors hover:text-[var(--color-fg)]"
+          className="flex cursor-pointer items-center gap-1.5 text-[11px] text-[var(--color-fg-dim)] transition-colors hover:text-[var(--color-fg)]"
           aria-label={maximized ? "Minimizar editor" : "Maximizar editor"}
         >
           <span className="capitalize">{maximized ? "Minimizar" : "Maximizar"}</span>
-          <span aria-hidden className="text-[13px] leading-none">{maximized ? "⤡" : "⤢"}</span>
+          <span aria-hidden className="text-[13px] leading-none">
+            {maximized ? "⤡" : "⤢"}
+          </span>
         </button>
       </div>
 

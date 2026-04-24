@@ -12,16 +12,16 @@ export function WelcomePage() {
   const router = useRouter()
   return (
     <div className="flex min-h-[calc(100vh-84px)] items-center justify-center px-8 py-20">
-      <div className="flex flex-col items-center text-center max-w-[420px]">
-
+      <div className="flex max-w-[420px] flex-col items-center text-center">
         <Logo className="mb-6 h-24 w-auto" />
 
-        <h1 className="font-mono text-[30px] font-medium leading-none text-[var(--color-fg)]">
+        <h1 className="font-mono text-[30px] leading-none font-medium text-[var(--color-fg)]">
           React Dojo
         </h1>
 
         <p className="mt-4 text-[16px] leading-[1.7] text-[var(--color-fg-muted)]">
-          React se aprende practicando. Cada concepto tiene explicación, playground interactivo y ejercicios de código real — sin atajos.
+          React se aprende practicando. Cada concepto tiene explicación, playground interactivo y
+          ejercicios de código real — sin atajos.
         </p>
 
         <div className="mt-6 flex items-center gap-4 text-[12px] text-[var(--color-fg-dim)]">
@@ -35,7 +35,7 @@ export function WelcomePage() {
         <div className="mt-8 flex gap-3">
           <Button
             onClick={() => router.push(`/${allConcepts[0].id}`)}
-            className="gap-2 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80 border-0"
+            className="gap-2 border-0 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80"
           >
             Comenzar
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
@@ -43,13 +43,12 @@ export function WelcomePage() {
           <Button
             variant="outline"
             onClick={() => router.push(`/learn/${allExercises[0].id}`)}
-            className="gap-2 border-[var(--color-line-strong)] text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)] bg-transparent"
+            className="gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
           >
             <Dumbbell className="h-3.5 w-3.5" strokeWidth={1.8} />
             Practicar
           </Button>
         </div>
-
       </div>
     </div>
   )

@@ -53,11 +53,15 @@ const INDEX: SearchResult[] = [
 
 const KIND_META: Record<
   ResultKind,
-  { groupLabel: string; tag: string; Icon: ComponentType<{ className?: string; strokeWidth?: number }> }
+  {
+    groupLabel: string
+    tag: string
+    Icon: ComponentType<{ className?: string; strokeWidth?: number }>
+  }
 > = {
-  concept:  { groupLabel: "Conceptos", tag: "Concepto", Icon: BookOpen },
-  exercise: { groupLabel: "Práctica",  tag: "Práctica", Icon: Dumbbell },
-  quiz:     { groupLabel: "Quiz",      tag: "Quiz",     Icon: Brain    },
+  concept: { groupLabel: "Conceptos", tag: "Concepto", Icon: BookOpen },
+  exercise: { groupLabel: "Práctica", tag: "Práctica", Icon: Dumbbell },
+  quiz: { groupLabel: "Quiz", tag: "Quiz", Icon: Brain },
 }
 
 interface SearchModalProps {
@@ -80,9 +84,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       return [...byKind("concept"), ...byKind("exercise"), ...byKind("quiz")]
     }
     return INDEX.filter(
-      (r) =>
-        r.label.toLowerCase().includes(q) ||
-        r.subtitle.toLowerCase().includes(q),
+      (r) => r.label.toLowerCase().includes(q) || r.subtitle.toLowerCase().includes(q)
     ).slice(0, 24)
   }, [query])
 
@@ -128,12 +130,14 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                   value={`${r.label} ${r.subtitle} ${tag}`}
                   onSelect={() => handleSelect(r.href)}
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center text-muted-foreground/60">
+                  <span className="text-muted-foreground/60 flex h-6 w-6 shrink-0 items-center justify-center">
                     <Icon className="h-[13px] w-[13px]" strokeWidth={1.6} />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-mono text-[13px]">{r.label}</span>
-                    <span className="block truncate text-[11px] text-muted-foreground/60 leading-[1.4]">{r.subtitle}</span>
+                    <span className="text-muted-foreground/60 block truncate text-[11px] leading-[1.4]">
+                      {r.subtitle}
+                    </span>
                   </span>
                   <CommandShortcut>{tag}</CommandShortcut>
                 </CommandItem>
@@ -143,10 +147,19 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
         })}
       </CommandList>
 
-      <div className="flex items-center gap-4 border-t border-border/40 px-4 py-2">
-        {([["↑↓", "navegar"], ["↵", "abrir"], ["Esc", "cerrar"]] as const).map(([key, label]) => (
-          <span key={label} className="flex items-center gap-1.5 text-[11px] text-muted-foreground/40">
-            <kbd className="inline-flex items-center rounded-md border border-border/60 bg-muted/30 px-1.5 py-px font-mono text-[10px] leading-4 text-muted-foreground/50">
+      <div className="border-border/40 flex items-center gap-4 border-t px-4 py-2">
+        {(
+          [
+            ["↑↓", "navegar"],
+            ["↵", "abrir"],
+            ["Esc", "cerrar"],
+          ] as const
+        ).map(([key, label]) => (
+          <span
+            key={label}
+            className="text-muted-foreground/40 flex items-center gap-1.5 text-[11px]"
+          >
+            <kbd className="border-border/60 bg-muted/30 text-muted-foreground/50 inline-flex items-center rounded-md border px-1.5 py-px font-mono text-[10px] leading-4">
               {key}
             </kbd>
             {label}

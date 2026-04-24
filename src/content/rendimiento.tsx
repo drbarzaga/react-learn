@@ -13,7 +13,9 @@ export const rendimiento: Concept[] = [
         heading: "Cuándo importa",
         body: (
           <p>
-            Para cálculos genuinamente caros (transformar listas grandes, parsear, ordenar) o para mantener <em>identidad referencial</em> de objetos/arrays que se pasan a hijos memoizados o a dependencias de otros hooks.
+            Para cálculos genuinamente caros (transformar listas grandes, parsear, ordenar) o para
+            mantener <em>identidad referencial</em> de objetos/arrays que se pasan a hijos
+            memoizados o a dependencias de otros hooks.
           </p>
         ),
       },
@@ -21,7 +23,9 @@ export const rendimiento: Concept[] = [
         heading: "Cuándo es ruido",
         body: (
           <p>
-            Para funciones simples, valores primitivos, o cálculos que React resuelve más rápido que la propia comparación de dependencias. La memoización tiene coste: comparar deps, retener referencias en memoria.
+            Para funciones simples, valores primitivos, o cálculos que React resuelve más rápido que
+            la propia comparación de dependencias. La memoización tiene coste: comparar deps,
+            retener referencias en memoria.
           </p>
         ),
       },
@@ -90,7 +94,9 @@ export default function App() {
         heading: "Cuándo aporta",
         body: (
           <p>
-            Cuando pasas un callback a un componente envuelto en <code>memo()</code>, o cuando la función es dependencia de un <code>useEffect</code> y no quieres que el efecto se reinicie en cada render.
+            Cuando pasas un callback a un componente envuelto en <code>memo()</code>, o cuando la
+            función es dependencia de un <code>useEffect</code> y no quieres que el efecto se
+            reinicie en cada render.
           </p>
         ),
       },
@@ -98,7 +104,8 @@ export default function App() {
         heading: "Sin un consumidor, es ceremonia",
         body: (
           <p>
-            Envolver toda función en useCallback no acelera nada por sí solo. Solo importa cuando alguien río abajo se beneficia de que la referencia sea estable.
+            Envolver toda función en useCallback no acelera nada por sí solo. Solo importa cuando
+            alguien río abajo se beneficia de que la referencia sea estable.
           </p>
         ),
       },
@@ -158,7 +165,9 @@ export default function App() {
         heading: "La comparación",
         body: (
           <p>
-            Por defecto, comparación shallow: <code>===</code> sobre cada prop. Por eso pasar un objeto literal nuevo en cada render rompe la memoización. Pasa primitivos, o estabiliza referencias con useMemo/useCallback.
+            Por defecto, comparación shallow: <code>===</code> sobre cada prop. Por eso pasar un
+            objeto literal nuevo en cada render rompe la memoización. Pasa primitivos, o estabiliza
+            referencias con useMemo/useCallback.
           </p>
         ),
       },
@@ -166,7 +175,8 @@ export default function App() {
         heading: "Cuándo no la quieres",
         body: (
           <p>
-            Si el componente es trivial o sus props cambian en casi todos los renders, comparar es más caro que renderizar. Reserva memo para subárboles caros o listas largas.
+            Si el componente es trivial o sus props cambian en casi todos los renders, comparar es
+            más caro que renderizar. Reserva memo para subárboles caros o listas largas.
           </p>
         ),
       },
