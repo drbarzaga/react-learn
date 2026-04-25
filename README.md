@@ -52,7 +52,7 @@ For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issue
 ## All Thanks To Our Contributors
 
 <a href="https://github.com/drbarzaga/react-dojo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" alt="Contributors" />
+  <img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" />
 </a>
 
 ---
