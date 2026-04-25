@@ -265,6 +265,25 @@ hr { border:0; border-top:1px solid ${t.line}; margin:14px 0; }
 `
 }
 
+function TerminalIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <polyline points="4 17 10 11 4 5" />
+      <line x1="12" y1="19" x2="20" y2="19" />
+    </svg>
+  )
+}
+
 // Updates only /styles.css when app theme changes — without resetting user code
 function ThemeSync({ appTheme }: { appTheme: Theme }) {
   const { sandpack } = useSandpack()
@@ -302,6 +321,7 @@ export function Playground({
   const { editorTheme } = useEditorTheme()
 
   const [maximized, setMaximized] = useState(false)
+  const [consoleOpen, setConsoleOpen] = useState(showConsole)
   const [windowHeight, setWindowHeight] = useState(0)
   const editorHeight = maximized && windowHeight > 0 ? windowHeight - 48 - 40 - 64 : height
 
@@ -371,9 +391,33 @@ export function Playground({
             <SandpackPreview
               showOpenInCodeSandbox={false}
               style={{ height: editorHeight, flex: "35 35 0%" }}
+              actionsChildren={
+                <button
+                  onClick={() => setConsoleOpen((v) => !v)}
+                  title={consoleOpen ? "Cerrar terminal" : "Abrir terminal"}
+                  type="button"
+                  style={{
+                    appearance: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 28,
+                    height: 28,
+                    padding: 0,
+                    cursor: "pointer",
+                    border: "1px solid var(--sp-colors-surface3)",
+                    borderRadius: 9999,
+                    backgroundColor: "var(--sp-colors-surface2)",
+                    color: consoleOpen ? "var(--sp-colors-accent)" : "var(--sp-colors-clickable)",
+                    transition: "color 0.15s",
+                  }}
+                >
+                  <TerminalIcon />
+                </button>
+              }
             />
           </SandpackLayout>
-          {showConsole && <SandpackConsole style={{ height: 200 }} />}
+          {consoleOpen && <SandpackConsole style={{ height: 200 }} />}
         </SandpackProvider>
       </div>
     </div>

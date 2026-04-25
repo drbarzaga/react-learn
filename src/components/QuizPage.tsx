@@ -41,57 +41,57 @@ function clearSession(id: string) {
   localStorage.removeItem(sessionKey(id))
 }
 
+const DEFAULT_SESSION: QuizSession = { currentIndex: 0, selected: null, score: 0, finished: false }
+
 export function QuizPage({ quiz }: QuizPageProps) {
   const router = useRouter()
-  const initial = loadSession(quiz.id)
   const [browsing, setBrowsing] = useState(true)
-  const [hasProgress, setHasProgress] = useState(
-    initial.currentIndex > 0 || initial.selected !== null || initial.finished
-  )
-  const [currentIndex, setCurrentIndex] = useState(initial.currentIndex)
-  const [selected, setSelected] = useState<number | null>(initial.selected)
-  const [score, setScore] = useState(initial.score)
-  const [finished, setFinished] = useState(initial.finished)
+  const [session, setSession] = useState<QuizSession>(DEFAULT_SESSION)
+  const wasFinishedOnMount = useRef(false)
 
-  const wasFinishedOnMount = useRef(initial.finished)
+  useEffect(() => {
+    const saved = loadSession(quiz.id)
+    wasFinishedOnMount.current = saved.finished
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSession(saved)
+  }, [quiz.id])
 
   const { saveQuizScore } = useProgress()
+  const { currentIndex, selected, score, finished } = session
+  const hasProgress = currentIndex > 0 || selected !== null || finished
   const question = quiz.questions[currentIndex]
   const total = quiz.questions.length
   const answered = selected !== null
 
   useEffect(() => {
-    saveSession(quiz.id, { currentIndex, selected, score, finished })
-  }, [quiz.id, currentIndex, selected, score, finished])
+    saveSession(quiz.id, session)
+  }, [quiz.id, session])
 
   function handleSelect(index: number) {
     if (answered) return
-    setSelected(index)
-    if (index === question.correctIndex) setScore((s) => s + 1)
+    setSession((prev) => ({
+      ...prev,
+      selected: index,
+      score: index === question.correctIndex ? prev.score + 1 : prev.score,
+    }))
   }
 
   function handleNext() {
     if (currentIndex < total - 1) {
-      setCurrentIndex((i) => i + 1)
-      setSelected(null)
+      setSession((prev) => ({ ...prev, currentIndex: prev.currentIndex + 1, selected: null }))
     } else {
-      setFinished(true)
+      setSession((prev) => ({ ...prev, finished: true }))
     }
   }
 
   function handleRestart() {
     clearSession(quiz.id)
-    setCurrentIndex(0)
-    setSelected(null)
-    setScore(0)
-    setFinished(false)
-    setHasProgress(false)
+    setSession(DEFAULT_SESSION)
     setBrowsing(true)
   }
 
   function startQuiz() {
-    setCurrentIndex(0)
-    setSelected(null)
+    setSession((prev) => ({ ...prev, currentIndex: 0, selected: null }))
     setBrowsing(false)
   }
 

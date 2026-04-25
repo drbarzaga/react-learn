@@ -36,7 +36,12 @@ function getInitial(): EditorThemeId {
 }
 
 export function EditorThemeProvider({ children }: { children: ReactNode }) {
-  const [editorTheme, setEditorThemeState] = useState<EditorThemeId>(getInitial)
+  const [editorTheme, setEditorThemeState] = useState<EditorThemeId>("auto")
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setEditorThemeState(getInitial())
+  }, [])
 
   const setEditorTheme = useCallback((t: EditorThemeId) => {
     setEditorThemeState(t)

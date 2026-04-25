@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 
 const DEFAULT_ROUTE = ""
 
-function readHash() {
-  if (typeof window === "undefined") return DEFAULT_ROUTE
-  const raw = window.location.hash.slice(1).trim()
-  return raw || DEFAULT_ROUTE
+function subscribe(cb: () => void) {
+  window.addEventListener("hashchange", cb)
+  return () => window.removeEventListener("hashchange", cb)
 }
 
 export function useHashRoute() {
-  const [route, setRoute] = useState(readHash)
-  useEffect(() => {
-    const onChange = () => setRoute(readHash())
-    window.addEventListener("hashchange", onChange)
-    return () => window.removeEventListener("hashchange", onChange)
-  }, [])
-  return route
+  return useSyncExternalStore(
+    subscribe,
+    () => window.location.hash.slice(1).trim() || DEFAULT_ROUTE,
+    () => DEFAULT_ROUTE
+  )
 }
 
 export function navigate(id: string) {
