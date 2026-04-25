@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 .next/
 tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo

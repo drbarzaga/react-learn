@@ -6,10 +6,13 @@ export interface QuizQuestion {
   explanation: string
 }
 
+export type QuizDifficulty = "basic" | "intermediate" | "advanced"
+
 export interface Quiz {
   id: string
   label: string
   description: string
+  difficulty: QuizDifficulty
   questions: QuizQuestion[]
 }
 
@@ -357,24 +360,28 @@ export const allQuizzes: Quiz[] = [
     id: "fundamentos",
     label: "Fundamentos",
     description: "State, props, Virtual DOM y las bases de React",
+    difficulty: "basic",
     questions: fundamentosQuestions,
   },
   {
     id: "hooks",
     label: "Hooks",
     description: "useEffect, useMemo, useCallback y el modelo mental correcto",
+    difficulty: "intermediate",
     questions: hooksQuestions,
   },
   {
     id: "patrones",
     label: "Patrones",
     description: "HOC, Render Props, Controlled components y composición",
+    difficulty: "intermediate",
     questions: patronesQuestions,
   },
   {
     id: "avanzado",
     label: "Avanzado",
     description: "Concurrent React, Server Components, React 19 y rendimiento profundo",
+    difficulty: "advanced",
     questions: avanzadoQuestions,
   },
 ]

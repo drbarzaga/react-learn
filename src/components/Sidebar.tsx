@@ -17,7 +17,7 @@ import { Sidebar as ShadcnSidebar, SidebarContent } from "@/components/ui/sideba
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { allConcepts, categories, conceptIndex } from "@/content/concepts"
 import { allExercises, type Difficulty } from "@/content/exercises"
-import { allQuizzes } from "@/content/quiz"
+import { allQuizzes, type QuizDifficulty } from "@/content/quiz"
 import { useProgress } from "@/hooks/useProgress"
 
 type IconC = ComponentType<{ className?: string; strokeWidth?: number }>
@@ -69,6 +69,12 @@ const difficultyDot: Record<Difficulty, string> = {
   basic: "bg-emerald-400/80",
   intermediate: "bg-amber-400/80",
   advanced: "bg-rose-400/80",
+}
+
+const difficultyLabel: Record<Difficulty, string> = {
+  basic: "Básico",
+  intermediate: "Intermedio",
+  advanced: "Avanzado",
 }
 
 function SectionLabel({ children, ring }: { children: React.ReactNode; ring?: React.ReactNode }) {
@@ -136,12 +142,18 @@ export function Sidebar() {
   const activeDifficulty = activeExId
     ? (allExercises.find((e) => e.id === activeExId)?.difficulty ?? null)
     : null
+  const activeQuizDifficulty = isQuizRoute
+    ? (allQuizzes.find((q) => `quiz/${q.id}` === current)?.difficulty ?? null)
+    : null
 
   const [openCats, setOpenCats] = useState<Set<string>>(
     () => new Set(activeCatId ? [activeCatId] : [])
   )
   const [openLevels, setOpenLevels] = useState<Set<string>>(
     () => new Set(activeDifficulty ? [activeDifficulty] : [])
+  )
+  const [openQuizLevels, setOpenQuizLevels] = useState<Set<string>>(
+    () => new Set(activeQuizDifficulty ? [activeQuizDifficulty] : [])
   )
 
   useEffect(() => {
@@ -160,6 +172,15 @@ export function Sidebar() {
     }
   }, [activeDifficulty])
 
+  useEffect(() => {
+    if (activeQuizDifficulty) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOpenQuizLevels((prev) =>
+        prev.has(activeQuizDifficulty) ? prev : new Set([...prev, activeQuizDifficulty])
+      )
+    }
+  }, [activeQuizDifficulty])
+
   const toggle = (id: string) =>
     setOpenCats((prev) => {
       const next = new Set(prev)
@@ -170,6 +191,14 @@ export function Sidebar() {
 
   const toggleLevel = (level: string) =>
     setOpenLevels((prev) => {
+      const next = new Set(prev)
+      if (next.has(level)) next.delete(level)
+      else next.add(level)
+      return next
+    })
+
+  const toggleQuizLevel = (level: string) =>
+    setOpenQuizLevels((prev) => {
       const next = new Set(prev)
       if (next.has(level)) next.delete(level)
       else next.add(level)
@@ -301,16 +330,16 @@ export function Sidebar() {
               const exs = allExercises.filter((e) => e.difficulty === level)
               if (!exs.length) return null
               return (
-                <div key={level} className="mt-4 first:mt-1">
+                <div key={level}>
                   <button
                     onClick={() => toggleLevel(level)}
-                    className="group/level hover:bg-sidebar-accent/60 flex w-full items-center gap-2 rounded-md px-3 pt-[2px] pb-1 transition-colors"
+                    className="group/level hover:bg-sidebar-accent/60 flex w-full items-center gap-2 rounded-md px-3 py-[6px] transition-colors"
                   >
                     <span
                       className={`h-[6px] w-[6px] shrink-0 rounded-full ${difficultyDot[level]}`}
                     />
                     <span className="text-sidebar-foreground/50 group-hover/level:text-sidebar-foreground/70 flex-1 text-left font-mono text-[11px] font-semibold tracking-[0.1em] uppercase">
-                      {level}
+                      {difficultyLabel[level]}
                     </span>
                     <ChevronDown
                       className="text-sidebar-foreground/20 h-[10px] w-[10px] shrink-0 transition-transform duration-200"
@@ -372,16 +401,51 @@ export function Sidebar() {
           </SectionLabel>
 
           <div className="px-2">
-            {allQuizzes.map((quiz) => {
-              const active = current === `quiz/${quiz.id}`
+            {(["basic", "intermediate", "advanced"] as const).map((level) => {
+              const quizzes = allQuizzes.filter((q) => q.difficulty === level)
+              if (!quizzes.length) return null
               return (
-                <NavItem
-                  key={quiz.id}
-                  label={quiz.label}
-                  active={active}
-                  onClick={() => router.push(`/quiz/${quiz.id}`)}
-                  badge={quiz.questions.length}
-                />
+                <div key={level}>
+                  <button
+                    onClick={() => toggleQuizLevel(level)}
+                    className="group/qlevel hover:bg-sidebar-accent/60 flex w-full items-center gap-2 rounded-md px-3 py-[6px] transition-colors"
+                  >
+                    <span
+                      className={`h-[6px] w-[6px] shrink-0 rounded-full ${difficultyDot[level as QuizDifficulty]}`}
+                    />
+                    <span className="text-sidebar-foreground/50 group-hover/qlevel:text-sidebar-foreground/70 flex-1 text-left font-mono text-[11px] font-semibold tracking-[0.1em] uppercase">
+                      {difficultyLabel[level as QuizDifficulty]}
+                    </span>
+                    <ChevronDown
+                      className="text-sidebar-foreground/20 h-[10px] w-[10px] shrink-0 transition-transform duration-200"
+                      style={{
+                        transform: openQuizLevels.has(level) ? "rotate(0deg)" : "rotate(-90deg)",
+                      }}
+                    />
+                  </button>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateRows: openQuizLevels.has(level) ? "1fr" : "0fr",
+                      transition: "grid-template-rows 180ms ease",
+                    }}
+                  >
+                    <div style={{ overflow: "hidden", minHeight: 0 }}>
+                      {quizzes.map((quiz) => {
+                        const active = current === `quiz/${quiz.id}`
+                        return (
+                          <NavItem
+                            key={quiz.id}
+                            label={quiz.label}
+                            active={active}
+                            onClick={() => router.push(`/quiz/${quiz.id}`)}
+                            badge={quiz.questions.length}
+                          />
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
               )
             })}
           </div>
