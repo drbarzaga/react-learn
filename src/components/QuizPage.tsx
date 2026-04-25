@@ -3,7 +3,10 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import confetti from "canvas-confetti"
+import { Timer } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Switch } from "@/components/ui/switch"
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import type { Quiz } from "@/content/quiz"
 import { allQuizzes } from "@/content/quiz"
 import { useProgress } from "@/hooks/useProgress"
@@ -12,7 +15,7 @@ interface QuizPageProps {
   quiz: Quiz
 }
 
-type AnswerState = "unanswered" | "correct" | "wrong"
+type AnswerState = "unanswered" | "correct" | "wrong" | "revealed"
 
 interface QuizSession {
   currentIndex: number
@@ -43,11 +46,41 @@ function clearSession(id: string) {
 
 const DEFAULT_SESSION: QuizSession = { currentIndex: 0, selected: null, score: 0, finished: false }
 
+function playTick(ctx: AudioContext, urgent: boolean) {
+  try {
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+    osc.type = "sine"
+    osc.frequency.value = urgent ? 1050 : 720
+    const now = ctx.currentTime
+    gain.gain.setValueAtTime(urgent ? 0.35 : 0.2, now)
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.055)
+    osc.start(now)
+    osc.stop(now + 0.055)
+  } catch {}
+}
+
 export function QuizPage({ quiz }: QuizPageProps) {
   const router = useRouter()
   const [browsing, setBrowsing] = useState(true)
   const [session, setSession] = useState<QuizSession>(DEFAULT_SESSION)
   const wasFinishedOnMount = useRef(false)
+
+  const [timerEnabled, setTimerEnabled] = useState(false)
+  const [timerSeconds, setTimerSeconds] = useState<number>(() => {
+    if (typeof window === "undefined") return 30
+    try {
+      return Number(localStorage.getItem("react-dojo-timer-secs")) || 30
+    } catch {
+      return 30
+    }
+  })
+  const [timeLeft, setTimeLeft] = useState(timerSeconds)
+  const [timerPickerOpen, setTimerPickerOpen] = useState(false)
+  const timerPickerRef = useRef<HTMLDivElement>(null)
+  const audioCtxRef = useRef<AudioContext | null>(null)
 
   useEffect(() => {
     const saved = loadSession(quiz.id)
@@ -55,6 +88,43 @@ export function QuizPage({ quiz }: QuizPageProps) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(saved)
   }, [quiz.id])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("react-dojo-timer-secs", String(timerSeconds))
+    } catch {}
+  }, [timerSeconds])
+
+  // Reset countdown on each new question or when entering the quiz
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTimeLeft(timerSeconds)
+  }, [session.currentIndex, timerSeconds, browsing])
+
+  // Countdown tick
+  useEffect(() => {
+    if (!timerEnabled || session.selected !== null || browsing || session.finished) return
+    if (timeLeft <= 0) return
+
+    const id = setTimeout(() => {
+      if (audioCtxRef.current) {
+        if (audioCtxRef.current.state === "suspended") audioCtxRef.current.resume()
+        playTick(audioCtxRef.current, timeLeft <= 6)
+      }
+      if (timeLeft === 1) {
+        // Fire timed-out from inside the real timeout so it never runs
+        // on a stale timeLeft=0 leftover from the previous question
+        setSession((prev) => {
+          if (prev.selected !== null) return prev
+          return { ...prev, selected: -1 }
+        })
+        setTimeLeft(0)
+      } else {
+        setTimeLeft((t) => t - 1)
+      }
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [timeLeft, timerEnabled, session.selected, session.finished, browsing])
 
   const { saveQuizScore } = useProgress()
   const { currentIndex, selected, score, finished } = session
@@ -93,6 +163,11 @@ export function QuizPage({ quiz }: QuizPageProps) {
   function startQuiz() {
     setSession((prev) => ({ ...prev, currentIndex: 0, selected: null }))
     setBrowsing(false)
+    try {
+      if (!audioCtxRef.current || audioCtxRef.current.state === "closed") {
+        audioCtxRef.current = new AudioContext()
+      }
+    } catch {}
   }
 
   useEffect(() => {
@@ -118,9 +193,79 @@ export function QuizPage({ quiz }: QuizPageProps) {
               {quiz.label}
             </h1>
           </div>
-          <span className="mt-1 shrink-0 font-mono text-[13px] text-[var(--color-fg-dim)] tabular-nums">
-            {total} preguntas
-          </span>
+          <div className="mt-1 flex shrink-0 items-center gap-3">
+            {/* Timer picker */}
+            <div
+              ref={timerPickerRef}
+              className="relative"
+              onBlur={(e) => {
+                if (!timerPickerRef.current?.contains(e.relatedTarget as Node)) {
+                  setTimerPickerOpen(false)
+                }
+              }}
+            >
+              <TooltipProvider delay={400}>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <button
+                        type="button"
+                        onClick={() => setTimerPickerOpen((v) => !v)}
+                        aria-label="Configurar cronómetro"
+                        className={cn(
+                          "grid h-7 w-7 place-items-center rounded-md transition-colors",
+                          timerEnabled
+                            ? "bg-[var(--color-bg-hover)] text-[var(--color-fg)]"
+                            : "text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
+                        )}
+                      >
+                        <Timer className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                      </button>
+                    }
+                  />
+                  <TooltipContent side="bottom">
+                    {timerEnabled ? "¡Modo presión activo!" : "Activar modo presión"}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              {timerPickerOpen && (
+                <div className="absolute top-full right-0 z-50 mt-2 w-52 rounded-lg border border-[var(--color-line)] bg-[var(--color-bg-raise)] p-3 shadow-lg">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[12px] text-[var(--color-fg-muted)]">Cronómetro</span>
+                    <Switch
+                      checked={timerEnabled}
+                      onCheckedChange={setTimerEnabled}
+                      aria-label="Activar cronómetro"
+                    />
+                  </div>
+                  {timerEnabled && (
+                    <div className="mt-3 flex gap-1.5">
+                      {([15, 30, 60] as const).map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => setTimerSeconds(s)}
+                          className={cn(
+                            "flex-1 rounded-md border py-1 font-mono text-[12px] transition-colors",
+                            timerSeconds === s
+                              ? "border-[var(--color-fg)] text-[var(--color-fg)]"
+                              : "border-[var(--color-line)] text-[var(--color-fg-muted)] hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+                          )}
+                        >
+                          {s}s
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <span className="font-mono text-[13px] text-[var(--color-fg-dim)] tabular-nums">
+              {total} preguntas
+            </span>
+          </div>
         </div>
 
         <p className="mt-4 mb-10 text-[15px] leading-[1.6] text-[var(--color-fg-muted)]">
@@ -287,6 +432,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
           Quiz · {quiz.label}
         </span>
         <div className="flex items-center gap-4">
+          {timerEnabled && !answered && <TimerRing timeLeft={timeLeft} total={timerSeconds} />}
           <button
             onClick={() => setBrowsing(true)}
             className="text-[11px] text-[var(--color-fg-faint)] transition-colors hover:text-[var(--color-fg-muted)]"
@@ -315,7 +461,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
         {question.options.map((option, i) => {
           let state: AnswerState = "unanswered"
           if (answered) {
-            if (i === question.correctIndex) state = "correct"
+            if (i === question.correctIndex) state = selected === -1 ? "revealed" : "correct"
             else if (i === selected) state = "wrong"
           }
 
@@ -331,6 +477,8 @@ export function QuizPage({ quiz }: QuizPageProps) {
                     "border-[var(--color-line)] text-[var(--color-fg-muted)] hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]",
                   state === "correct" &&
                     "border-green-500/40 bg-green-500/5 text-[var(--color-fg)]",
+                  state === "revealed" &&
+                    "border-amber-500/40 bg-amber-500/5 text-[var(--color-fg-muted)]",
                   state === "wrong" &&
                     "border-red-500/40 bg-red-500/5 text-[var(--color-fg-muted)]",
                   state === "unanswered" &&
@@ -351,7 +499,11 @@ export function QuizPage({ quiz }: QuizPageProps) {
       {answered && (
         <div className="mt-6 rounded-lg border border-[var(--color-line)] bg-[var(--color-bg-raise)] px-5 py-4">
           <div className="mb-1 text-[11px] tracking-[0.12em] text-[var(--color-fg-dim)] uppercase">
-            {selected === question.correctIndex ? "Correcto" : "Incorrecto"}
+            {selected === -1
+              ? "Tiempo agotado"
+              : selected === question.correctIndex
+                ? "Correcto"
+                : "Incorrecto"}
           </div>
           <p className="text-[14px] leading-[1.65] text-[var(--color-fg-muted)]">
             {question.explanation}
@@ -368,6 +520,45 @@ export function QuizPage({ quiz }: QuizPageProps) {
         </button>
       )}
     </article>
+  )
+}
+
+function TimerRing({ timeLeft, total }: { timeLeft: number; total: number }) {
+  const r = 8
+  const circ = 2 * Math.PI * r
+  const pct = total === 0 ? 0 : timeLeft / total
+  const offset = circ * (1 - pct)
+  const color = pct > 0.5 ? "#34d399" : pct > 0.25 ? "#fbbf24" : "#f87171"
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <svg width="20" height="20" viewBox="0 0 20 20" className="-rotate-90" aria-hidden>
+        <circle
+          cx="10"
+          cy="10"
+          r={r}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="text-[var(--color-line)]"
+        />
+        <circle
+          cx="10"
+          cy="10"
+          r={r}
+          fill="none"
+          stroke={color}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          style={{ transition: "stroke-dashoffset 1s linear, stroke 0.3s ease" }}
+        />
+      </svg>
+      <span className="font-mono text-[12px] tabular-nums" style={{ color }}>
+        {timeLeft}s
+      </span>
+    </div>
   )
 }
 
