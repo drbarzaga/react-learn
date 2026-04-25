@@ -1,6 +1,14 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  type ReactNode,
+} from "react"
 
 const STORAGE_KEY = "react-dojo-progress"
 
@@ -42,7 +50,12 @@ interface ProgressCtx {
 const Ctx = createContext<ProgressCtx | null>(null)
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
-  const [data, setData] = useState<ProgressData>(load)
+  const [data, setData] = useState<ProgressData>(empty)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setData(load())
+  }, [])
 
   const markConceptVisited = useCallback((id: string) => {
     setData((prev) => {

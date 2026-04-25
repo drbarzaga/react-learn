@@ -17,11 +17,16 @@ function readCache(key: string): number | null {
 }
 
 export function useGitHubStars(repo: string) {
-  const [stars, setStars] = useState<number | null>(() => readCache(`gh-stars:${repo}`))
+  const [stars, setStars] = useState<number | null>(null)
 
   useEffect(() => {
     const key = `gh-stars:${repo}`
-    if (readCache(key) !== null) return
+    const cached = readCache(key)
+    if (cached !== null) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setStars(cached)
+      return
+    }
 
     fetch(`https://api.github.com/repos/${repo}`)
       .then((r) => r.json())
