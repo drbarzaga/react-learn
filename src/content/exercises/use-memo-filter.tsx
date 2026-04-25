@@ -5,7 +5,7 @@ export const useMemoFilter: Exercise = {
   label: "use memo filter",
   title: "Derivar listas con useMemo",
   lede: "Una lista de tareas se filtra y ordena con cada render — incluso cuando solo cambia un contador no relacionado. Usa useMemo para que el cálculo pesado solo se repita cuando cambien query u order.",
-  difficulty: "básico",
+  difficulty: "basic",
   objectives: [
     "Envuelve el filtrado + ordenamiento en useMemo",
     "Declara [query, order] como dependencias",

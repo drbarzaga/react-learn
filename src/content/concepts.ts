@@ -23,37 +23,37 @@ export const conceptIndex: Record<string, Concept> = Object.fromEntries(
 
 export const categories: Category[] = [
   {
-    id: "estado",
+    id: "state",
     kicker: "I",
     title: "Estado y memoria",
     conceptIds: ["useState", "useReducer", "useRef", "useOptimistic", "useActionState"],
   },
   {
-    id: "sincronizacion",
+    id: "sync",
     kicker: "II",
     title: "Sincronización",
     conceptIds: ["useEffect", "useLayoutEffect", "useEffectEvent"],
   },
   {
-    id: "rendimiento",
+    id: "performance",
     kicker: "III",
     title: "Rendimiento",
     conceptIds: ["useMemo", "useCallback", "memo"],
   },
   {
-    id: "concurrencia",
+    id: "concurrency",
     kicker: "IV",
     title: "Concurrencia",
     conceptIds: ["useTransition", "useDeferredValue", "Suspense", "use"],
   },
   {
-    id: "composicion",
+    id: "composition",
     kicker: "V",
     title: "Composición",
     conceptIds: ["useContext", "createPortal", "lazy", "useId", "useFormStatus"],
   },
   {
-    id: "entrevistas",
+    id: "interviews",
     kicker: "VI",
     title: "Entrevistas",
     conceptIds: [

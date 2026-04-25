@@ -5,7 +5,7 @@ export const useCallbackExercise: Exercise = {
   label: "use callback",
   title: "Memorizar callbacks",
   lede: "Un padre con un contador pasa onDelete a una lista memoizada. Cada render recrea onDelete, invalidando memo en todos los items. Usa useCallback para que los items dejen de re-renderizar cuando solo cambia el contador.",
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   objectives: [
     "Envuelve onDelete en useCallback con las dependencias correctas",
     "Verifica en la consola que los items ya no se re-renderizan al incrementar el contador",

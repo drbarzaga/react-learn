@@ -1,6 +1,6 @@
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
 
-export type Difficulty = "básico" | "intermedio" | "avanzado"
+export type Difficulty = "basic" | "intermediate" | "advanced"
 
 export interface Exercise {
   id: string

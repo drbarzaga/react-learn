@@ -5,7 +5,7 @@ export const stopwatch: Exercise = {
   label: "stopwatch",
   title: "Cronómetro con intervalos",
   lede: "Construye un cronómetro que puedes iniciar, pausar y resetear. Usa una ref para guardar el id del intervalo — no estado — y limpia siempre en el cleanup para que el timer no quede vivo al desmontar.",
-  difficulty: "básico",
+  difficulty: "basic",
   objectives: [
     "Estado elapsed (ms) que empieza en 0",
     "Estado running (boolean) que controla el botón start/pause",

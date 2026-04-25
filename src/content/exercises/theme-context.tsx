@@ -13,7 +13,7 @@ export const themeContext: Exercise = {
     "Un componente <Toolbar/> que lee setTheme — NO debe re-renderizarse al cambiar tick del padre",
     "Un componente <Card/> memoizado que lee theme",
   ],
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   hint: "memo + useMemo trabajan juntos aquí: Toolbar envuelto en memo solo evita renders si sus props (el value del ctx vía useTheme) son estables. Si el value cambia por referencia, memo no sirve.",
   relatedConcepts: ["useContext", "useMemo", "memo"],
   starter: {

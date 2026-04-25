@@ -5,7 +5,7 @@ export const transitionTabs: Exercise = {
   label: "transition tabs",
   title: "Tabs sin bloqueo",
   lede: "Tres tabs, una renderiza 4000 items y bloquea el hilo. Al hacer click la UI se congela y la tab activa no responde hasta que termina. Usa useTransition para mantener los clicks responsivos y mostrar un indicador de carga.",
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   objectives: [
     "Envuelve setActiveTab en startTransition",
     "Usa isPending para atenuar visualmente la tab que está cargando",

@@ -5,7 +5,7 @@ export const todoList: Exercise = {
   label: "todo list",
   title: "Lista con useReducer",
   lede: "Lista de tareas con tres acciones: agregar, alternar done, y eliminar. Implementa el reducer manteniendo las reglas de pureza: nada de mutación, cada transición devuelve un estado nuevo.",
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   objectives: [
     "Define un reducer con acciones: 'add', 'toggle', 'remove'",
     "Estado inicial: { items: [], next: 1 } — next sirve como ID incremental",

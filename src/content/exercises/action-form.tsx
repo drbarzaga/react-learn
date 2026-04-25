@@ -7,7 +7,7 @@ export const actionForm: Exercise = {
   label: "action form",
   title: "Formulario con useActionState",
   lede: "Un formulario de registro que hoy usa useState + onSubmit. Migra la lógica a useActionState para centralizar estado, validaciones y pending en un solo lugar — sin useState extra.",
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   objectives: [
     "Crea una función action async que recibe (prevState, formData)",
     "Valida username (mín 3 chars) y email (debe contener @) y retorna { error }",

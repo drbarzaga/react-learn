@@ -5,7 +5,7 @@ export const formReducer: Exercise = {
   label: "form reducer",
   title: "Formulario con validación",
   lede: "Un formulario de registro con tres campos (email, password, confirmación). Modela los cambios y la validación con useReducer: cada acción nombrada, reducer puro, errores derivados en cada transición.",
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   objectives: [
     "Reducer con acciones 'change', 'blur', 'submit'",
     "Estado: { values, touched, submitted } — errors se derivan en render, no se guardan",

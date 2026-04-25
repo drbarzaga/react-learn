@@ -5,7 +5,7 @@ export const debouncedSearch: Exercise = {
   label: "debounced search",
   title: "Búsqueda sin bloqueo",
   lede: "Un input filtra una lista de 6.000 ítems. Tal cual está, el input se siente lento porque el filtrado pesa. Usa useDeferredValue para que el input responda al instante y la lista se actualice con prioridad baja.",
-  difficulty: "avanzado",
+  difficulty: "advanced",
   objectives: [
     "Mantén el input controlado (setState urgente)",
     "Crea un valor diferido a partir de query",

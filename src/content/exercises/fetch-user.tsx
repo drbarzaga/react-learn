@@ -5,7 +5,7 @@ export const fetchUser: Exercise = {
   label: "fetch user",
   title: "Fetch con cancelación",
   lede: "Carga datos de un usuario al cambiar de id. El truco: si el usuario hace click rápido entre varios ids, la respuesta vieja puede llegar después de la nueva y sobrescribir la UI. Cancela con AbortController.",
-  difficulty: "intermedio",
+  difficulty: "intermediate",
   objectives: [
     "useEffect que dispara un fetch cada vez que cambia userId",
     "Crea un AbortController y pásalo al fetch como { signal }",

@@ -5,7 +5,7 @@ export const counter: Exercise = {
   label: "counter",
   title: "Contador clásico",
   lede: "Un contador con controles para incrementar, decrementar y resetear. El botón '+3' debe sumar tres unidades incluso si se presiona varias veces seguido — usa actualización funcional.",
-  difficulty: "básico",
+  difficulty: "basic",
   objectives: [
     "Declara un estado count que empiece en 0",
     "Botón '+' suma 1, botón '−' resta 1",

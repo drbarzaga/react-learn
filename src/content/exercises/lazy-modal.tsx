@@ -5,7 +5,7 @@ export const lazyModal: Exercise = {
   label: "lazy modal",
   title: "Modal cargado on-demand",
   lede: "Un modal con un editor pesado. No queremos descargar su código hasta que el usuario lo abra. Usa lazy() para diferir el import y Suspense para mostrar feedback mientras llega.",
-  difficulty: "avanzado",
+  difficulty: "advanced",
   objectives: [
     "Implementa EditorModal en archivo aparte (export default)",
     "En App usa lazy(() => import('./EditorModal.js'))",

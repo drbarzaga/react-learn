@@ -7,7 +7,7 @@ export const optimisticLike: Exercise = {
   label: "optimistic like",
   title: "Like optimista",
   lede: "Un post con contador de likes. Al hacer click, el like tarda 800ms en guardarse y la UI no responde hasta que termina. Implementa useOptimistic para que el contador suba al instante y revierta si falla.",
-  difficulty: "básico",
+  difficulty: "basic",
   objectives: [
     "Crea el estado optimista con useOptimistic a partir de likes",
     "Al hacer click, llama addOptimistic(1) antes de la petición async",

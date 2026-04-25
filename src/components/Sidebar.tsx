@@ -57,18 +57,18 @@ function SectionRing({ value, total }: { value: number; total: number }) {
 }
 
 const categoryIcon: Record<string, IconC> = {
-  estado: Boxes,
-  sincronizacion: RefreshCw,
-  rendimiento: Gauge,
-  concurrencia: Hourglass,
-  composicion: Component,
-  entrevistas: MessageCircleQuestion,
+  state: Boxes,
+  sync: RefreshCw,
+  performance: Gauge,
+  concurrency: Hourglass,
+  composition: Component,
+  interviews: MessageCircleQuestion,
 }
 
 const difficultyDot: Record<Difficulty, string> = {
-  básico: "bg-emerald-400/80",
-  intermedio: "bg-amber-400/80",
-  avanzado: "bg-rose-400/80",
+  basic: "bg-emerald-400/80",
+  intermediate: "bg-amber-400/80",
+  advanced: "bg-rose-400/80",
 }
 
 function SectionLabel({ children, ring }: { children: React.ReactNode; ring?: React.ReactNode }) {
@@ -297,7 +297,7 @@ export function Sidebar() {
           </SectionLabel>
 
           <div className="px-2">
-            {(["básico", "intermedio", "avanzado"] as const).map((level) => {
+            {(["basic", "intermediate", "advanced"] as const).map((level) => {
               const exs = allExercises.filter((e) => e.difficulty === level)
               if (!exs.length) return null
               return (
