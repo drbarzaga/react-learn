@@ -109,7 +109,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
                   </a>
                 }
               />
-              <TooltipContent>Dar estrella en GitHub</TooltipContent>
+              <TooltipContent>Apoya el proyecto</TooltipContent>
             </Tooltip>
           )}
 
