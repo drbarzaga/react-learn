@@ -133,7 +133,7 @@ body {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
-*:hover {
+*:hover:not(:has(*:hover)) {
   scrollbar-color: var(--color-line-strong) transparent;
 }
 *::-webkit-scrollbar {

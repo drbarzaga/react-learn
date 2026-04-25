@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: {
-    default: "React Dojo",
+    default: "React Dojo - Aprende React de forma sencilla",
     template: "%s — React Dojo",
   },
   description: "Simple way to learn React: read it, edit it, run it.",
