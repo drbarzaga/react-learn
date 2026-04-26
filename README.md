@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/og-image.png" alt="React Dojo" width="600" />
+  <img src="./public/og-image.png" alt="React Dojo" width="800" />
 </p>
 
 <h2 align="center">Simple way to learn React: read, edit, run.</h2>
