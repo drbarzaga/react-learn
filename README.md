@@ -2,35 +2,33 @@
   <img src="./public/og-image.png" alt="React Dojo" width="800" />
 </p>
 
-<h2 align="center">Simple way to learn React: read, edit, run.</h2>
+<p align="center">
+  <strong>Simple way to learn React: read, edit, run.</strong>
+</p>
 
----
-
-React Dojo is an interactive reference for React. Each concept comes with a focused explanation, a live playground where you can edit and run code directly in the browser, and real coding exercises — no shortcuts, just practice.
+<p align="center">
+  React Dojo is an interactive reference for React. Each concept comes with a focused explanation,<br />
+  a live playground where you can edit and run code directly in the browser,<br />
+  and real coding exercises — no shortcuts, just practice.
+</p>
 
 ---
 
 ## Installation
 
 ```bash
-# Clone the repo
 git clone https://github.com/drbarzaga/react-dojo.git
 cd react-dojo
-
-# Install dependencies
 bun install
-
-# Start the dev server
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-# Build for production
-bun run build
+**Production:**
 
-# Start production server
+```bash
+bun run build
 bun start
 ```
 
@@ -42,14 +40,19 @@ Contributions are welcome. If you find a bug or want to add a concept, exercise,
 
 1. Fork the repository
 2. Create a branch: `git checkout -b feat/my-feature`
-3. Make your changes and commit
-4. Open a pull request
+3. Make your changes and run checks before committing:
+   ```bash
+   bun run build
+   bun run lint
+   bun run format
+   ```
+4. Commit and open a pull request
 
 For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issues/new).
 
 ---
 
-## All Thanks To Our Contributors
+## Contributors
 
 <a href="https://github.com/drbarzaga/react-dojo/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" />
@@ -63,8 +66,8 @@ For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issue
   <img src="https://api.star-history.com/svg?repos=drbarzaga/react-dojo&type=Date&theme=dark" alt="Star History Chart" />
 </a>
 
+---
+
 ## License
 
-MIT - created by [Dayan Perez](https://github.com/drbarzaga)
-
----
+MIT · created by [Dayan Perez](https://github.com/drbarzaga)
