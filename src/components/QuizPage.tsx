@@ -126,12 +126,26 @@ export function QuizPage({ quiz }: QuizPageProps) {
     return () => clearTimeout(id)
   }, [timeLeft, timerEnabled, session.selected, session.finished, browsing])
 
-  const { saveQuizScore } = useProgress()
+  const { saveQuizScore, quizScores } = useProgress()
   const { currentIndex, selected, score, finished } = session
   const hasProgress = currentIndex > 0 || selected !== null || finished
   const question = quiz.questions[currentIndex]
   const total = quiz.questions.length
   const answered = selected !== null
+  const pct = total > 0 ? Math.round((score / total) * 100) : 0
+  const bestScore = quizScores[quiz.id]
+  const wasCompleted = bestScore !== undefined
+
+  function restartAndStart() {
+    clearSession(quiz.id)
+    setSession(DEFAULT_SESSION)
+    setBrowsing(false)
+    try {
+      if (!audioCtxRef.current || audioCtxRef.current.state === "closed") {
+        audioCtxRef.current = new AudioContext()
+      }
+    } catch {}
+  }
 
   useEffect(() => {
     saveSession(quiz.id, session)
@@ -189,9 +203,25 @@ export function QuizPage({ quiz }: QuizPageProps) {
             <p className="mb-1 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
               Quiz
             </p>
-            <h1 className="font-mono text-[28px] leading-none font-medium text-[var(--color-fg)]">
-              {quiz.label}
-            </h1>
+            <div className="flex items-center gap-3">
+              <h1 className="font-mono text-[28px] leading-none font-medium text-[var(--color-fg)]">
+                {quiz.label}
+              </h1>
+              {wasCompleted && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-green-500/25 bg-green-500/10 px-2.5 py-1 font-mono text-[11px] text-green-500">
+                  <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden>
+                    <path
+                      d="M1.5 4.5L3.5 6.5L7.5 2.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  Completado · {bestScore}%
+                </span>
+              )}
+            </div>
           </div>
           <div className="mt-1 flex shrink-0 items-center gap-3">
             {/* Timer picker */}
@@ -277,39 +307,75 @@ export function QuizPage({ quiz }: QuizPageProps) {
           {quiz.questions.map((q, i) => (
             <div
               key={q.id}
-              className="flex items-baseline gap-4 rounded-lg border border-[var(--color-line)] bg-[var(--color-bg-raise)] px-5 py-4 text-[14px] leading-[1.55] text-[var(--color-fg-muted)]"
+              className={cn(
+                "flex items-baseline gap-4 rounded-lg border px-5 py-4 text-[14px] leading-[1.55]",
+                wasCompleted
+                  ? "border-green-500/15 bg-green-500/[0.03] text-[var(--color-fg-muted)]"
+                  : "border-[var(--color-line)] bg-[var(--color-bg-raise)] text-[var(--color-fg-muted)]"
+              )}
             >
               <span className="shrink-0 font-mono text-[11px] text-[var(--color-fg-faint)]">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span>{q.question}</span>
+              <span className="flex-1">{q.question}</span>
+              {wasCompleted && (
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className="ml-2 shrink-0 self-center text-green-500/50"
+                  aria-hidden
+                >
+                  <path
+                    d="M2 6L5 9L10 3"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
             </div>
           ))}
         </div>
 
         {/* Actions */}
         <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-[var(--color-line)] pt-8">
-          <button
-            onClick={startQuiz}
-            className="rounded-md bg-[var(--color-fg)] px-5 py-2.5 text-[14px] font-medium text-[var(--color-bg)] transition-opacity hover:opacity-80"
-          >
-            Comenzar →
-          </button>
-          {hasProgress && !finished && (
-            <button
-              onClick={() => setBrowsing(false)}
-              className="rounded-md border border-[var(--color-line)] px-4 py-2.5 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
-            >
-              Continuar donde lo dejé
-            </button>
-          )}
-          {finished && (
-            <button
-              onClick={handleRestart}
-              className="rounded-md border border-[var(--color-line)] px-4 py-2.5 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
-            >
-              Reiniciar
-            </button>
+          {wasCompleted ? (
+            <>
+              <button
+                onClick={restartAndStart}
+                className="rounded-md bg-[var(--color-fg)] px-5 py-2.5 text-[14px] font-medium text-[var(--color-bg)] transition-opacity hover:opacity-80"
+              >
+                Reintentar
+              </button>
+              {finished && (
+                <button
+                  onClick={() => setBrowsing(false)}
+                  className="rounded-md border border-[var(--color-line)] px-4 py-2.5 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+                >
+                  Ver resultado →
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <button
+                onClick={startQuiz}
+                className="rounded-md bg-[var(--color-fg)] px-5 py-2.5 text-[14px] font-medium text-[var(--color-bg)] transition-opacity hover:opacity-80"
+              >
+                Comenzar →
+              </button>
+              {hasProgress && !finished && (
+                <button
+                  onClick={() => setBrowsing(false)}
+                  className="rounded-md border border-[var(--color-line)] px-4 py-2.5 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+                >
+                  Continuar donde lo dejé
+                </button>
+              )}
+            </>
           )}
         </div>
       </article>
@@ -318,7 +384,6 @@ export function QuizPage({ quiz }: QuizPageProps) {
 
   /* ── Finished screen ── */
   if (finished) {
-    const pct = Math.round((score / total) * 100)
     const shareUrl = `https://react-dojo.vercel.app/quiz/${quiz.id}`
     const shareText = `Acabo de completar el quiz "${quiz.label}" en React Dojo con ${score}/${total} (${pct}%) 🎯\nPractica React gratis:`
     const links = {

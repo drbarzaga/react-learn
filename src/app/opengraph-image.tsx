@@ -269,7 +269,7 @@ export default async function Image() {
           {[
             { v: "33", l: "Conceptos" },
             { v: "17", l: "Ejercicios" },
-            { v: "4", l: "Quizzes" },
+            { v: "5", l: "Quizzes" },
           ].map((s, i) => (
             <div key={s.l} style={{ display: "flex", alignItems: "center" }}>
               {i > 0 && (
