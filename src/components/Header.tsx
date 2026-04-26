@@ -2,22 +2,28 @@
 
 import { useRef, useState } from "react"
 import { Search, Star } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useTheme } from "@/hooks/useTheme"
 import { useEditorTheme, EDITOR_THEMES_META, type EditorThemeId } from "@/hooks/useEditorTheme"
 import { useGitHubStars } from "@/hooks/useGitHubStars"
 import { Logo } from "@/components/Logo"
+import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+
 interface HeaderProps {
   onSearchOpen?: () => void
 }
 
 export function Header({ onSearchOpen }: HeaderProps) {
+  const t = useTranslations("Header")
   const { theme, toggle } = useTheme()
   const { editorTheme, setEditorTheme } = useEditorTheme()
   const stars = useGitHubStars("drbarzaga/react-dojo")
   const [pickerOpen, setPickerOpen] = useState(false)
   const pickerRef = useRef<HTMLDivElement>(null)
+  const { href } = useLocaleRouter()
 
   function handlePickerBlur(e: React.FocusEvent) {
     if (!pickerRef.current?.contains(e.relatedTarget as Node)) {
@@ -34,11 +40,10 @@ export function Header({ onSearchOpen }: HeaderProps) {
     <TooltipProvider delay={400}>
       <header className="relative z-20 flex h-12 shrink-0 items-center justify-between border-b border-[var(--color-line)] bg-[var(--color-bg)] px-3 md:px-6">
         <div className="flex items-center gap-2">
-          {/* Hamburger — solo mobile */}
           <SidebarTrigger className="text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)] md:hidden" />
 
           <a
-            href="/"
+            href={href("/")}
             className="flex items-center gap-2 text-[14px] text-[var(--color-fg)] transition-colors hover:text-[var(--color-fg-muted)]"
           >
             <Logo className="h-[28px] w-auto" />
@@ -47,15 +52,16 @@ export function Header({ onSearchOpen }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2 md:gap-3">
-          {/* Búsqueda móvil — solo ícono */}
+          {/* Mobile search — icon only */}
           <button
             type="button"
             onClick={onSearchOpen}
-            aria-label="Buscar"
+            aria-label={t("search")}
             className="grid h-7 w-7 place-items-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)] sm:hidden"
           >
             <Search className="h-[15px] w-[15px]" strokeWidth={1.8} />
           </button>
+
           {/* Search trigger */}
           <button
             type="button"
@@ -71,7 +77,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
             }
           >
             <Search className="h-[12px] w-[12px] shrink-0" strokeWidth={1.8} />
-            <span className="flex-1 text-left font-mono">Buscar…</span>
+            <span className="flex-1 text-left font-mono">{t("searchPlaceholder")}</span>
             <kbd
               className="shrink-0 rounded border px-1.5 py-0.5 font-mono text-[10px] leading-4"
               style={
@@ -109,7 +115,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
                   </a>
                 }
               />
-              <TooltipContent>Apoya el proyecto</TooltipContent>
+              <TooltipContent>{t("supportProject")}</TooltipContent>
             </Tooltip>
           )}
 
@@ -121,14 +127,14 @@ export function Header({ onSearchOpen }: HeaderProps) {
                   <button
                     type="button"
                     onClick={() => setPickerOpen((v) => !v)}
-                    aria-label="Tema del editor"
+                    aria-label={t("editorTheme")}
                     className="grid h-7 w-7 cursor-pointer place-items-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
                   >
                     <PaletteIcon className="h-[15px] w-[15px]" />
                   </button>
                 }
               />
-              <TooltipContent>Tema del editor</TooltipContent>
+              <TooltipContent>{t("editorTheme")}</TooltipContent>
             </Tooltip>
 
             {pickerOpen && (
@@ -177,7 +183,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
                 <button
                   type="button"
                   onClick={toggle}
-                  aria-label={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+                  aria-label={theme === "dark" ? t("switchToLight") : t("switchToDark")}
                   className="grid h-7 w-7 cursor-pointer place-items-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
                 >
                   {theme === "dark" ? (
@@ -188,8 +194,10 @@ export function Header({ onSearchOpen }: HeaderProps) {
                 </button>
               }
             />
-            <TooltipContent>{theme === "dark" ? "Modo claro" : "Modo oscuro"}</TooltipContent>
+            <TooltipContent>{theme === "dark" ? t("modeLight") : t("modeDark")}</TooltipContent>
           </Tooltip>
+
+          <LocaleSwitcher />
         </div>
       </header>
     </TooltipProvider>

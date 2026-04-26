@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
 import { BookOpen, Brain, Dumbbell } from "lucide-react"
+import { useTranslations } from "next-intl"
 import type { ComponentType } from "react"
 import {
   CommandDialog,
@@ -13,9 +13,8 @@ import {
   CommandList,
   CommandShortcut,
 } from "@/components/ui/command"
-import { allConcepts } from "@/content/concepts"
-import { allExercises } from "@/content/exercises"
-import { allQuizzes } from "@/content/quiz"
+import { useContent } from "@/components/ContentProvider"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 type ResultKind = "concept" | "exercise" | "quiz"
 
@@ -27,51 +26,56 @@ interface SearchResult {
   href: string
 }
 
-const INDEX: SearchResult[] = [
-  ...allConcepts.map((c) => ({
-    id: c.id,
-    kind: "concept" as const,
-    label: c.label,
-    subtitle: c.title,
-    href: c.id,
-  })),
-  ...allExercises.map((e) => ({
-    id: e.id,
-    kind: "exercise" as const,
-    label: e.label,
-    subtitle: e.lede,
-    href: `learn/${e.id}`,
-  })),
-  ...allQuizzes.map((q) => ({
-    id: q.id,
-    kind: "quiz" as const,
-    label: q.label,
-    subtitle: q.description,
-    href: `quiz/${q.id}`,
-  })),
-]
-
-const KIND_META: Record<
-  ResultKind,
-  {
-    groupLabel: string
-    tag: string
-    Icon: ComponentType<{ className?: string; strokeWidth?: number }>
-  }
-> = {
-  concept: { groupLabel: "Conceptos", tag: "Concepto", Icon: BookOpen },
-  exercise: { groupLabel: "Práctica", tag: "Práctica", Icon: Dumbbell },
-  quiz: { groupLabel: "Quiz", tag: "Quiz", Icon: Brain },
-}
-
 interface SearchModalProps {
   open: boolean
   onClose: () => void
 }
 
 export function SearchModal({ open, onClose }: SearchModalProps) {
-  const router = useRouter()
+  const t = useTranslations("SearchModal")
+  const { push } = useLocaleRouter()
+  const { allConcepts, allExercises, allQuizzes } = useContent()
   const [query, setQuery] = useState("")
+
+  const KIND_META: Record<
+    ResultKind,
+    {
+      groupLabel: string
+      tag: string
+      Icon: ComponentType<{ className?: string; strokeWidth?: number }>
+    }
+  > = {
+    concept: { groupLabel: t("conceptsGroup"), tag: t("conceptTag"), Icon: BookOpen },
+    exercise: { groupLabel: t("practiceGroup"), tag: t("practiceTag"), Icon: Dumbbell },
+    quiz: { groupLabel: t("quizGroup"), tag: t("quizTag"), Icon: Brain },
+  }
+
+  const INDEX: SearchResult[] = useMemo(
+    () => [
+      ...allConcepts.map((c) => ({
+        id: c.id,
+        kind: "concept" as const,
+        label: c.label,
+        subtitle: c.title,
+        href: c.id,
+      })),
+      ...allExercises.map((e) => ({
+        id: e.id,
+        kind: "exercise" as const,
+        label: e.label,
+        subtitle: e.lede,
+        href: `learn/${e.id}`,
+      })),
+      ...allQuizzes.map((q) => ({
+        id: q.id,
+        kind: "quiz" as const,
+        label: q.label,
+        subtitle: q.description,
+        href: `quiz/${q.id}`,
+      })),
+    ],
+    [allConcepts, allExercises, allQuizzes]
+  )
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -87,7 +91,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
     return INDEX.filter(
       (r) => r.label.toLowerCase().includes(q) || r.subtitle.toLowerCase().includes(q)
     ).slice(0, 24)
-  }, [query])
+  }, [query, INDEX])
 
   const grouped = useMemo(() => {
     const map: Partial<Record<ResultKind, SearchResult[]>> = {}
@@ -101,7 +105,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
   }, [results])
 
   function handleSelect(href: string) {
-    router.push(`/${href}`)
+    push(`/${href}`)
     onClose()
   }
 
@@ -109,17 +113,13 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
     <CommandDialog
       open={open}
       onOpenChange={(v) => !v && onClose()}
-      title="Buscar"
-      description="Busca conceptos, ejercicios y quizzes"
+      title={t("title")}
+      description={t("description")}
     >
-      <CommandInput
-        placeholder="Buscar conceptos, ejercicios, quizzes…"
-        value={query}
-        onValueChange={setQuery}
-      />
+      <CommandInput placeholder={t("placeholder")} value={query} onValueChange={setQuery} />
 
       <CommandList className="max-h-[400px] py-1.5">
-        <CommandEmpty>Sin resultados para &ldquo;{query}&rdquo;</CommandEmpty>
+        <CommandEmpty>{t("empty", { query })}</CommandEmpty>
 
         {grouped.map(({ kind, items }) => {
           const { groupLabel, tag, Icon } = KIND_META[kind]
@@ -151,9 +151,9 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       <div className="border-border/40 flex items-center gap-4 border-t px-4 py-2">
         {(
           [
-            ["↑↓", "navegar"],
-            ["↵", "abrir"],
-            ["Esc", "cerrar"],
+            ["↑↓", t("navigate")],
+            ["↵", t("open")],
+            ["Esc", t("close")],
           ] as const
         ).map(([key, label]) => (
           <span

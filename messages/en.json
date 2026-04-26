@@ -1,0 +1,126 @@
+{
+  "WelcomePage": {
+    "tagline": "React is learned by practicing. Every concept has an explanation, an interactive playground, and real coding exercises — no shortcuts.",
+    "concepts": "{count} concepts",
+    "exercises": "{count} exercises",
+    "categories": "{count} categories",
+    "start": "Start",
+    "practice": "Practice"
+  },
+  "Header": {
+    "search": "Search",
+    "searchPlaceholder": "Search…",
+    "supportProject": "Support the project",
+    "editorTheme": "Editor theme",
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme",
+    "modeLight": "Light mode",
+    "modeDark": "Dark mode"
+  },
+  "Sidebar": {
+    "concepts": "Concepts",
+    "practice": "Practice",
+    "quiz": "Quiz",
+    "conceptsVisited": "{visited} / {total} concepts visited",
+    "exercisesCompleted": "{completed} / {total} exercises completed",
+    "quizzesCompleted": "{attempted} / {total} quizzes completed",
+    "basic": "Basic",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "Footer": {
+    "madeWith": "Made with",
+    "by": "by",
+    "reportBug": "Report bug",
+    "contribute": "Contribute!",
+    "concepts": "{count} concepts",
+    "exercises": "{count} exercises",
+    "quizzes": "{count} quizzes"
+  },
+  "SearchModal": {
+    "title": "Search",
+    "description": "Search concepts, exercises and quizzes",
+    "placeholder": "Search concepts, exercises, quizzes…",
+    "empty": "No results for \"{query}\"",
+    "conceptsGroup": "Concepts",
+    "practiceGroup": "Practice",
+    "quizGroup": "Quiz",
+    "conceptTag": "Concept",
+    "practiceTag": "Practice",
+    "quizTag": "Quiz",
+    "navigate": "navigate",
+    "open": "open",
+    "close": "close"
+  },
+  "ConceptPage": {
+    "prev": "← previous",
+    "next": "next →",
+    "pitfalls": "Common pitfalls"
+  },
+  "ExercisePage": {
+    "practice": "practice",
+    "completed": "Completed",
+    "markCompleted": "Mark as completed",
+    "objectives": "Objectives",
+    "yourCode": "your code",
+    "solution": "solution",
+    "backToStarter": "← back to starter",
+    "viewSolution": "view solution →",
+    "hint": "Hint",
+    "relatedConcepts": "Related concepts",
+    "prev": "← previous",
+    "next": "next →",
+    "difficultyBasic": "basic",
+    "difficultyIntermediate": "intermediate",
+    "difficultyAdvanced": "advanced"
+  },
+  "QuizPage": {
+    "quiz": "Quiz",
+    "completed": "Completed · {pct}%",
+    "questions": "{count} questions",
+    "configureTimer": "Configure timer",
+    "pressureModeActive": "Pressure mode active!",
+    "activatePressure": "Activate pressure mode",
+    "timer": "Timer",
+    "retry": "Retry",
+    "viewResult": "View result →",
+    "start": "Start →",
+    "continue": "Continue where I left off",
+    "result": "Result",
+    "excellent": "Excellent — you're ready for the interview.",
+    "good": "Good, but review the topics you missed.",
+    "keepPracticing": "Keep practicing — go back to the concepts.",
+    "shareResult": "Share result",
+    "shareOnX": "Share on X",
+    "shareOnLinkedIn": "Share on LinkedIn",
+    "shareOnWhatsApp": "Share on WhatsApp",
+    "viewQuestions": "View questions",
+    "timedOut": "Time's up",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "next": "Next →",
+    "viewResultFinal": "View result",
+    "shareText": "I just completed the \"{label}\" quiz on React Dojo with {score}/{total} ({pct}%) 🎯\nPractice React for free:"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The address you visited doesn't correspond to any available content.",
+    "back": "back to home"
+  },
+  "Playground": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "minimizeLabel": "Minimize editor",
+    "maximizeLabel": "Maximize editor",
+    "closeTerminal": "Close terminal",
+    "openTerminal": "Open terminal"
+  },
+  "LocaleSwitcher": {
+    "label": "Language"
+  },
+  "Metadata": {
+    "titleDefault": "React Dojo - Learn React the easy way",
+    "titleTemplate": "%s — React Dojo",
+    "description": "Interactive platform to master React: clear concepts, real exercises, and quizzes in the browser."
+  }
+}

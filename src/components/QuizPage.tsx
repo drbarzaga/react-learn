@@ -1,18 +1,19 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { useRouter } from "next/navigation"
 import confetti from "canvas-confetti"
 import { Timer } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Switch } from "@/components/ui/switch"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import type { Quiz } from "@/content/quiz"
-import { allQuizzes } from "@/content/quiz"
 import { useProgress } from "@/hooks/useProgress"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 interface QuizPageProps {
   quiz: Quiz
+  allQuizzes: Quiz[]
 }
 
 type AnswerState = "unanswered" | "correct" | "wrong" | "revealed"
@@ -62,8 +63,9 @@ function playTick(ctx: AudioContext, urgent: boolean) {
   } catch {}
 }
 
-export function QuizPage({ quiz }: QuizPageProps) {
-  const router = useRouter()
+export function QuizPage({ quiz, allQuizzes }: QuizPageProps) {
+  const t = useTranslations("QuizPage")
+  const { push } = useLocaleRouter()
   const [browsing, setBrowsing] = useState(true)
   const [session, setSession] = useState<QuizSession>(DEFAULT_SESSION)
   const wasFinishedOnMount = useRef(false)
@@ -95,13 +97,11 @@ export function QuizPage({ quiz }: QuizPageProps) {
     } catch {}
   }, [timerSeconds])
 
-  // Reset countdown on each new question or when entering the quiz
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTimeLeft(timerSeconds)
   }, [session.currentIndex, timerSeconds, browsing])
 
-  // Countdown tick
   useEffect(() => {
     if (!timerEnabled || session.selected !== null || browsing || session.finished) return
     if (timeLeft <= 0) return
@@ -112,8 +112,6 @@ export function QuizPage({ quiz }: QuizPageProps) {
         playTick(audioCtxRef.current, timeLeft <= 6)
       }
       if (timeLeft === 1) {
-        // Fire timed-out from inside the real timeout so it never runs
-        // on a stale timeLeft=0 leftover from the previous question
         setSession((prev) => {
           if (prev.selected !== null) return prev
           return { ...prev, selected: -1 }
@@ -197,11 +195,10 @@ export function QuizPage({ quiz }: QuizPageProps) {
   if (browsing) {
     return (
       <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
-        {/* Header */}
         <div className="mb-2 flex items-start justify-between gap-4">
           <div>
             <p className="mb-1 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
-              Quiz
+              {t("quiz")}
             </p>
             <div className="flex items-center gap-3">
               <h1 className="font-mono text-[28px] leading-none font-medium text-[var(--color-fg)]">
@@ -218,13 +215,12 @@ export function QuizPage({ quiz }: QuizPageProps) {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  Completado · {bestScore}%
+                  {t("completed", { pct: bestScore })}
                 </span>
               )}
             </div>
           </div>
           <div className="mt-1 flex shrink-0 items-center gap-3">
-            {/* Timer picker */}
             <div
               ref={timerPickerRef}
               className="relative"
@@ -241,7 +237,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
                       <button
                         type="button"
                         onClick={() => setTimerPickerOpen((v) => !v)}
-                        aria-label="Configurar cronómetro"
+                        aria-label={t("configureTimer")}
                         className={cn(
                           "grid h-7 w-7 place-items-center rounded-md transition-colors",
                           timerEnabled
@@ -254,7 +250,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
                     }
                   />
                   <TooltipContent side="bottom">
-                    {timerEnabled ? "¡Modo presión activo!" : "Activar modo presión"}
+                    {timerEnabled ? t("pressureModeActive") : t("activatePressure")}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -262,11 +258,11 @@ export function QuizPage({ quiz }: QuizPageProps) {
               {timerPickerOpen && (
                 <div className="absolute top-full right-0 z-50 mt-2 w-52 rounded-lg border border-[var(--color-line)] bg-[var(--color-bg-raise)] p-3 shadow-lg">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-[12px] text-[var(--color-fg-muted)]">Cronómetro</span>
+                    <span className="text-[12px] text-[var(--color-fg-muted)]">{t("timer")}</span>
                     <Switch
                       checked={timerEnabled}
                       onCheckedChange={setTimerEnabled}
-                      aria-label="Activar cronómetro"
+                      aria-label={t("timer")}
                     />
                   </div>
                   {timerEnabled && (
@@ -293,7 +289,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
             </div>
 
             <span className="font-mono text-[13px] text-[var(--color-fg-dim)] tabular-nums">
-              {total} preguntas
+              {t("questions", { count: total })}
             </span>
           </div>
         </div>
@@ -302,7 +298,6 @@ export function QuizPage({ quiz }: QuizPageProps) {
           {quiz.description}
         </p>
 
-        {/* Question list — read-only preview */}
         <div className="space-y-2">
           {quiz.questions.map((q, i) => (
             <div
@@ -340,7 +335,6 @@ export function QuizPage({ quiz }: QuizPageProps) {
           ))}
         </div>
 
-        {/* Actions */}
         <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-[var(--color-line)] pt-8">
           {wasCompleted ? (
             <>
@@ -348,14 +342,14 @@ export function QuizPage({ quiz }: QuizPageProps) {
                 onClick={restartAndStart}
                 className="rounded-md bg-[var(--color-fg)] px-5 py-2.5 text-[14px] font-medium text-[var(--color-bg)] transition-opacity hover:opacity-80"
               >
-                Reintentar
+                {t("retry")}
               </button>
               {finished && (
                 <button
                   onClick={() => setBrowsing(false)}
                   className="rounded-md border border-[var(--color-line)] px-4 py-2.5 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                 >
-                  Ver resultado →
+                  {t("viewResult")}
                 </button>
               )}
             </>
@@ -365,14 +359,14 @@ export function QuizPage({ quiz }: QuizPageProps) {
                 onClick={startQuiz}
                 className="rounded-md bg-[var(--color-fg)] px-5 py-2.5 text-[14px] font-medium text-[var(--color-bg)] transition-opacity hover:opacity-80"
               >
-                Comenzar →
+                {t("start")}
               </button>
               {hasProgress && !finished && (
                 <button
                   onClick={() => setBrowsing(false)}
                   className="rounded-md border border-[var(--color-line)] px-4 py-2.5 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                 >
-                  Continuar donde lo dejé
+                  {t("continue")}
                 </button>
               )}
             </>
@@ -385,7 +379,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
   /* ── Finished screen ── */
   if (finished) {
     const shareUrl = `https://react-dojo.vercel.app/quiz/${quiz.id}`
-    const shareText = `Acabo de completar el quiz "${quiz.label}" en React Dojo con ${score}/${total} (${pct}%) 🎯\nPractica React gratis:`
+    const shareText = t("shareText", { label: quiz.label, score, total, pct })
     const links = {
       x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
       linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(`Quiz: ${quiz.label}`)}&summary=${encodeURIComponent(`${shareText} ${shareUrl}`)}&source=ReactDojo`,
@@ -395,10 +389,10 @@ export function QuizPage({ quiz }: QuizPageProps) {
     return (
       <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
         <div className="mb-4 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
-          Quiz · {quiz.label}
+          {t("quiz")} · {quiz.label}
         </div>
         <h1 className="font-mono text-[32px] leading-none font-medium text-[var(--color-fg)]">
-          Resultado
+          {t("result")}
         </h1>
 
         <div className="mt-12 rounded-xl border border-[var(--color-line)] p-8 text-center">
@@ -406,11 +400,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
             {score}/{total}
           </div>
           <div className="mt-3 text-[15px] text-[var(--color-fg-muted)]">
-            {pct >= 80
-              ? "Excelente — estás listo para la entrevista."
-              : pct >= 50
-                ? "Bien, pero repasa los temas que fallaste."
-                : "Sigue practicando — vuelve a los conceptos."}
+            {pct >= 80 ? t("excellent") : pct >= 50 ? t("good") : t("keepPracticing")}
           </div>
 
           <div className="mt-8 h-2 w-full overflow-hidden rounded-full bg-[var(--color-line)]">
@@ -424,13 +414,13 @@ export function QuizPage({ quiz }: QuizPageProps) {
           </div>
 
           <div className="mt-8 border-t border-[var(--color-line)] pt-6">
-            <p className="mb-3 text-[12px] text-[var(--color-fg-dim)]">Compartir resultado</p>
+            <p className="mb-3 text-[12px] text-[var(--color-fg-dim)]">{t("shareResult")}</p>
             <div className="flex items-center justify-center gap-2">
               <a
                 href={links.x}
                 target="_blank"
                 rel="noreferrer"
-                title="Compartir en X"
+                title={t("shareOnX")}
                 className="flex items-center gap-2 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-[12px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
               >
                 <XIcon />
@@ -440,7 +430,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
                 href={links.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                title="Compartir en LinkedIn"
+                title={t("shareOnLinkedIn")}
                 className="flex items-center gap-2 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-[12px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
               >
                 <LinkedInIcon />
@@ -450,7 +440,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
                 href={links.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                title="Compartir en WhatsApp"
+                title={t("shareOnWhatsApp")}
                 className="flex items-center gap-2 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-[12px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
               >
                 <WhatsAppIcon />
@@ -465,20 +455,20 @@ export function QuizPage({ quiz }: QuizPageProps) {
             onClick={() => setBrowsing(true)}
             className="rounded-md border border-[var(--color-line)] px-4 py-2 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
           >
-            Ver preguntas
+            {t("viewQuestions")}
           </button>
           <button
             onClick={handleRestart}
             className="rounded-md border border-[var(--color-line)] px-4 py-2 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
           >
-            Reintentar
+            {t("retry")}
           </button>
           {allQuizzes
             .filter((q) => q.id !== quiz.id)
             .map((q) => (
               <button
                 key={q.id}
-                onClick={() => router.push(`/quiz/${q.id}`)}
+                onClick={() => push(`/quiz/${q.id}`)}
                 className="rounded-md border border-[var(--color-line)] px-4 py-2 text-[14px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
               >
                 {q.label}
@@ -494,7 +484,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
     <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
       <div className="mb-4 flex items-center justify-between">
         <span className="text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
-          Quiz · {quiz.label}
+          {t("quiz")} · {quiz.label}
         </span>
         <div className="flex items-center gap-4">
           {timerEnabled && !answered && <TimerRing timeLeft={timeLeft} total={timerSeconds} />}
@@ -502,7 +492,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
             onClick={() => setBrowsing(true)}
             className="text-[11px] text-[var(--color-fg-faint)] transition-colors hover:text-[var(--color-fg-muted)]"
           >
-            Ver preguntas
+            {t("viewQuestions")}
           </button>
           <span className="font-mono text-[12px] text-[var(--color-fg-dim)]">
             {currentIndex + 1} / {total}
@@ -510,7 +500,6 @@ export function QuizPage({ quiz }: QuizPageProps) {
         </div>
       </div>
 
-      {/* Progress bar */}
       <div className="mb-10 h-[2px] w-full overflow-hidden rounded-full bg-[var(--color-line)]">
         <div
           className="h-full rounded-full bg-[var(--color-fg)] transition-all duration-300"
@@ -565,10 +554,10 @@ export function QuizPage({ quiz }: QuizPageProps) {
         <div className="mt-6 rounded-lg border border-[var(--color-line)] bg-[var(--color-bg-raise)] px-5 py-4">
           <div className="mb-1 text-[11px] tracking-[0.12em] text-[var(--color-fg-dim)] uppercase">
             {selected === -1
-              ? "Tiempo agotado"
+              ? t("timedOut")
               : selected === question.correctIndex
-                ? "Correcto"
-                : "Incorrecto"}
+                ? t("correct")
+                : t("incorrect")}
           </div>
           <p className="text-[14px] leading-[1.65] text-[var(--color-fg-muted)]">
             {question.explanation}
@@ -581,7 +570,7 @@ export function QuizPage({ quiz }: QuizPageProps) {
           onClick={handleNext}
           className="mt-6 rounded-md bg-[var(--color-fg)] px-5 py-2.5 text-[14px] font-medium text-[var(--color-bg)] transition-opacity hover:opacity-80"
         >
-          {currentIndex < total - 1 ? "Siguiente →" : "Ver resultado"}
+          {currentIndex < total - 1 ? t("next") : t("viewResultFinal")}
         </button>
       )}
     </article>

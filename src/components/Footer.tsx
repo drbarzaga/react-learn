@@ -2,10 +2,9 @@
 
 import React from "react"
 import { Heart, Bug } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { Separator } from "@/components/ui/separator"
-import { allConcepts } from "@/content/concepts"
-import { allExercises } from "@/content/exercises"
-import { allQuizzes } from "@/content/quiz"
+import { useContent } from "@/components/ContentProvider"
 
 function ReactIcon({ className }: { className?: string }) {
   return (
@@ -33,22 +32,26 @@ function GitHubIcon({ className }: { className?: string }) {
   )
 }
 
-const links = [
-  { label: "react.dev", href: "https://react.dev", Icon: ReactIcon },
-  {
-    label: "Reportar error",
-    href: "https://github.com/drbarzaga/react-dojo/issues/new",
-    Icon: Bug,
-  },
-]
-
 export function Footer() {
+  const t = useTranslations("Footer")
+  const { allConcepts, allExercises, allQuizzes } = useContent()
+
+  const links = [
+    { label: "react.dev", href: "https://react.dev", Icon: ReactIcon },
+    {
+      label: t("reportBug"),
+      href: "https://github.com/drbarzaga/react-dojo/issues/new",
+      Icon: Bug,
+    },
+  ]
+
   return (
     <footer className="shrink-0 border-t border-[var(--color-line)] px-4 py-3 md:px-6">
-      {/* Mobile: stack verticalmente */}
+      {/* Mobile */}
       <div className="flex flex-col gap-2 text-[11px] text-[var(--color-fg-faint)] sm:hidden">
         <span className="flex items-center justify-center gap-1 select-none">
-          Hecho con <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" /> por{" "}
+          {t("madeWith")} <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" />{" "}
+          {t("by")}{" "}
           <a
             href="https://github.com/drbarzaga"
             target="_blank"
@@ -78,25 +81,24 @@ export function Footer() {
             className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase"
           >
             <GitHubIcon className="h-[12px] w-[12px]" />
-            ¡Contribuye!
+            {t("contribute")}
           </a>
         </div>
       </div>
 
-      {/* Desktop: grid de 3 columnas iguales */}
+      {/* Desktop */}
       <div className="hidden items-center text-[11px] text-[var(--color-fg-faint)] sm:grid sm:grid-cols-3">
-        {/* Izquierda: stats */}
         <div className="flex items-center gap-3">
-          <span className="tabular">{allConcepts.length} conceptos</span>
+          <span className="tabular">{t("concepts", { count: allConcepts.length })}</span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span className="tabular">{allExercises.length} ejercicios</span>
+          <span className="tabular">{t("exercises", { count: allExercises.length })}</span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span className="tabular">{allQuizzes.length} quizzes</span>
+          <span className="tabular">{t("quizzes", { count: allQuizzes.length })}</span>
         </div>
 
-        {/* Centro: atribución */}
         <span className="flex items-center justify-center gap-1 select-none">
-          Hecho con <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" /> por{" "}
+          {t("madeWith")} <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" />{" "}
+          {t("by")}{" "}
           <a
             href="https://github.com/drbarzaga"
             target="_blank"
@@ -107,30 +109,19 @@ export function Footer() {
           </a>
         </span>
 
-        {/* Derecha: links */}
         <div className="flex items-center justify-end gap-2">
-          {links.map(
-            ({
-              label,
-              href,
-              Icon,
-            }: {
-              label: string
-              href: string
-              Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>
-            }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
-              >
-                <Icon className="h-[12px] w-[12px]" strokeWidth={1.6} />
-                {label}
-              </a>
-            )
-          )}
+          {links.map(({ label, href, Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+            >
+              <Icon className="h-[12px] w-[12px]" strokeWidth={1.6} />
+              {label}
+            </a>
+          ))}
           <a
             href="https://github.com/drbarzaga/react-dojo"
             target="_blank"
@@ -138,7 +129,7 @@ export function Footer() {
             className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase transition-colors hover:border-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
           >
             <GitHubIcon className="h-[12px] w-[12px]" />
-            ¡Contribuye!
+            {t("contribute")}
           </a>
         </div>
       </div>

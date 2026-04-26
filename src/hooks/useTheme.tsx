@@ -20,12 +20,7 @@ function getInitial(): Theme {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark")
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTheme(getInitial())
-  }, [])
+  const [theme, setTheme] = useState<Theme>(getInitial)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme

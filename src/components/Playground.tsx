@@ -12,6 +12,7 @@ import {
   type SandpackPredefinedTemplate,
   type SandpackThemeProp,
 } from "@codesandbox/sandpack-react"
+import { useTranslations } from "next-intl"
 import { useTheme, type Theme } from "@/hooks/useTheme"
 import { useEditorTheme, type EditorThemeId } from "@/hooks/useEditorTheme"
 
@@ -317,6 +318,7 @@ export function Playground({
   height = 650,
   dependencies,
 }: PlaygroundProps) {
+  const t = useTranslations("Playground")
   const { theme: appTheme } = useTheme()
   const { editorTheme } = useEditorTheme()
 
@@ -364,9 +366,9 @@ export function Playground({
         <button
           onClick={() => setMaximized((v) => !v)}
           className="flex cursor-pointer items-center gap-1.5 text-[11px] text-[var(--color-fg-dim)] transition-colors hover:text-[var(--color-fg)]"
-          aria-label={maximized ? "Minimizar editor" : "Maximizar editor"}
+          aria-label={maximized ? t("minimizeLabel") : t("maximizeLabel")}
         >
-          <span className="capitalize">{maximized ? "Minimizar" : "Maximizar"}</span>
+          <span className="capitalize">{maximized ? t("minimize") : t("maximize")}</span>
           <span aria-hidden className="text-[13px] leading-none">
             {maximized ? "⤡" : "⤢"}
           </span>
@@ -394,7 +396,7 @@ export function Playground({
               actionsChildren={
                 <button
                   onClick={() => setConsoleOpen((v) => !v)}
-                  title={consoleOpen ? "Cerrar terminal" : "Abrir terminal"}
+                  title={consoleOpen ? t("closeTerminal") : t("openTerminal")}
                   type="button"
                   style={{
                     appearance: "none",

@@ -12,13 +12,15 @@ import {
 } from "lucide-react"
 import type { ComponentType } from "react"
 import { useState, useEffect } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { Sidebar as ShadcnSidebar, SidebarContent } from "@/components/ui/sidebar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { allConcepts, categories, conceptIndex } from "@/content/concepts"
-import { allExercises, type Difficulty } from "@/content/exercises"
-import { allQuizzes, type QuizDifficulty } from "@/content/quiz"
+import { useContent } from "@/components/ContentProvider"
+import { type Difficulty } from "@/content/exercises"
+import { type QuizDifficulty } from "@/content/quiz"
 import { useProgress } from "@/hooks/useProgress"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 type IconC = ComponentType<{ className?: string; strokeWidth?: number }>
 
@@ -71,12 +73,6 @@ const difficultyDot: Record<Difficulty, string> = {
   advanced: "bg-rose-400/80",
 }
 
-const difficultyLabel: Record<Difficulty, string> = {
-  basic: "Básico",
-  intermediate: "Intermedio",
-  advanced: "Avanzado",
-}
-
 function SectionLabel({ children, ring }: { children: React.ReactNode; ring?: React.ReactNode }) {
   return (
     <div className="flex items-center px-4 pt-4 pb-1 first:pt-2">
@@ -123,13 +119,30 @@ function NavItem({
 }
 
 export function Sidebar() {
+  const t = useTranslations("Sidebar")
   const pathname = usePathname()
-  const router = useRouter()
-  const current = pathname === "/" ? "" : pathname.slice(1)
+  const { locale, push } = useLocaleRouter()
+  const { allConcepts, categories, conceptIndex, allExercises, allQuizzes } = useContent()
+  const { visitedConcepts, completedExercises, quizScores } = useProgress()
+
+  const difficultyLabel: Record<Difficulty, string> = {
+    basic: t("basic"),
+    intermediate: t("intermediate"),
+    advanced: t("advanced"),
+  }
+
+  // Strip locale prefix so active-state comparisons work under /en/... and /es/...
+  const rawPath = pathname.slice(1)
+  const current =
+    rawPath === locale
+      ? ""
+      : rawPath.startsWith(`${locale}/`)
+        ? rawPath.slice(locale.length + 1)
+        : rawPath
+
   const isExerciseRoute = current.startsWith("learn/")
   const isQuizRoute = current.startsWith("quiz/")
   const activeExId = isExerciseRoute ? current.slice(6) : null
-  const { visitedConcepts, completedExercises, quizScores } = useProgress()
 
   const totalConcepts = allConcepts.length
   const visitedCount = visitedConcepts.size
@@ -212,7 +225,7 @@ export function Sidebar() {
     >
       <TooltipProvider delay={300}>
         <SidebarContent className="gap-0 py-1">
-          {/* ── CONCEPTOS ─────────────────────── */}
+          {/* ── CONCEPTS ─────────────────────── */}
           <SectionLabel
             ring={
               <Tooltip>
@@ -220,12 +233,12 @@ export function Sidebar() {
                   <SectionRing value={visitedCount} total={totalConcepts} />
                 </TooltipTrigger>
                 <TooltipContent side="right">
-                  {visitedCount} / {totalConcepts} conceptos visitados
+                  {t("conceptsVisited", { visited: visitedCount, total: totalConcepts })}
                 </TooltipContent>
               </Tooltip>
             }
           >
-            Conceptos
+            {t("concepts")}
           </SectionLabel>
 
           <div className="px-2">
@@ -237,7 +250,6 @@ export function Sidebar() {
 
               return (
                 <div key={cat.id}>
-                  {/* Category header */}
                   <button
                     onClick={() => toggle(cat.id)}
                     className="group/cat hover:bg-sidebar-accent/60 flex w-full items-center gap-2 rounded-md px-3 py-[6px] transition-colors"
@@ -268,7 +280,6 @@ export function Sidebar() {
                     />
                   </button>
 
-                  {/* Animated concept list */}
                   <div
                     style={{
                       display: "grid",
@@ -288,7 +299,7 @@ export function Sidebar() {
                               key={id}
                               label={concept.label}
                               active={active}
-                              onClick={() => router.push(`/${id}`)}
+                              onClick={() => push(`/${id}`)}
                               indicator={
                                 seen ? (
                                   <Check
@@ -308,7 +319,7 @@ export function Sidebar() {
             })}
           </div>
 
-          {/* ── PRÁCTICA ──────────────────────── */}
+          {/* ── PRACTICE ──────────────────────── */}
           <div className="bg-sidebar-border mx-3 mt-3 h-px" />
           <SectionLabel
             ring={
@@ -317,12 +328,12 @@ export function Sidebar() {
                   <SectionRing value={completedCount} total={totalExercises} />
                 </TooltipTrigger>
                 <TooltipContent side="right">
-                  {completedCount} / {totalExercises} ejercicios completados
+                  {t("exercisesCompleted", { completed: completedCount, total: totalExercises })}
                 </TooltipContent>
               </Tooltip>
             }
           >
-            Práctica
+            {t("practice")}
           </SectionLabel>
 
           <div className="px-2">
@@ -364,7 +375,7 @@ export function Sidebar() {
                             key={ex.id}
                             label={ex.label}
                             active={active}
-                            onClick={() => router.push(`/learn/${ex.id}`)}
+                            onClick={() => push(`/learn/${ex.id}`)}
                             indicator={
                               completed ? (
                                 <Check
@@ -392,12 +403,12 @@ export function Sidebar() {
                   <SectionRing value={attemptedQuizzes} total={totalQuizzes} />
                 </TooltipTrigger>
                 <TooltipContent side="right">
-                  {attemptedQuizzes} / {totalQuizzes} quizzes completados
+                  {t("quizzesCompleted", { attempted: attemptedQuizzes, total: totalQuizzes })}
                 </TooltipContent>
               </Tooltip>
             }
           >
-            Quiz
+            {t("quiz")}
           </SectionLabel>
 
           <div className="px-2">
@@ -438,7 +449,7 @@ export function Sidebar() {
                             key={quiz.id}
                             label={quiz.label}
                             active={active}
-                            onClick={() => router.push(`/quiz/${quiz.id}`)}
+                            onClick={() => push(`/quiz/${quiz.id}`)}
                             badge={quiz.questions.length}
                           />
                         )

@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { TriangleAlert } from "lucide-react"
 import { type Concept } from "@/content/concepts"
 import { useProgress } from "@/hooks/useProgress"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 
@@ -15,7 +16,8 @@ interface ConceptPageProps {
 }
 
 export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
-  const router = useRouter()
+  const t = useTranslations("ConceptPage")
+  const { push, href } = useLocaleRouter()
   const { markConceptVisited } = useProgress()
   const bottomRef = useRef<HTMLElement>(null)
 
@@ -34,7 +36,6 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
 
   return (
     <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
-      {/* Kicker */}
       <div className="mb-4">
         <Badge
           variant="outline"
@@ -44,20 +45,16 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
         </Badge>
       </div>
 
-      {/* Hook name */}
       <h1 className="font-mono text-[32px] leading-none font-medium text-[var(--color-fg)]">
         {concept.label}
       </h1>
 
-      {/* Tagline */}
       <p className="mt-3 text-[15px] font-medium text-[var(--color-fg-muted)]">{concept.title}</p>
 
-      {/* Lede */}
       <p className="mt-6 text-[17px] leading-[1.65] text-[var(--color-fg-muted)]">{concept.lede}</p>
 
       <Separator className="mt-12 bg-[var(--color-line)]" />
 
-      {/* Sections */}
       <div className="mt-10 space-y-10">
         {concept.sections.map((s, i) => (
           <section key={i}>
@@ -71,15 +68,13 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
         ))}
       </div>
 
-      {/* Playground */}
       <div className="-mx-8 mt-12 md:-mx-12 lg:-mx-24">{concept.playground}</div>
 
-      {/* Pitfalls */}
       {concept.pitfalls && concept.pitfalls.length > 0 && (
         <section className="mt-14">
           <h2 className="mb-4 flex items-center gap-1.5 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
             <TriangleAlert className="h-[13px] w-[13px] text-yellow-400" strokeWidth={2} />
-            Tropiezos comunes
+            {t("pitfalls")}
           </h2>
           <ul className="overflow-hidden rounded-lg border border-[var(--color-line)]">
             {concept.pitfalls.map((p, i) => (
@@ -97,21 +92,20 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
         </section>
       )}
 
-      {/* Footer nav */}
       <nav
         ref={bottomRef}
         className="mt-24 flex items-start justify-between gap-8 border-t border-[var(--color-line)] pt-8 text-[14px]"
       >
         {prev ? (
           <a
-            href={`/${prev.id}`}
+            href={href(`/${prev.id}`)}
             onClick={(e) => {
               e.preventDefault()
-              router.push(`/${prev.id}`)
+              push(`/${prev.id}`)
             }}
             className="group flex flex-col gap-1 text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
-            <span className="text-[12px] text-[var(--color-fg-dim)]">← anterior</span>
+            <span className="text-[12px] text-[var(--color-fg-dim)]">{t("prev")}</span>
             <span className="font-mono text-[var(--color-fg)]">{prev.label}</span>
           </a>
         ) : (
@@ -119,14 +113,14 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
         )}
         {next ? (
           <a
-            href={`/${next.id}`}
+            href={href(`/${next.id}`)}
             onClick={(e) => {
               e.preventDefault()
-              router.push(`/${next.id}`)
+              push(`/${next.id}`)
             }}
             className="group flex flex-col items-end gap-1 text-right text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
-            <span className="text-[12px] text-[var(--color-fg-dim)]">siguiente →</span>
+            <span className="text-[12px] text-[var(--color-fg-dim)]">{t("next")}</span>
             <span className="font-mono text-[var(--color-fg)]">{next.label}</span>
           </a>
         ) : (

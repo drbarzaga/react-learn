@@ -1,12 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Lightbulb, BookOpen, CheckCircle2, Circle } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { Playground } from "@/components/Playground"
 import { cn } from "@/lib/utils"
-import type { Exercise } from "@/content/exercises"
+import type { Exercise, Difficulty } from "@/content/exercises"
 import { useProgress } from "@/hooks/useProgress"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 interface ExercisePageProps {
   exercise: Exercise
@@ -14,27 +15,36 @@ interface ExercisePageProps {
   next?: Exercise
 }
 
-const difficultyColor: Record<string, string> = {
-  básico: "text-[var(--color-fg-dim)]",
-  intermedio: "text-[var(--color-fg-muted)]",
-  avanzado: "text-[var(--color-fg)]",
+const difficultyColor: Record<Difficulty, string> = {
+  basic: "text-[var(--color-fg-dim)]",
+  intermediate: "text-[var(--color-fg-muted)]",
+  advanced: "text-[var(--color-fg)]",
+}
+
+const difficultyKey: Record<
+  Difficulty,
+  "difficultyBasic" | "difficultyIntermediate" | "difficultyAdvanced"
+> = {
+  basic: "difficultyBasic",
+  intermediate: "difficultyIntermediate",
+  advanced: "difficultyAdvanced",
 }
 
 export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
-  const router = useRouter()
+  const t = useTranslations("ExercisePage")
+  const { push, href } = useLocaleRouter()
   const [showSolution, setShowSolution] = useState(false)
   const { completedExercises, toggleExerciseCompleted } = useProgress()
   const isCompleted = completedExercises.has(exercise.id)
 
   return (
     <article className="mx-auto max-w-[1000px] px-5 py-10 md:px-12 md:py-20">
-      {/* Kicker */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
-          <span>práctica</span>
+          <span>{t("practice")}</span>
           <span className="h-px w-4 bg-[var(--color-fg-faint)]" />
           <span className={difficultyColor[exercise.difficulty] ?? "text-[var(--color-fg-dim)]"}>
-            {exercise.difficulty}
+            {t(difficultyKey[exercise.difficulty])}
           </span>
         </div>
         <button
@@ -51,26 +61,23 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
           ) : (
             <Circle className="h-[13px] w-[13px]" strokeWidth={1.8} />
           )}
-          {isCompleted ? "Completado" : "Marcar como completado"}
+          {isCompleted ? t("completed") : t("markCompleted")}
         </button>
       </div>
 
-      {/* Title */}
       <h1 className="font-mono text-[32px] leading-none font-medium text-[var(--color-fg)]">
         {exercise.title}
       </h1>
 
-      {/* Lede */}
       <p className="mt-6 text-[17px] leading-[1.65] text-[var(--color-fg-muted)]">
         {exercise.lede}
       </p>
 
       <hr className="mt-12 border-t border-none border-[var(--color-line)]" />
 
-      {/* Objetivos */}
       <section className="mt-10">
         <h2 className="mb-4 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
-          Objetivos
+          {t("objectives")}
         </h2>
         <ol className="space-y-2">
           {exercise.objectives.map((o, i) => (
@@ -87,10 +94,9 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         </ol>
       </section>
 
-      {/* Playground */}
       <section className="mt-12">
         <div className="mb-2 flex items-center justify-between text-[11px] text-[var(--color-fg-dim)]">
-          <span>{showSolution ? "solución" : "tu código"}</span>
+          <span>{showSolution ? t("solution") : t("yourCode")}</span>
           <button
             onClick={() => setShowSolution((v) => !v)}
             className={cn(
@@ -100,7 +106,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
                 : "text-[var(--color-fg-dim)] hover:text-[var(--color-fg)]"
             )}
           >
-            {showSolution ? "← volver al starter" : "ver solución →"}
+            {showSolution ? t("backToStarter") : t("viewSolution")}
           </button>
         </div>
         <div className={showSolution ? "hidden" : ""}>
@@ -119,13 +125,12 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         </div>
       </section>
 
-      {/* Hint */}
       {exercise.hint && (
         <section className="mt-8">
           <details className="group">
             <summary className="flex cursor-pointer list-none items-center gap-2 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase transition-colors select-none hover:text-[var(--color-fg)]">
               <Lightbulb className="h-[13px] w-[13px]" strokeWidth={1.8} />
-              <span>Pista</span>
+              <span>{t("hint")}</span>
             </summary>
             <p className="mt-3 rounded-md border border-[var(--color-line)] px-4 py-3 text-[14px] leading-[1.65] text-[var(--color-fg-muted)]">
               {exercise.hint}
@@ -134,21 +139,20 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         </section>
       )}
 
-      {/* Conceptos relacionados */}
       {exercise.relatedConcepts && exercise.relatedConcepts.length > 0 && (
         <section className="mt-10">
           <h3 className="mb-3 flex items-center gap-2 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
             <BookOpen className="h-[13px] w-[13px]" strokeWidth={1.8} />
-            Conceptos relacionados
+            {t("relatedConcepts")}
           </h3>
           <div className="flex flex-wrap gap-2">
             {exercise.relatedConcepts.map((id) => (
               <a
                 key={id}
-                href={`/${id}`}
+                href={href(`/${id}`)}
                 onClick={(e) => {
                   e.preventDefault()
-                  router.push(`/${id}`)
+                  push(`/${id}`)
                 }}
                 className="inline-block rounded border border-[var(--color-line)] px-3 py-1 font-mono text-[13px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-line-strong)] hover:text-[var(--color-fg)]"
               >
@@ -159,18 +163,17 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         </section>
       )}
 
-      {/* Footer nav */}
       <nav className="mt-14 flex items-start justify-between gap-8 border-t border-[var(--color-line)] pt-8 text-[14px]">
         {prev ? (
           <a
-            href={`/learn/${prev.id}`}
+            href={href(`/learn/${prev.id}`)}
             onClick={(e) => {
               e.preventDefault()
-              router.push(`/learn/${prev.id}`)
+              push(`/learn/${prev.id}`)
             }}
             className="group flex flex-col gap-1 text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
-            <span className="text-[12px] text-[var(--color-fg-dim)]">← anterior</span>
+            <span className="text-[12px] text-[var(--color-fg-dim)]">{t("prev")}</span>
             <span className="text-[var(--color-fg)]">{prev.label}</span>
           </a>
         ) : (
@@ -178,14 +181,14 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
         )}
         {next ? (
           <a
-            href={`/learn/${next.id}`}
+            href={href(`/learn/${next.id}`)}
             onClick={(e) => {
               e.preventDefault()
-              router.push(`/learn/${next.id}`)
+              push(`/learn/${next.id}`)
             }}
             className="group flex flex-col items-end gap-1 text-right text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
-            <span className="text-[12px] text-[var(--color-fg-dim)]">siguiente →</span>
+            <span className="text-[12px] text-[var(--color-fg-dim)]">{t("next")}</span>
             <span className="text-[var(--color-fg)]">{next.label}</span>
           </a>
         ) : (

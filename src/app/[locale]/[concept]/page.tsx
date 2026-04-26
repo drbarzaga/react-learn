@@ -1,25 +1,34 @@
 import { notFound } from "next/navigation"
-import { conceptIndex, allConcepts } from "@/content/concepts"
 import { ConceptPage } from "@/components/ConceptPage"
+import { getContentForLocale } from "@/content/loader"
+import { routing, type Locale } from "@/i18n/routing"
 import type { Metadata } from "next"
 
 interface Props {
-  params: Promise<{ concept: string }>
+  params: Promise<{ locale: string; concept: string }>
 }
 
 export async function generateStaticParams() {
-  return allConcepts.map((c) => ({ concept: c.id }))
+  const results = await Promise.all(
+    routing.locales.map(async (locale) => {
+      const { allConcepts } = await getContentForLocale(locale)
+      return allConcepts.map((c) => ({ locale, concept: c.id }))
+    })
+  )
+  return results.flat()
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { concept: id } = await params
+  const { locale, concept: id } = await params
+  const { conceptIndex } = await getContentForLocale(locale as Locale)
   const concept = conceptIndex[id]
   if (!concept) return {}
   return { title: concept.label }
 }
 
 export default async function ConceptRoute({ params }: Props) {
-  const { concept: id } = await params
+  const { locale, concept: id } = await params
+  const { conceptIndex, allConcepts } = await getContentForLocale(locale as Locale)
   const concept = conceptIndex[id]
   if (!concept) notFound()
 

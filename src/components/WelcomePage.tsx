@@ -1,15 +1,18 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { Logo } from "@/components/Logo"
-import { allConcepts, categories } from "@/content/concepts"
-import { allExercises } from "@/content/exercises"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { ArrowRight, Dumbbell } from "lucide-react"
+import { useContent } from "@/components/ContentProvider"
+import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 export function WelcomePage() {
-  const router = useRouter()
+  const t = useTranslations("WelcomePage")
+  const { push } = useLocaleRouter()
+  const { allConcepts, allExercises, categories } = useContent()
+
   return (
     <div className="flex min-h-[calc(100vh-84px)] items-center justify-center px-8 py-20">
       <div className="flex max-w-[420px] flex-col items-center text-center">
@@ -20,33 +23,32 @@ export function WelcomePage() {
         </h1>
 
         <p className="mt-4 text-[16px] leading-[1.7] text-[var(--color-fg-muted)]">
-          React se aprende practicando. Cada concepto tiene explicación, playground interactivo y
-          ejercicios de código real — sin atajos.
+          {t("tagline")}
         </p>
 
         <div className="mt-6 flex items-center gap-4 text-[12px] text-[var(--color-fg-dim)]">
-          <span>{allConcepts.length} conceptos</span>
+          <span>{t("concepts", { count: allConcepts.length })}</span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span>{allExercises.length} ejercicios</span>
+          <span>{t("exercises", { count: allExercises.length })}</span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span>{categories.length} categorías</span>
+          <span>{t("categories", { count: categories.length })}</span>
         </div>
 
         <div className="mt-8 flex gap-3">
           <Button
-            onClick={() => router.push(`/${allConcepts[0].id}`)}
+            onClick={() => push(`/${allConcepts[0].id}`)}
             className="gap-2 border-0 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80"
           >
-            Comenzar
+            {t("start")}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
           </Button>
           <Button
             variant="outline"
-            onClick={() => router.push(`/learn/${allExercises[0].id}`)}
+            onClick={() => push(`/learn/${allExercises[0].id}`)}
             className="gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
           >
             <Dumbbell className="h-3.5 w-3.5" strokeWidth={1.8} />
-            Practicar
+            {t("practice")}
           </Button>
         </div>
       </div>

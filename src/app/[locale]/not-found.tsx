@@ -1,7 +1,11 @@
-import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
+import { getTranslations, getLocale } from "next-intl/server"
+import Link from "next/link"
 
-export default function NotFound() {
+export default async function NotFound() {
+  const t = await getTranslations("NotFound")
+  const locale = await getLocale()
+
   return (
     <div className="flex min-h-[calc(100vh-84px)] flex-col items-center justify-center px-8 py-16">
       <div className="flex max-w-[400px] flex-col items-center text-center">
@@ -11,17 +15,15 @@ export default function NotFound() {
 
         <div className="mt-8 h-px w-8 bg-[var(--color-line-strong)]" />
 
-        <p className="mt-8 text-[18px] font-medium text-[var(--color-fg)]">Página no encontrada</p>
-        <p className="mt-3 text-[14px] leading-relaxed text-[var(--color-fg-muted)]">
-          La dirección que visitaste no corresponde a ningún contenido disponible.
-        </p>
+        <p className="mt-8 text-[18px] font-medium text-[var(--color-fg)]">{t("title")}</p>
+        <p className="mt-3 text-[14px] leading-relaxed text-[var(--color-fg-muted)]">{t("body")}</p>
 
         <Link
-          href="/"
+          href={`/${locale}`}
           className="mt-8 inline-flex items-center gap-2 rounded-md border border-[var(--color-line-strong)] bg-transparent px-4 py-2 font-mono text-[13px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
         >
           <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.8} />
-          volver al inicio
+          {t("back")}
         </Link>
       </div>
     </div>

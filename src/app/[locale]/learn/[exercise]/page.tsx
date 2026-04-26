@@ -1,25 +1,34 @@
 import { notFound } from "next/navigation"
-import { exerciseIndex, allExercises } from "@/content/exercises"
 import { ExercisePage } from "@/components/ExercisePage"
+import { getContentForLocale } from "@/content/loader"
+import { routing, type Locale } from "@/i18n/routing"
 import type { Metadata } from "next"
 
 interface Props {
-  params: Promise<{ exercise: string }>
+  params: Promise<{ locale: string; exercise: string }>
 }
 
 export async function generateStaticParams() {
-  return allExercises.map((e) => ({ exercise: e.id }))
+  const results = await Promise.all(
+    routing.locales.map(async (locale) => {
+      const { allExercises } = await getContentForLocale(locale)
+      return allExercises.map((e) => ({ locale, exercise: e.id }))
+    })
+  )
+  return results.flat()
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { exercise: id } = await params
+  const { locale, exercise: id } = await params
+  const { exerciseIndex } = await getContentForLocale(locale as Locale)
   const exercise = exerciseIndex[id]
   if (!exercise) return {}
   return { title: exercise.label }
 }
 
 export default async function ExerciseRoute({ params }: Props) {
-  const { exercise: id } = await params
+  const { locale, exercise: id } = await params
+  const { exerciseIndex, allExercises } = await getContentForLocale(locale as Locale)
   const exercise = exerciseIndex[id]
   if (!exercise) notFound()
 
