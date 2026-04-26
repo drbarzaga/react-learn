@@ -5,19 +5,20 @@ export const metadata: Metadata = {
     default: "React Dojo - Aprende React de forma sencilla",
     template: "%s — React Dojo",
   },
-  description: "Simple way to learn React: read it, edit it, run it.",
+  description:
+    "Plataforma interactiva para dominar React: conceptos claros, ejercicios reales y quizzes en el navegador.",
   metadataBase: new URL("https://react-dojo.vercel.app"),
   openGraph: {
     title: "React Dojo",
-    description: "Simple way to learn React: read it, edit it, run it.",
+    description:
+      "Plataforma interactiva para dominar React: conceptos claros, ejercicios reales y quizzes en el navegador.",
     url: "https://react-dojo.vercel.app",
-    images: [{ url: "/og-image.png" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "React Dojo",
-    description: "Simple way to learn React: read it, edit it, run it.",
-    images: ["/og-image.png"],
+    description:
+      "Plataforma interactiva para dominar React: conceptos claros, ejercicios reales y quizzes en el navegador.",
   },
 }
