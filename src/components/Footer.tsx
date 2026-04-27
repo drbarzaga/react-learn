@@ -68,7 +68,7 @@ export function Footer() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1 transition-colors hover:text-[var(--color-fg-muted)]"
+              className="flex items-center gap-1.5 rounded-full border border-[var(--color-line-strong)] px-3 py-1 text-[10px] font-semibold tracking-[0.1em] text-[var(--color-fg-muted)] uppercase"
             >
               <Icon className="h-[12px] w-[12px]" strokeWidth={1.6} />
               {label}
