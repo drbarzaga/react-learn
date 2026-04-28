@@ -60,14 +60,6 @@ For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issue
 
 ---
 
-## Star History
-
-<a href="https://star-history.com/#drbarzaga/react-dojo&Date">
-  <img src="https://api.star-history.com/svg?repos=drbarzaga/react-dojo&type=Date&theme=dark" alt="Star History Chart" />
-</a>
-
----
-
 ## License
 
 MIT · created by [Dayan Perez](https://github.com/drbarzaga)
