@@ -10,7 +10,6 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "og": "node scripts/generate-og.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
