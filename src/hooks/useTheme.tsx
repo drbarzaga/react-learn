@@ -1,6 +1,14 @@
 "use client"
 
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react"
 
 export type Theme = "dark" | "light"
 
@@ -12,15 +20,18 @@ interface ThemeContextValue {
 
 const Ctx = createContext<ThemeContextValue | null>(null)
 
-function getInitial(): Theme {
-  if (typeof document === "undefined") return "dark"
-  const attr = document.documentElement.dataset.theme
-  if (attr === "light" || attr === "dark") return attr
-  return "dark"
-}
-
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getInitial)
+  const [theme, setTheme] = useState<Theme>("dark")
+  const isInitialized = useRef(false)
+
+  useEffect(() => {
+    if (!isInitialized.current) {
+      isInitialized.current = true
+      const attr = document.documentElement.dataset.theme
+      const initialTheme = attr === "light" || attr === "dark" ? attr : "dark"
+      setTheme(initialTheme)
+    }
+  }, [])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
