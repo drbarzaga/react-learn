@@ -13,7 +13,7 @@ import {
   CommandList,
   CommandShortcut,
 } from "@/components/ui/command"
-import { useContent } from "@/components/ContentProvider"
+import { useContent } from "@/providers/content-provider"
 import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 type ResultKind = "concept" | "exercise" | "quiz"

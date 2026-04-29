@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
 import { routing, type Locale } from "@/i18n/routing"
-import { AppProviders } from "@/components/AppProviders"
+import { AppProviders } from "@/providers/app-provider"
 import { AppShell } from "@/components/AppShell"
-import { ContentProvider } from "@/components/ContentProvider"
+import { ContentProvider } from "@/providers/content-provider"
 import { getContentForLocale } from "@/content/loader"
 
 interface LocaleLayoutProps {

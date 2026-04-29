@@ -5,7 +5,7 @@ import { Logo } from "@/components/Logo"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { ArrowRight, Dumbbell } from "lucide-react"
-import { useContent } from "@/components/ContentProvider"
+import { useContent } from "@/providers/content-provider"
 import { useLocaleRouter } from "@/hooks/useLocaleRouter"
 
 export function WelcomePage() {

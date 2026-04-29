@@ -4,7 +4,7 @@ import React from "react"
 import { Heart, Bug } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Separator } from "@/components/ui/separator"
-import { useContent } from "@/components/ContentProvider"
+import { useContent } from "@/providers/content-provider"
 
 function ReactIcon({ className }: { className?: string }) {
   return (
