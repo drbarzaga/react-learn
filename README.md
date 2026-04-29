@@ -54,8 +54,10 @@ For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issue
 
 ## Contributors
 
-Made with [contrib.rocks](https://contrib.rocks).<a href="https://github.com/drbarzaga/react-dojo/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" />
+Made with [contrib.rocks](https://contrib.rocks).
+
+<a href="https://github.com/drbarzaga/react-dojo/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" />
 </a>
 
 Made with [contrib.rocks](https://contrib.rocks).
