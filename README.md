@@ -1,14 +1,14 @@
+<h1 align="center">
+  React Dojo | Simple way to learn React: read, edit, run.
+</h1>
+
 <p align="center">
-  <img src="./public/og-image.png" alt="React Dojo" width="800" />
+  <img src="./public/image.png" alt="React Dojo" width="800" />
 </p>
 
 <p align="center">
-  <strong>Simple way to learn React: read, edit, run.</strong>
-</p>
-
-<p align="center">
-  React Dojo is an interactive reference for React. Each concept comes with a focused explanation,<br />
-  a live playground where you can edit and run code directly in the browser,<br />
+  React Dojo is an interactive reference for React. Each concept comes with a focused explanation,
+  a live playground where you can edit and run code directly in the browser,
   and real coding exercises — no shortcuts, just practice.
 </p>
 
