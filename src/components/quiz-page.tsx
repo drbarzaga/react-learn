@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils"
 import { Switch } from "@/components/ui/switch"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import type { Quiz } from "@/content/quiz"
-import { useProgress } from "@/hooks/useProgress"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useProgress } from "@/hooks/use-progress"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
 
 interface QuizPageProps {
   quiz: Quiz

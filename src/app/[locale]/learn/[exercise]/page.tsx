@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { ExercisePage } from "@/components/ExercisePage"
+import { ExercisePage } from "@/components/exercise-page"
 import { getContentForLocale } from "@/content/loader"
 import { routing, type Locale } from "@/i18n/routing"
 import type { Metadata } from "next"

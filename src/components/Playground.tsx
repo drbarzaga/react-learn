@@ -13,8 +13,9 @@ import {
   type SandpackThemeProp,
 } from "@codesandbox/sandpack-react"
 import { useTranslations } from "next-intl"
-import { useTheme, type Theme } from "@/hooks/useTheme"
-import { useEditorTheme, type EditorThemeId } from "@/hooks/useEditorTheme"
+import { useTheme, type Theme } from "@/hooks/use-theme"
+import { useEditorTheme } from "@/hooks/use-editor-theme"
+import { type EditorThemeId } from "@/types"
 
 // ─── Editor theme definitions ────────────────────────────────────────────────
 

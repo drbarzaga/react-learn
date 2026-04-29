@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { ConceptPage } from "@/components/ConceptPage"
+import { ConceptPage } from "@/components/concept-page"
 import { getContentForLocale } from "@/content/loader"
 import { routing, type Locale } from "@/i18n/routing"
 import type { Metadata } from "next"

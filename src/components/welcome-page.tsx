@@ -1,12 +1,12 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { Logo } from "@/components/Logo"
+import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { ArrowRight, Dumbbell } from "lucide-react"
 import { useContent } from "@/providers/content-provider"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
 
 export function WelcomePage() {
   const t = useTranslations("WelcomePage")

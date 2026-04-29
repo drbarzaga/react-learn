@@ -3,14 +3,16 @@
 import { useRef, useState } from "react"
 import { Search, Star } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useTheme } from "@/hooks/useTheme"
-import { useEditorTheme, EDITOR_THEMES_META, type EditorThemeId } from "@/hooks/useEditorTheme"
-import { useGitHubStars } from "@/hooks/useGitHubStars"
-import { Logo } from "@/components/Logo"
-import { LocaleSwitcher } from "@/components/LocaleSwitcher"
+import { useTheme } from "@/hooks/use-theme"
+import { useEditorTheme } from "@/hooks/use-editor-theme"
+import { useGitHubStars } from "@/hooks/use-github-stars"
+import { Logo } from "@/components/logo"
+import { LocaleSwitcher } from "@/components/locale-switcher"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
+import { type EditorThemeId } from "@/types"
+import { EDITOR_THEMES_META } from "@/lib/constants"
 
 interface HeaderProps {
   onSearchOpen?: () => void

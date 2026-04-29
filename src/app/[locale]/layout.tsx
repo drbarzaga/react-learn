@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
 import { routing, type Locale } from "@/i18n/routing"
 import { AppProviders } from "@/providers/app-provider"
-import { AppShell } from "@/components/AppShell"
+import { AppShell } from "@/components/app-shell"
 import { ContentProvider } from "@/providers/content-provider"
 import { getContentForLocale } from "@/content/loader"
 

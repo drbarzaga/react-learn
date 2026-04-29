@@ -3,11 +3,11 @@
 import { useState } from "react"
 import { Lightbulb, BookOpen, CheckCircle2, Circle } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Playground } from "@/components/Playground"
+import { Playground } from "@/components/playground"
 import { cn } from "@/lib/utils"
 import type { Exercise, Difficulty } from "@/content/exercises"
-import { useProgress } from "@/hooks/useProgress"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useProgress } from "@/hooks/use-progress"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
 
 interface ExercisePageProps {
   exercise: Exercise

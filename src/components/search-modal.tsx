@@ -14,7 +14,7 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 import { useContent } from "@/providers/content-provider"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
 
 type ResultKind = "concept" | "exercise" | "quiz"
 
