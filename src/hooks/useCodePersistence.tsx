@@ -10,7 +10,8 @@ import {
   type ReactNode,
 } from "react"
 
-const STORAGE_KEY = "react-dojo-code"
+import type { ExerciseFiles } from "@/types/code-persistence"
+import { STORAGE_KEY } from "@/lib/constants"
 
 interface CodePersistenceData {
   [exerciseId: string]: {
@@ -43,8 +44,8 @@ function persist(data: CodePersistenceData) {
 }
 
 interface CodePersistenceCtx {
-  getSavedCode: (exerciseId: string) => Record<string, string> | null
-  saveCode: (exerciseId: string, files: Record<string, string>) => void
+  getSavedCode: (exerciseId: string) => ExerciseFiles | null
+  saveCode: (exerciseId: string, files: ExerciseFiles) => void
   clearCode: (exerciseId: string) => void
 }
 
@@ -65,7 +66,7 @@ export function CodePersistenceProvider({ children }: { children: ReactNode }) {
     [data]
   )
 
-  const saveCode = useCallback((exerciseId: string, files: Record<string, string>) => {
+  const saveCode = useCallback((exerciseId: string, files: ExerciseFiles) => {
     setData((prev) => {
       const next = { ...prev, [exerciseId]: files }
       persist(next)

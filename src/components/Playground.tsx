@@ -16,6 +16,9 @@ import { useTranslations } from "next-intl"
 import { useTheme, type Theme } from "@/hooks/useTheme"
 import { useEditorTheme, type EditorThemeId } from "@/hooks/useEditorTheme"
 import { useCodePersistence } from "@/hooks/useCodePersistence"
+import type { ExerciseFiles } from "@/types/code-persistence"
+import { THEME_FILE_NAME } from "@/lib/constants"
+import type { SandpackFiles } from "@codesandbox/sandpack-react"
 
 // ─── Editor theme definitions ────────────────────────────────────────────────
 
@@ -322,16 +325,11 @@ function CodeSync({ exerciseId }: { exerciseId: string }) {
     // Debounced save
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => {
-      const codeToSave = Object.entries(currentFiles).reduce(
-        (acc, [path, file]) => {
-          // Skip injected theme file
-          if (!path.includes("styles.css")) {
-            acc[path] = file.code
-          }
-          return acc
-        },
-        {} as Record<string, string>
-      )
+      const codeToSave = Object.entries(currentFiles).reduce((acc, [path, file]) => {
+        // Skip injected theme file
+        if (path.includes(THEME_FILE_NAME)) return acc
+        return { ...acc, [path]: file.code }
+      }, {} as ExerciseFiles)
 
       saveCode(exerciseId, codeToSave)
     }, 750)
@@ -398,7 +396,10 @@ export function Playground({
 
   // appTheme intentionally excluded — ThemeSync handles CSS updates imperatively
   const initialFiles = useMemo(() => {
-    const baseFiles = { "/styles.css": { code: buildStyles(appTheme), hidden: true }, ...files }
+    const baseFiles: SandpackFiles = {
+      [THEME_FILE_NAME]: { code: buildStyles(appTheme), hidden: true },
+      ...files,
+    }
 
     // Restore saved code if persistence enabled
     if (enablePersistence && exerciseId) {
