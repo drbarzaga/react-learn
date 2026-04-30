@@ -5,3 +5,5 @@ export interface EditorThemeMeta {
   bg: string
   colors: [string, string, string] // keyword, string, definition
 }
+
+export type ExerciseFiles = Record<string, string>

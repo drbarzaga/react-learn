@@ -16,6 +16,9 @@ import { useTranslations } from "next-intl"
 import { useTheme, type Theme } from "@/hooks/use-theme"
 import { useEditorTheme } from "@/hooks/use-editor-theme"
 import { type EditorThemeId } from "@/types"
+import { useCodePersistence } from "@/hooks/use-code-persistence"
+import type { ExerciseFiles } from "@/types/code-persistence"
+import { THEME_FILE_NAME } from "@/lib/constants"
 
 // ─── Editor theme definitions ────────────────────────────────────────────────
 
@@ -302,6 +305,43 @@ function ThemeSync({ appTheme }: { appTheme: Theme }) {
   return null
 }
 
+// Auto-saves user code to localStorage when files change
+function CodeSync({ exerciseId }: { exerciseId: string }) {
+  const { sandpack } = useSandpack()
+  const { saveCode } = useCodePersistence()
+  const filesRef = useRef(sandpack.files)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    const currentFiles = sandpack.files
+    // Check if files changed
+    const changed = Object.keys(currentFiles).some(
+      (path) => currentFiles[path].code !== filesRef.current[path]?.code
+    )
+
+    if (!changed) return
+    filesRef.current = currentFiles
+
+    // Debounced save
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => {
+      const codeToSave = Object.entries(currentFiles).reduce((acc, [path, file]) => {
+        // Skip injected theme file
+        if (path.includes(THEME_FILE_NAME)) return acc
+        return { ...acc, [path]: file.code }
+      }, {} as ExerciseFiles)
+
+      saveCode(exerciseId, codeToSave)
+    }, 750)
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [sandpack.files, exerciseId, saveCode])
+
+  return null
+}
+
 // ─── Playground ───────────────────────────────────────────────────────────────
 
 interface PlaygroundProps {
@@ -310,6 +350,8 @@ interface PlaygroundProps {
   showConsole?: boolean
   height?: number
   dependencies?: Record<string, string>
+  exerciseId?: string
+  enablePersistence?: boolean
 }
 
 export function Playground({
@@ -318,10 +360,13 @@ export function Playground({
   showConsole = false,
   height = 650,
   dependencies,
+  exerciseId,
+  enablePersistence = false,
 }: PlaygroundProps) {
   const t = useTranslations("Playground")
   const { theme: appTheme } = useTheme()
   const { editorTheme } = useEditorTheme()
+  const { getSavedCode } = useCodePersistence()
 
   const [maximized, setMaximized] = useState(false)
   const [consoleOpen, setConsoleOpen] = useState(showConsole)
@@ -350,10 +395,26 @@ export function Playground({
   }, [maximized])
 
   // appTheme intentionally excluded — ThemeSync handles CSS updates imperatively
-  const initialFiles = useMemo(
-    () => ({ "/styles.css": { code: buildStyles(appTheme), hidden: true }, ...files }),
-    [files] // eslint-disable-line react-hooks/exhaustive-deps
-  )
+  const initialFiles = useMemo(() => {
+    const baseFiles: SandpackFiles = {
+      [THEME_FILE_NAME]: { code: buildStyles(appTheme), hidden: true },
+      ...files,
+    }
+
+    // Restore saved code if persistence enabled
+    if (enablePersistence && exerciseId) {
+      const savedCode = getSavedCode(exerciseId)
+      if (savedCode) {
+        Object.entries(savedCode).forEach(([path, code]) => {
+          if (baseFiles[path]) {
+            baseFiles[path] = { code }
+          }
+        })
+      }
+    }
+
+    return baseFiles
+  }, [files, exerciseId, enablePersistence, getSavedCode]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
@@ -384,6 +445,7 @@ export function Playground({
           customSetup={dependencies ? { dependencies } : undefined}
         >
           <ThemeSync appTheme={appTheme} />
+          {enablePersistence && exerciseId && <CodeSync exerciseId={exerciseId} />}
           <SandpackLayout>
             <SandpackCodeEditor
               showLineNumbers
