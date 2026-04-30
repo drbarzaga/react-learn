@@ -5,7 +5,8 @@
     "exercises": "{count} ejercicios",
     "categories": "{count} categorías",
     "start": "Comenzar",
-    "practice": "Practicar"
+    "practice": "Practicar",
+    "surprise": "Sorpréndeme"
   },
   "Header": {
     "search": "Buscar",

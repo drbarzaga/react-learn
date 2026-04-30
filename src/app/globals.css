@@ -230,6 +230,43 @@ body {
   background: var(--color-fg-dim);
 }
 
+@keyframes shimmer {
+  0%,
+  100% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(300%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    var(--shimmer-color, rgba(255, 255, 255, 0.55)) 50%,
+    transparent 70%
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+:root[data-theme="light"] .btn-shimmer::after {
+  --shimmer-color: rgba(0, 0, 0, 0.12);
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
