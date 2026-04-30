@@ -104,7 +104,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       .map((k) => ({ kind: k, items: map[k]! }))
   }, [results])
 
-  function handleSelect(href: string) {
+  const handleSelect = (href: string) => {
     push(`/${href}`)
     onClose()
   }

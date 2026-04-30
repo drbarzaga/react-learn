@@ -7,3 +7,5 @@ export const EDITOR_THEMES_META: Record<EditorThemeId, EditorThemeMeta> = {
   githubLight: { label: "GitHub Light", bg: "#ffffff", colors: ["#cf222e", "#0a3069", "#8250df"] },
   monokai: { label: "Monokai", bg: "#272822", colors: ["#f92672", "#e6db74", "#a6e22e"] },
 }
+
+export const REPOSITORY = "drbarzaga/react-dojo"

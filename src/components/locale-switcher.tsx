@@ -9,7 +9,7 @@ export function LocaleSwitcher() {
   const router = useRouter()
   const pathname = usePathname()
 
-  function switchLocale(next: string) {
+  const switchLocale = (next: string) => {
     const localePrefix = `/${locale}`
     const withoutLocale = pathname.startsWith(localePrefix)
       ? pathname.slice(localePrefix.length) || "/"

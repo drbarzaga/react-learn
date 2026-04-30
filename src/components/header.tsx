@@ -12,7 +12,8 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
 import { type EditorThemeId } from "@/types"
-import { EDITOR_THEMES_META } from "@/lib/constants"
+import { EDITOR_THEMES_META, REPOSITORY } from "@/lib/constants"
+import { MoonIcon, PaletteIcon, SunIcon } from "./svg-icons"
 
 interface HeaderProps {
   onSearchOpen?: () => void
@@ -22,18 +23,18 @@ export function Header({ onSearchOpen }: HeaderProps) {
   const t = useTranslations("Header")
   const { theme, toggle } = useTheme()
   const { editorTheme, setEditorTheme } = useEditorTheme()
-  const stars = useGitHubStars("drbarzaga/react-dojo")
+  const stars = useGitHubStars(REPOSITORY)
   const [pickerOpen, setPickerOpen] = useState(false)
   const pickerRef = useRef<HTMLDivElement>(null)
   const { href } = useLocaleRouter()
 
-  function handlePickerBlur(e: React.FocusEvent) {
+  const handlePickerBlur = (e: React.FocusEvent) => {
     if (!pickerRef.current?.contains(e.relatedTarget as Node)) {
       setPickerOpen(false)
     }
   }
 
-  function selectTheme(id: EditorThemeId) {
+  const selectTheme = (id: EditorThemeId) => {
     setEditorTheme(id)
     setPickerOpen(false)
   }
@@ -203,61 +204,5 @@ export function Header({ onSearchOpen }: HeaderProps) {
         </div>
       </header>
     </TooltipProvider>
-  )
-}
-
-function PaletteIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden
-    >
-      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-    </svg>
-  )
-}
-
-function SunIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden
-    >
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-    </svg>
-  )
-}
-
-function MoonIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden
-    >
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-    </svg>
   )
 }
