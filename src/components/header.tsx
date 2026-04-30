@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useRef, useState } from "react"
 import { Search, Star } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -45,13 +46,13 @@ export function Header({ onSearchOpen }: HeaderProps) {
         <div className="flex items-center gap-2">
           <SidebarTrigger className="text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)] md:hidden" />
 
-          <a
+          <Link
             href={href("/")}
             className="flex items-center gap-2 text-[14px] text-[var(--color-fg)] transition-colors hover:text-[var(--color-fg-muted)]"
           >
             <Logo className="h-[28px] w-auto" />
             <span className="hidden font-mono sm:inline">React Dojo</span>
-          </a>
+          </Link>
         </div>
 
         <div className="flex items-center gap-2 md:gap-3">
