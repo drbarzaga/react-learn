@@ -10,6 +10,7 @@ import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/comp
 import type { Quiz } from "@/content/quiz"
 import { useProgress } from "@/hooks/use-progress"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
+import { TIMER_TICK_MS } from "@/lib/constants"
 
 interface QuizPageProps {
   quiz: Quiz
@@ -120,7 +121,7 @@ export function QuizPage({ quiz, allQuizzes }: QuizPageProps) {
       } else {
         setTimeLeft((t) => t - 1)
       }
-    }, 1000)
+    }, TIMER_TICK_MS)
     return () => clearTimeout(id)
   }, [timeLeft, timerEnabled, session.selected, session.finished, browsing])
 
