@@ -1,8 +1,8 @@
 import type { Exercise } from "./types"
 
-export const listaFiltrada: Exercise = {
-  id: "lista-filtrada",
-  label: "lista filtrada",
+export const filteredList: Exercise = {
+  id: "filtered-list",
+  label: "filtered list",
   title: "Lista con búsqueda en tiempo real",
   lede: "Un campo de búsqueda filtra una lista de frutas mientras el usuario escribe. El resultado filtrado se deriva directamente del estado — sin useState extra ni useMemo necesario a esta escala.",
   difficulty: "basic",

@@ -1,7 +1,7 @@
 import { counter } from "@/content/exercises/counter"
 import { autoFocus } from "@/content/exercises/auto-focus"
 import { stopwatch } from "@/content/exercises/stopwatch"
-import { listaFiltrada } from "@/content/exercises/lista-filtrada"
+import { filteredList } from "@/content/exercises/filtered-list"
 import { todoList } from "@/content/exercises/todo-list"
 import { formReducer } from "@/content/exercises/form-reducer"
 import { fetchUser } from "@/content/exercises/fetch-user"
@@ -22,7 +22,7 @@ type ExerciseOverride = Partial<
 >
 
 const overrides: Record<string, ExerciseOverride> = {
-  "lista-filtrada": {
+  "filtered-list": {
     title: "Real-time filtered list",
     lede: "A search field filters a list of fruits as the user types. The filtered result is derived directly from state — no extra useState or useMemo needed at this scale.",
     objectives: [
@@ -1746,7 +1746,7 @@ export const allExercises: Exercise[] = [
   counter,
   autoFocus,
   stopwatch,
-  listaFiltrada,
+  filteredList,
   todoList,
   formReducer,
   fetchUser,
