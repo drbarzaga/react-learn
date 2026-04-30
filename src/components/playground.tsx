@@ -13,12 +13,12 @@ import {
   type SandpackThemeProp,
 } from "@codesandbox/sandpack-react"
 import { useTranslations } from "next-intl"
-import { useTheme, type Theme } from "@/hooks/useTheme"
-import { useEditorTheme, type EditorThemeId } from "@/hooks/useEditorTheme"
-import { useCodePersistence } from "@/hooks/useCodePersistence"
+import { useTheme, type Theme } from "@/hooks/use-theme"
+import { useEditorTheme } from "@/hooks/use-editor-theme"
+import { type EditorThemeId } from "@/types"
+import { useCodePersistence } from "@/hooks/use-code-persistence"
 import type { ExerciseFiles } from "@/types/code-persistence"
 import { THEME_FILE_NAME } from "@/lib/constants"
-import type { SandpackFiles } from "@codesandbox/sandpack-react"
 
 // ─── Editor theme definitions ────────────────────────────────────────────────
 

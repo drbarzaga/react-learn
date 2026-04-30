@@ -16,11 +16,11 @@ import { usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Sidebar as ShadcnSidebar, SidebarContent } from "@/components/ui/sidebar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { useContent } from "@/components/ContentProvider"
+import { useContent } from "@/providers/content-provider"
 import { type Difficulty } from "@/content/exercises"
 import { type QuizDifficulty } from "@/content/quiz"
-import { useProgress } from "@/hooks/useProgress"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useProgress } from "@/hooks/use-progress"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
 
 type IconC = ComponentType<{ className?: string; strokeWidth?: number }>
 

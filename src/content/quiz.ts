@@ -657,6 +657,682 @@ const rendimientoQuestions: QuizQuestion[] = [
   },
 ]
 
+const listasYKeysQuestions: QuizQuestion[] = [
+  {
+    id: "lyk-1",
+    question:
+      "¿Por qué es peligroso usar el índice del array como key cuando la lista puede reordenarse?",
+    options: [
+      "Porque React prohíbe el uso del índice como key",
+      "Porque el índice cambia al reordenar, haciendo que React reutilice el DOM del elemento incorrecto",
+      "Porque los índices no son únicos entre hermanos",
+      "Porque el índice es un número y la key debe ser un string",
+    ],
+    correctIndex: 1,
+    explanation:
+      "La key le dice a React qué elemento del DOM corresponde a qué dato. Si usas el índice y reordenas la lista, el elemento 0 ahora representa otro dato pero React reutiliza el nodo DOM anterior — causa bugs en inputs, animaciones y estado de componentes.",
+  },
+  {
+    id: "lyk-2",
+    question: "¿Cuál es la forma correcta de renderizar una lista de nombres en JSX?",
+    options: [
+      "nombres.forEach(n => <li>{n}</li>)",
+      "nombres.map(n => <li key={n}>{n}</li>)",
+      "<for name in nombres><li>{name}</li></for>",
+      "nombres.filter(n => <li>{n}</li>)",
+    ],
+    correctIndex: 1,
+    explanation:
+      "JSX acepta arrays de elementos. map retorna un array nuevo, por lo que es la herramienta natural para listas. Cada elemento del array debe tener key única. forEach no retorna nada — no sirve en JSX. No existe <for> en JSX.",
+  },
+  {
+    id: "lyk-3",
+    question:
+      "¿Qué problema concreto ocurre al renderizar {count && <span>texto</span>} cuando count es 0?",
+    options: [
+      "Nada, el componente no se renderiza",
+      "React lanza un error porque 0 no es un booleano",
+      "Se renderiza el número 0 en la pantalla porque 0 es falsy pero React lo muestra igual",
+      "El span aparece igual porque 0 es truthy en JSX",
+    ],
+    correctIndex: 2,
+    explanation:
+      "El operador && retorna el operando izquierdo si es falsy. React renderiza 0 (número) pero no renderiza false ni null. La solución: usar count > 0 && <span/> o un ternario. Es uno de los bugs más comunes en renderizado condicional.",
+  },
+  {
+    id: "lyk-4",
+    question: "¿Dónde debe colocarse la prop key al usar map?",
+    options: [
+      "En el primer elemento hijo del componente que se mapea",
+      "En el elemento raíz que retorna el map, no en un elemento hijo interno",
+      "En el elemento HTML más externo del árbol completo",
+      "Puede ponerse en cualquier nivel, React la busca automáticamente",
+    ],
+    correctIndex: 1,
+    explanation:
+      "La key debe estar en el elemento raíz del map. Si el map retorna <li><span key={id}>...</span></li>, la key está en el lugar equivocado. Debe ser <li key={id}>...</li>. React usa la key para reconciliar el nivel del map, no los hijos internos.",
+  },
+  {
+    id: "lyk-5",
+    question: "¿Cuál es la diferencia práctica entre retornar null y false en JSX?",
+    options: [
+      "No hay diferencia, ambos ocultan el componente sin dejar rastro en el DOM",
+      "null oculta sin renderizar nada; false también, pero algunos linters prefieren null por claridad",
+      "false renderiza un nodo DOM vacío; null no renderiza nada",
+      "null cierra el Portal más cercano; false cancela el render completo",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Tanto null como false hacen que React no renderice nada al DOM. La diferencia es semántica: null comunica 'aquí no hay nada intencionalmente', false comunica una condición no cumplida. undefined también funciona. La convención es usar null para elementos opcionales.",
+  },
+  {
+    id: "lyk-6",
+    question: "¿Cuándo usar el operador ternario en lugar de && para renderizado condicional?",
+    options: [
+      "Siempre, el ternario es más seguro que &&",
+      "Cuando quieres mostrar un elemento alternativo si la condición es falsa",
+      "Solo cuando la condición es un booleano estricto",
+      "Cuando el componente tiene más de un nivel de anidamiento",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Si solo necesitas mostrar algo o nada, && es suficiente (con cuidado de los valores falsy). Si necesitas A o B según la condición, el ternario condición ? <A/> : <B/> es la herramienta correcta. Ambos son válidos en sus casos de uso.",
+  },
+  {
+    id: "lyk-7",
+    question:
+      "¿La key debe ser única en todo el árbol de React o solo entre hermanos del mismo nivel?",
+    options: [
+      "Única en todo el árbol — dos componentes con la misma key causan conflictos",
+      "Única solo entre los hermanos directos del mismo map o lista",
+      "Única dentro del mismo componente padre",
+      "Única globalmente en la aplicación para evitar colisiones",
+    ],
+    correctIndex: 1,
+    explanation:
+      "La key solo necesita ser única entre los hermanos directos del mismo conjunto. Dos listas distintas pueden usar perfectamente los mismos valores de key sin conflictos. React compara las keys solo dentro del mismo contexto de reconciliación.",
+  },
+  {
+    id: "lyk-8",
+    question: "¿Cómo mostrar un mensaje 'Sin resultados' cuando una lista filtrada está vacía?",
+    options: [
+      "items.length === 0 ? <p>Sin resultados</p> : items.map(...)",
+      "items.map(...) || <p>Sin resultados</p>",
+      "!items && <p>Sin resultados</p>",
+      "items.length < 1 ?? <p>Sin resultados</p>",
+    ],
+    correctIndex: 0,
+    explanation:
+      "El ternario es la forma más directa: si la longitud es 0, muestra el mensaje alternativo; si no, renderiza la lista. items.map(...) || ... no funciona porque map retorna un array vacío [] que es truthy. El operador ?? es para null/undefined, no para arrays.",
+  },
+  {
+    id: "lyk-9",
+    question: "¿Puede un componente retornar un array de elementos directamente (sin Fragment)?",
+    options: [
+      "No, el componente siempre debe retornar un único elemento raíz",
+      "Sí, retornar un array de elementos JSX es válido, pero cada elemento debe tener key",
+      "Solo si usa TypeScript con el tipo correcto",
+      "Solo desde React 18 con la nueva API de retorno múltiple",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Un componente puede retornar un array: return [<A key='a'/>, <B key='b'/>]. Es válido aunque poco común porque los Fragments son más legibles. Si retornas un array, cada elemento necesita key igual que en un map.",
+  },
+  {
+    id: "lyk-10",
+    question: "¿Qué hace React cuando la misma key aparece dos veces en el mismo nivel?",
+    options: [
+      "Lanza un error en producción y detiene el render",
+      "Muestra solo el primer elemento con esa key",
+      "Emite un warning en desarrollo y puede mostrar comportamiento inesperado en el DOM",
+      "Los fusiona en un único nodo DOM para mayor eficiencia",
+    ],
+    correctIndex: 2,
+    explanation:
+      "React emite un warning en consola pero no lanza un error. Sin embargo, el comportamiento es indefinido: puede renderizar solo uno de los duplicados o comportarse de forma impredecible durante la reconciliación. Las keys duplicadas rompen la garantía de identidad estable.",
+  },
+]
+
+const formulariosQuestions: QuizQuestion[] = [
+  {
+    id: "frm-1",
+    question: "¿Qué hace e.preventDefault() en el handler de onSubmit de un formulario?",
+    options: [
+      "Detiene la propagación del evento hacia los componentes padre",
+      "Evita el comportamiento por defecto del navegador de recargar la página al enviar el formulario",
+      "Cancela el evento de submit y vacía los inputs automáticamente",
+      "Impide que el formulario valide sus campos nativos del navegador",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Sin preventDefault(), al hacer submit el navegador recarga la página — el comportamiento HTTP por defecto de los formularios. En React manejamos el submit con JavaScript, así que necesitamos evitar ese comportamiento nativo para procesar los datos sin recarga.",
+  },
+  {
+    id: "frm-2",
+    question: "¿Por qué un input con value={texto} pero sin onChange es problemático?",
+    options: [
+      "Causa un error de TypeScript porque value requiere onChange",
+      "El input queda en modo de solo lectura: el usuario no puede escribir aunque lo intente",
+      "El valor no se actualiza en el estado, pero el input funciona normalmente",
+      "React ignora el value si no hay onChange definido",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React controla el valor del input mediante el state. Si hay value pero no onChange, React sobreescribe el input con el valor del state en cada render — impidiendo que el usuario escriba. React mostrará un warning. La solución: añadir onChange, o usar defaultValue para modo no controlado.",
+  },
+  {
+    id: "frm-3",
+    question: "¿Cuál es la diferencia entre value y defaultValue en un input?",
+    options: [
+      "value controla el estado en tiempo real (controlado); defaultValue establece el valor inicial sin control de React (no controlado)",
+      "defaultValue es para inputs de tipo text; value para checkboxes",
+      "value se usa en formularios de login; defaultValue en formularios de registro",
+      "No hay diferencia práctica entre ambos",
+    ],
+    correctIndex: 0,
+    explanation:
+      "value convierte el input en controlado: React es la fuente de verdad y actualiza el DOM en cada render. defaultValue solo establece el valor inicial y luego el DOM maneja su propio estado — es para componentes no controlados. No se mezclan en el mismo input.",
+  },
+  {
+    id: "frm-4",
+    question: "¿Cómo se maneja correctamente un checkbox controlado en React?",
+    options: [
+      "Usar value={checked} y onChange para actualizar el estado",
+      "Usar checked={booleano} y onChange que actualice el booleano con e.target.checked",
+      "Los checkboxes no pueden ser controlados en React, solo no controlados",
+      "Usar onClick en lugar de onChange para detectar cambios",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Los checkboxes usan checked (no value) para el modo controlado. El handler debe leer e.target.checked — un booleano — no e.target.value. Ejemplo: <input type='checkbox' checked={activo} onChange={e => setActivo(e.target.checked)} />",
+  },
+  {
+    id: "frm-5",
+    question: "¿Cómo leer todos los valores de un formulario no controlado en el evento submit?",
+    options: [
+      "Acceder a e.target.children y recorrer los inputs",
+      "Usar new FormData(e.target) y llamar a .get('nombreDelCampo')",
+      "Leer document.getElementById para cada campo",
+      "Los formularios no controlados no pueden leerse en el submit",
+    ],
+    correctIndex: 1,
+    explanation:
+      "new FormData(event.target) recoge todos los campos con atributo name del formulario. formData.get('email') devuelve el valor actual. Es la forma idiomática para formularios no controlados en React — evita gestionar el estado de cada campo con useState.",
+  },
+  {
+    id: "frm-6",
+    question: "¿Cuándo tiene sentido usar un formulario no controlado sobre uno controlado?",
+    options: [
+      "Siempre que el formulario tenga más de 3 campos",
+      "Cuando no necesitas validación en tiempo real ni leer el valor antes del submit",
+      "Solo en formularios de búsqueda, nunca en formularios de datos importantes",
+      "Cuando el formulario usa estilos CSS personalizados",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Los formularios no controlados son más simples cuando solo necesitas el valor en el submit. Si necesitas validar mientras el usuario escribe, mostrar caracteres restantes, o activar/desactivar el botón submit en tiempo real, el formulario controlado con useState es la mejor opción.",
+  },
+  {
+    id: "frm-7",
+    question: "¿Cómo resetear un formulario controlado a sus valores iniciales?",
+    options: [
+      "Llamar a e.target.reset() dentro del handler del formulario",
+      "Actualizar el estado de cada campo al valor inicial (ej: setEmail(''))",
+      "Cambiar la key del formulario para que React lo desmonte y vuelva a montar",
+      "Tanto B como C son válidos según el caso",
+    ],
+    correctIndex: 3,
+    explanation:
+      "En un formulario controlado, el estado de React ES el formulario. Para resetear: actualiza todos los estados al valor inicial (opción B). La opción C (cambiar key) fuerza un remontaje completo y también resetea — útil si el formulario tiene muchos campos o estado complejo interno.",
+  },
+  {
+    id: "frm-8",
+    question: "¿Cómo manejar múltiples inputs controlados sin un useState por campo?",
+    options: [
+      "No es posible — cada campo necesita su propio useState",
+      "Usar un objeto en el estado y actualizar con spread en onChange usando e.target.name",
+      "Usar useReducer solo si hay más de 5 campos",
+      "Dejar los inputs no controlados y leer con refs en el submit",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Un objeto de estado es la solución más común: const [form, setForm] = useState({ email: '', password: '' }). En onChange: setForm(f => ({ ...f, [e.target.name]: e.target.value })). Con el atributo name en cada input, un solo handler sirve para todos los campos.",
+  },
+  {
+    id: "frm-9",
+    question: "¿Qué evento se usa para detectar cambios en un <select> controlado?",
+    options: [
+      "onInput — onChange solo funciona con inputs de texto",
+      "onChange — igual que en inputs de texto, React normaliza el comportamiento",
+      "onSelect — evento específico de los elementos <select>",
+      "onClick — porque el usuario hace click en la opción",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React normaliza onChange para todos los elementos de formulario: input text, checkbox, radio, select y textarea. El valor está en e.target.value igual que en un input de texto. React mapea esto a los eventos nativos correspondientes de cada elemento.",
+  },
+  {
+    id: "frm-10",
+    question:
+      "¿Cómo deshabilitar el botón de submit mientras el formulario tiene errores de validación?",
+    options: [
+      "Usar CSS pointer-events: none en el botón",
+      "Calcular hasErrors a partir del estado y pasar disabled={hasErrors} al botón",
+      "Añadir required a los inputs para que el navegador lo gestione",
+      "Interceptar el onClick del botón y no llamar a submit si hay errores",
+    ],
+    correctIndex: 1,
+    explanation:
+      "La forma idiomática en React: derivar la validez del formulario del estado actual (sin almacenar isValid en el estado) y pasar disabled={hasErrors} al botón. Esto es un componente controlado llevado hasta el botón submit. required del navegador tiene comportamiento limitado y difícil de personalizar.",
+  },
+]
+
+const efectosBasicosQuestions: QuizQuestion[] = [
+  {
+    id: "efb-1",
+    question: "¿Cuándo se ejecuta useEffect sin array de dependencias (sin segundo argumento)?",
+    options: [
+      "Solo en el primer render",
+      "En cada render del componente",
+      "Solo cuando las props cambian",
+      "Solo cuando el estado cambia",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Sin array de dependencias, useEffect se ejecuta después de cada render. Incluye el primer render y todos los re-renders posteriores. Es equivalente a no tener ninguna optimización — úsalo solo si realmente necesitas que el efecto corra siempre.",
+  },
+  {
+    id: "efb-2",
+    question: "¿Para qué sirve la función que retorna useEffect (la función de cleanup)?",
+    options: [
+      "Para indicarle a React cuándo el efecto terminó de ejecutarse",
+      "Para limpiar suscripciones, timers o listeners antes de que el efecto se vuelva a ejecutar o el componente se desmonte",
+      "Para capturar errores que ocurran dentro del efecto",
+      "Para resetear el estado del componente a su valor inicial",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React llama al cleanup antes de ejecutar el efecto nuevamente (si las dependencias cambiaron) y cuando el componente se desmonta. Es esencial para clearInterval, clearTimeout, removeEventListener y cancelar suscripciones. Sin cleanup, acumulas recursos que nunca se liberan.",
+  },
+  {
+    id: "efb-3",
+    question: "¿Por qué no se puede marcar la función de useEffect directamente como async?",
+    options: [
+      "React no soporta async/await dentro de efectos",
+      "Una función async retorna una Promise, pero useEffect espera una función de cleanup o undefined — no una Promise",
+      "Async dentro de useEffect causa loops infinitos",
+      "Es una limitación temporal que se resolverá en React 20",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Si la función de useEffect es async, retorna una Promise. React espera void o una función de cleanup. La solución: definir una función async interna y llamarla inmediatamente: useEffect(() => { async function load() { ... } load(); }, []).",
+  },
+  {
+    id: "efb-4",
+    question: "¿Qué ocurre si actualizas el estado dentro de useEffect con [] como dependencias?",
+    options: [
+      "React lanza un error de dependencias faltantes",
+      "El estado se actualiza una vez al montar — no causa loop porque las dependencias son vacías",
+      "Causa un loop infinito porque el setState dispara un re-render que ejecuta el efecto de nuevo",
+      "El cambio de estado se ignora dentro de useEffect con []",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Con [], el efecto solo corre en el montaje. Actualizar estado dentro no causa loop porque React no vuelve a ejecutar el efecto (las dependencias vacías no cambian). El re-render ocurre, pero el efecto no se re-ejecuta. El loop infinito ocurriría sin el [] o con el estado actualizado como dependencia.",
+  },
+  {
+    id: "efb-5",
+    question: "¿Cuántas veces se ejecuta useEffect con [] en React.StrictMode en desarrollo?",
+    options: [
+      "Una vez, StrictMode no afecta los efectos",
+      "Dos veces — React monta, desmonta y vuelve a montar intencionalmente para detectar efectos no idempotentes",
+      "Tres veces para mayor certeza estadística",
+      "Depende del navegador y del modo concurrent",
+    ],
+    correctIndex: 1,
+    explanation:
+      "StrictMode ejecuta el ciclo mount → unmount → mount en desarrollo para verificar que tu cleanup funciona correctamente. Si tu efecto tiene efectos secundarios no revertibles (analytics, mutaciones de BD), se detectan aquí. En producción solo corre una vez.",
+  },
+  {
+    id: "efb-6",
+    question: "¿Qué es una 'stale closure' en el contexto de useEffect?",
+    options: [
+      "Un efecto que no tiene cleanup y deja recursos sin liberar",
+      "Cuando el efecto captura el valor de una variable en el momento de crearse y no ve las actualizaciones posteriores",
+      "Un efecto que tarda demasiado y bloquea el render",
+      "Cuando se usa useEffect fuera de un componente React",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Las closures capturan valores del momento en que se crean. Si tienes useEffect con [] y lees count dentro, siempre verás 0 (el valor inicial). La solución: incluir count en las dependencias o usar actualización funcional (setCount(c => c + 1)) que no necesita el valor capturado.",
+  },
+  {
+    id: "efb-7",
+    question: "¿Cuándo se ejecuta el cleanup de un useEffect con dependencias [userId]?",
+    options: [
+      "Solo cuando el componente se desmonta",
+      "Antes de cada re-ejecución del efecto (cuando userId cambia) y también cuando el componente se desmonta",
+      "Después de cada ejecución del efecto",
+      "Solo si el efecto lanzó un error",
+    ],
+    correctIndex: 1,
+    explanation:
+      "El cleanup corre en dos momentos: (1) cuando el componente se desmonta, y (2) justo antes de que el efecto se vuelva a ejecutar por un cambio en las dependencias. Esto garantiza que al cambiar userId, cancelamos la petición anterior antes de lanzar la nueva.",
+  },
+  {
+    id: "efb-8",
+    question: "¿Es correcto tener múltiples useEffect en un mismo componente?",
+    options: [
+      "No, solo puede haber uno por componente — usa un único useEffect con toda la lógica",
+      "Sí, y es una buena práctica separar efectos por responsabilidad",
+      "Sí, pero solo si tienen diferentes arrays de dependencias",
+      "Solo en componentes de clase, no en funcionales",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Tener múltiples useEffect es la práctica recomendada. Cada efecto debería tener una sola responsabilidad. Separar el efecto del fetch del efecto de un event listener hace el código más legible, testeable y con cleanups independientes. React los ejecuta en orden de declaración.",
+  },
+  {
+    id: "efb-9",
+    question:
+      "¿Qué problema tiene incluir un objeto creado en el render como dependencia de useEffect?",
+    options: [
+      "Ninguno, React compara objetos por valor profundo",
+      "El objeto tiene una referencia nueva en cada render, causando que el efecto corra en cada render aunque los datos sean iguales",
+      "TypeScript lanza un error de tipo porque las dependencias deben ser primitivos",
+      "React serializa el objeto y lo compara como JSON automáticamente",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React compara dependencias por referencia (Object.is). Un objeto literal { id: 1 } crea una nueva referencia en cada render, aunque tenga el mismo contenido. El efecto corre en cada render como si no hubiera dependencias. Solución: usar primitivos como dependencias (el id, no el objeto) o memoizar con useMemo.",
+  },
+  {
+    id: "efb-10",
+    question: "¿Cuál es la forma correcta de hacer fetch dentro de useEffect?",
+    options: [
+      "useEffect(async () => { const data = await fetch(...) }, [])",
+      "useEffect(() => { fetch(...).then(r => r.json()).then(setData) }, [])",
+      "useEffect(() => { async function load() { const r = await fetch(...); setData(await r.json()); } load(); }, [])",
+      "Las opciones B y C son ambas válidas",
+    ],
+    correctIndex: 3,
+    explanation:
+      "Tanto B (.then() encadenado) como C (función async interna llamada de inmediato) son válidos. La opción A no funciona porque la función async retorna una Promise en lugar de undefined o cleanup. C es preferida cuando hay múltiples awaits porque es más legible.",
+  },
+]
+
+const estadoBasicoQuestions: QuizQuestion[] = [
+  {
+    id: "stb-1",
+    question: "¿Por qué no debes mutar el estado directamente (ej: state.count = 5)?",
+    options: [
+      "React lanzará un TypeError si detecta la mutación",
+      "La mutación no dispara un re-render porque React no detecta cambios en la misma referencia",
+      "Es solo una convención de estilo, funcionaría igual",
+      "Las mutaciones son más lentas que usar setState",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React detecta cambios comparando referencias. Si mutas el objeto sin crear uno nuevo, la referencia es la misma — React asume que no cambió nada y no re-renderiza. Siempre crea un nuevo objeto/array: setItems([...items, nuevoItem]) en lugar de items.push(nuevoItem).",
+  },
+  {
+    id: "stb-2",
+    question:
+      "¿Cuándo necesitas usar la forma funcional setCount(c => c + 1) en lugar de setCount(count + 1)?",
+    options: [
+      "Siempre — la forma funcional es siempre mejor",
+      "Cuando el nuevo valor depende del valor actual y puede haber múltiples actualizaciones en el mismo ciclo",
+      "Solo cuando el componente usa useCallback o useMemo",
+      "Solo en loops o setTimeout",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Si llamas a setCount varias veces en el mismo handler, cada llamada con setCount(count + 1) usa el valor capturado en el render — siempre el mismo. Con setCount(c => c + 1), React aplica cada actualización al valor más reciente. Tres incrementos consecutivos deben sumar 3, no 1.",
+  },
+  {
+    id: "stb-3",
+    question:
+      "¿Qué hace React si llamas a setState con exactamente el mismo valor que ya tiene el estado?",
+    options: [
+      "Re-renderiza igual porque no puede saber si algo cambió",
+      "Puede omitir el re-render si comprueba que el nuevo valor es el mismo (bailout)",
+      "Lanza un warning diciendo que el estado no cambió",
+      "Actualiza el estado pero no el DOM",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React usa Object.is para comparar el nuevo estado con el anterior. Si son iguales, React puede saltar el re-render del componente (bailout). Para primitivos esto es muy eficiente. Para objetos, aunque el contenido sea igual, si es una referencia nueva, React re-renderiza.",
+  },
+  {
+    id: "stb-4",
+    question: "¿Cómo actualizar correctamente un campo de un objeto en el estado?",
+    options: [
+      "state.email = nuevoEmail; setState(state)",
+      "setState({ email: nuevoEmail }) — React fusiona el nuevo valor con el anterior",
+      "setState(prev => ({ ...prev, email: nuevoEmail })) — spread del objeto anterior más el campo actualizado",
+      "setState(Object.assign(state, { email: nuevoEmail }))",
+    ],
+    correctIndex: 2,
+    explanation:
+      "useState no fusiona objetos automáticamente (a diferencia de setState de clase). Debes hacer el spread manualmente: { ...prev, email: nuevoEmail }. La opción A muta el estado. La opción B sobrescribe todo el estado con solo email. La opción D muta el objeto antes de pasarlo a setState.",
+  },
+  {
+    id: "stb-5",
+    question: "¿Qué es el 'estado derivado' y cuándo no necesitas useState para él?",
+    options: [
+      "Estado que proviene de props — siempre debe almacenarse en useState",
+      "Un valor calculable directamente a partir del estado o props existentes — no necesitas useState, se calcula en el render",
+      "Estado que se inicializa a partir de una prop — necesita su propio useState",
+      "Estado que depende de una petición HTTP asíncrona",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Si puedes calcular un valor a partir del estado existente, no lo guardes en otro useState. Ejemplo: si tienes items[], no necesitas const [count, setCount] = useState(items.length) — simplemente usa const count = items.length en el render. Duplicar estado derivado causa inconsistencias.",
+  },
+  {
+    id: "stb-6",
+    question:
+      "¿Qué garantiza React sobre el agrupamiento (batching) de múltiples setState en React 18?",
+    options: [
+      "Solo agrupa setState dentro de event handlers de React, nunca en setTimeout o fetch",
+      "Agrupa todos los setState en un solo re-render, incluso dentro de setTimeout, promesas y eventos nativos",
+      "Agrupa setState solo si los llamas en la misma línea de código",
+      "No garantiza nada — el batching es una optimización opcional del motor JS",
+    ],
+    correctIndex: 1,
+    explanation:
+      "React 18 introdujo automatic batching: múltiples setState en cualquier contexto asíncrono (setTimeout, fetch, promises) se agrupan en un único re-render. Antes de React 18, el batching solo ocurría en event handlers de React. Más batching = menos re-renders = mejor rendimiento.",
+  },
+  {
+    id: "stb-7",
+    question: "¿Dos instancias del mismo componente comparten su estado?",
+    options: [
+      "Sí, el estado está vinculado al tipo de componente, no a la instancia",
+      "No, cada instancia del componente tiene su propio estado completamente independiente",
+      "Solo si están en el mismo componente padre",
+      "Solo si usan el mismo nombre de variable en useState",
+    ],
+    correctIndex: 1,
+    explanation:
+      "El estado de React está vinculado a la posición en el árbol de componentes, no al componente como tipo. Dos <Contador /> en el árbol son instancias independientes con su propio estado. Cambiar el count de uno no afecta al otro. Para compartir estado, debes levantarlo a un ancestro común.",
+  },
+  {
+    id: "stb-8",
+    question: "¿Cuál es el orden correcto de los valores que retorna useState?",
+    options: [
+      "[setter, value] — primero el setter para seguir la convención de hooks",
+      "[value, setter] — primero el valor actual, luego la función para actualizarlo",
+      "{ value, set } — un objeto con las dos propiedades",
+      "Depende de si se pasa valor inicial o función inicializadora",
+    ],
+    correctIndex: 1,
+    explanation:
+      "useState retorna siempre un array de dos elementos: [valorActual, funcionSetteadora]. La convención de destructuring es const [count, setCount] = useState(0). El orden es fijo — valor primero, setter segundo. No hay variante de objeto.",
+  },
+  {
+    id: "stb-9",
+    question: "¿Cómo actualizar correctamente un array de objetos en el estado?",
+    options: [
+      "items[0].done = true; setItems(items)",
+      "setItems(items.map(item => item.id === id ? { ...item, done: true } : item))",
+      "setItems(items.splice(0, 1, { ...items[0], done: true }))",
+      "items.forEach(item => { if (item.id === id) item.done = true }); setItems(items)",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Debes crear un nuevo array y nuevos objetos para los items modificados — nunca mutar. map retorna un nuevo array. Para el item que cambia: { ...item, done: true } crea un nuevo objeto. Las opciones A y D mutan el estado. splice muta el array original.",
+  },
+  {
+    id: "stb-10",
+    question: "¿Cuándo ocurre el re-render de un componente en React?",
+    options: [
+      "Solo cuando setState es llamado con un valor diferente",
+      "Cuando cambia el estado propio, cuando cambian las props, o cuando el componente padre se re-renderiza (sin React.memo)",
+      "Solo cuando el usuario interactúa con el componente",
+      "En cada animationFrame del navegador para mantener la UI sincronizada",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Un componente se re-renderiza por tres razones: (1) su propio estado cambió, (2) sus props cambiaron, o (3) su padre se re-renderizó y el componente no está envuelto en React.memo. El re-render recalcula el JSX — React luego compara con el Virtual DOM anterior y aplica solo los cambios reales al DOM.",
+  },
+]
+
+const contextoQuestions: QuizQuestion[] = [
+  {
+    id: "ctx-1",
+    question: "¿Cuál es el propósito principal de la API Context de React?",
+    options: [
+      "Reemplazar completamente a Redux y otras librerías de estado global",
+      "Pasar datos directamente a componentes profundos del árbol sin prop drilling",
+      "Sincronizar el estado entre el servidor y el cliente en tiempo real",
+      "Crear stores de estado inmutable como alternativa a useReducer",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Context resuelve el prop drilling: pasar datos por componentes intermedios que no los necesitan. Es ideal para datos globales de la sesión como tema, locale o usuario autenticado. No es un reemplazo general de Redux — para lógica compleja con muchas actualizaciones, un state manager dedicado puede ser mejor.",
+  },
+  {
+    id: "ctx-2",
+    question: "¿Qué valor recibe useContext(MiContexto) cuando no hay ningún Provider en el árbol?",
+    options: [
+      "null siempre",
+      "undefined siempre",
+      "El defaultValue pasado a createContext() cuando se creó el contexto",
+      "Lanza un error automáticamente porque el Provider es obligatorio",
+    ],
+    correctIndex: 2,
+    explanation:
+      "createContext(defaultValue) — el defaultValue es el fallback cuando no hay Provider. Si no pasas nada, el default es undefined. React no lanza error automáticamente; si quieres forzar el Provider, hazlo en el hook personalizado: if (!ctx) throw new Error('Requiere Provider').",
+  },
+  {
+    id: "ctx-3",
+    question: "¿Cuándo se re-renderiza un consumidor de Context?",
+    options: [
+      "Solo cuando el componente padre se re-renderiza",
+      "Cada vez que el value del Provider cambia, independientemente de si el padre se re-renderizó",
+      "Cada vez que cualquier componente del árbol cambia su estado",
+      "Solo si el consumidor también tiene su propio useState",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Todos los consumidores de un Context se re-renderizan cuando el value del Provider cambia — usando comparación por referencia (Object.is). Esto es independiente del re-render del padre. React.memo no evita los re-renders causados por cambios en el Context.",
+  },
+  {
+    id: "ctx-4",
+    question:
+      "¿Por qué <MiCtx.Provider value={{ tema, setTema }}> puede causar re-renders innecesarios?",
+    options: [
+      "Porque los objetos literales no están permitidos como value del Provider",
+      "Porque un objeto literal crea una referencia nueva en cada render del padre, aunque tema no haya cambiado",
+      "Porque el Provider no acepta setTema como parte del value — debe ir en otra prop",
+      "Porque React compara objetos por valor profundo y eso tiene un costo alto",
+    ],
+    correctIndex: 1,
+    explanation:
+      "{ tema, setTema } crea un objeto nuevo en cada render del padre del Provider. Referencia nueva → todos los consumidores se re-renderizan aunque tema sea el mismo. La solución: memoizar el value con useMemo(() => ({ tema, setTema }), [tema]).",
+  },
+  {
+    id: "ctx-5",
+    question: "¿Puede un componente consumir múltiples Contexts al mismo tiempo?",
+    options: [
+      "No, un componente solo puede suscribirse a un Context a la vez",
+      "Sí, usando múltiples llamadas a useContext() — una por cada Context",
+      "Solo si los Contexts están relacionados y fueron creados juntos",
+      "Solo si se envuelven en un HOC que combina los Contexts",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Un componente puede llamar a useContext() tantas veces como necesite: const { tema } = useContext(TemaCtx); const { usuario } = useContext(AuthCtx). Cada llamada suscribe el componente al Context correspondiente de forma independiente.",
+  },
+  {
+    id: "ctx-6",
+    question:
+      "¿Cuál es la estrategia para evitar que componentes que solo leen setTema se re-rendericen cuando tema cambia?",
+    options: [
+      "Es imposible — cualquier consumidor del Context se re-renderiza cuando el value cambia",
+      "Separar el Context en dos: uno para el valor (tema) y otro para el setter (setTema)",
+      "Usar React.memo en los consumidores de setTema",
+      "Pasar setTema directamente como prop en lugar de por Context",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Si separas ThemeContext (solo el valor) de ThemeDispatchContext (solo el setter), los componentes que solo leen setTema no se re-renderizan cuando el tema cambia porque están suscritos al Context del setter — que tiene referencia estable ya que setTema no cambia entre renders.",
+  },
+  {
+    id: "ctx-7",
+    question: "¿Puede haber múltiples instancias del mismo Provider anidadas en el árbol?",
+    options: [
+      "No, solo puede haber un Provider por Context en toda la aplicación",
+      "Sí, y cada uno puede tener un value diferente — los consumidores usarán el Provider más cercano",
+      "Sí, pero los valores se fusionan automáticamente con merge profundo",
+      "Solo en modo de desarrollo, no en producción",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Puedes anidar múltiples Providers del mismo Context con diferentes values. Cada consumidor usará el Provider más cercano hacia arriba en el árbol. Esto es útil para sobreescribir valores en subtemas de la UI (ej: tema oscuro dentro de una sección concreta de la app).",
+  },
+  {
+    id: "ctx-8",
+    question: "¿Cuál es la principal limitación de Context para gestión de estado global complejo?",
+    options: [
+      "Solo puede almacenar strings y números, no objetos complejos",
+      "Cualquier cambio en el value re-renderiza todos los consumidores, sin granularidad fina por campo",
+      "No funciona con componentes de clase",
+      "Solo puede usarse una vez en la aplicación",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Context no tiene selectores. Si el value es { usuario, preferencias, carrito }, cambiar solo el carrito re-renderiza TODOS los consumidores — incluso los que solo leen usuario. Librerías como Zustand o Jotai tienen selectores que limitan los re-renders a los consumidores del dato específico que cambió.",
+  },
+  {
+    id: "ctx-9",
+    question:
+      "¿Qué retorna useContext cuando el componente está dentro del Provider pero su value es undefined?",
+    options: [
+      "El defaultValue de createContext, porque React hace fallback automático",
+      "undefined — el value del Provider tiene prioridad sobre el defaultValue de createContext",
+      "null, porque React normaliza undefined a null en los Contexts",
+      "Lanza un error porque undefined no es un value válido para un Provider",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Cuando hay un Provider, su value siempre tiene prioridad — incluso si es undefined. El defaultValue de createContext solo se usa cuando NO hay ningún Provider en el árbol. <MiCtx.Provider value={undefined}> → useContext retorna undefined, no el defaultValue.",
+  },
+  {
+    id: "ctx-10",
+    question: "¿Cuál es la forma recomendada de exponer un Context a los consumidores?",
+    options: [
+      "Exportar el objeto Context directamente y que cada consumidor llame a useContext",
+      "Crear un hook personalizado (ej: useTheme) que llama a useContext internamente y valida el Provider",
+      "Exportar el Provider y dejar que cada consumidor cree su propio Context local",
+      "Usar un HOC para inyectar el Context como props a los componentes que lo necesiten",
+    ],
+    correctIndex: 1,
+    explanation:
+      "El patrón recomendado: exporta el Provider y un hook personalizado (useTheme, useAuth) que llama a useContext internamente. El hook puede validar que hay Provider, ocultar detalles de implementación y añadir lógica derivada. Los consumidores llaman a useTheme() en lugar de manejar el Context directamente.",
+  },
+]
+
 export const allQuizzes: Quiz[] = [
   {
     id: "fundamentos",
@@ -664,6 +1340,34 @@ export const allQuizzes: Quiz[] = [
     description: "State, props, Virtual DOM y las bases de React",
     difficulty: "basic",
     questions: fundamentosQuestions,
+  },
+  {
+    id: "listas-y-keys",
+    label: "Listas y keys",
+    description: "Renderizado de listas, prop key, renderizado condicional y Fragments",
+    difficulty: "basic",
+    questions: listasYKeysQuestions,
+  },
+  {
+    id: "formularios",
+    label: "Formularios",
+    description: "Inputs controlados, eventos de formulario y manejo del submit",
+    difficulty: "basic",
+    questions: formulariosQuestions,
+  },
+  {
+    id: "efectos-basicos",
+    label: "Efectos",
+    description: "useEffect: cuándo corre, cleanup, dependencias y errores comunes",
+    difficulty: "basic",
+    questions: efectosBasicosQuestions,
+  },
+  {
+    id: "estado-basico",
+    label: "Estado",
+    description: "useState: actualizaciones, inmutabilidad, batching y estado derivado",
+    difficulty: "basic",
+    questions: estadoBasicoQuestions,
   },
   {
     id: "hooks",
@@ -685,6 +1389,13 @@ export const allQuizzes: Quiz[] = [
     description: "Memoización, code splitting, batching y optimización de renders",
     difficulty: "intermediate",
     questions: rendimientoQuestions,
+  },
+  {
+    id: "contexto",
+    label: "Context API",
+    description: "createContext, Provider, useContext y patrones para evitar re-renders",
+    difficulty: "intermediate",
+    questions: contextoQuestions,
   },
   {
     id: "avanzado",

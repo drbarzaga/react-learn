@@ -1,10 +1,10 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { ThemeProvider } from "@/hooks/useTheme"
-import { EditorThemeProvider } from "@/hooks/useEditorTheme"
-import { ProgressProvider } from "@/hooks/useProgress"
-import { CodePersistenceProvider } from "@/hooks/useCodePersistence"
+import { ThemeProvider } from "@/hooks/use-theme"
+import { EditorThemeProvider } from "@/hooks/use-editor-theme"
+import { ProgressProvider } from "@/hooks/use-progress"
+import { CodePersistenceProvider } from "@/hooks/use-code-persistence"
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (

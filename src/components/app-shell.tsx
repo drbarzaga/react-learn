@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
-import { Sidebar } from "@/components/Sidebar"
-import { SearchModal } from "@/components/SearchModal"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { Sidebar } from "@/components/sidebar"
+import { SearchModal } from "@/components/search-modal"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export function AppShell({ children }: { children: React.ReactNode }) {

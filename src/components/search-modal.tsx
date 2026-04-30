@@ -13,8 +13,8 @@ import {
   CommandList,
   CommandShortcut,
 } from "@/components/ui/command"
-import { useContent } from "@/components/ContentProvider"
-import { useLocaleRouter } from "@/hooks/useLocaleRouter"
+import { useContent } from "@/providers/content-provider"
+import { useLocaleRouter } from "@/hooks/use-locale-router"
 
 type ResultKind = "concept" | "exercise" | "quiz"
 
@@ -104,7 +104,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       .map((k) => ({ kind: k, items: map[k]! }))
   }, [results])
 
-  function handleSelect(href: string) {
+  const handleSelect = (href: string) => {
     push(`/${href}`)
     onClose()
   }

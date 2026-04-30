@@ -4,7 +4,7 @@ import { rendimiento } from "@/content/rendimiento"
 import { concurrencia } from "@/content/concurrencia"
 import { composicion } from "@/content/composicion"
 import { entrevistas } from "@/content/entrevistas"
-import { Playground } from "@/components/Playground"
+import { Playground } from "@/components/playground"
 import type { Concept, Category } from "@/content/types"
 
 export type { Concept, Category, Section } from "@/content/types"

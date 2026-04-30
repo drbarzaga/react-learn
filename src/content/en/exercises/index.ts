@@ -1,6 +1,7 @@
 import { counter } from "@/content/exercises/counter"
 import { autoFocus } from "@/content/exercises/auto-focus"
 import { stopwatch } from "@/content/exercises/stopwatch"
+import { filteredList } from "@/content/exercises/filtered-list"
 import { todoList } from "@/content/exercises/todo-list"
 import { formReducer } from "@/content/exercises/form-reducer"
 import { fetchUser } from "@/content/exercises/fetch-user"
@@ -21,6 +22,109 @@ type ExerciseOverride = Partial<
 >
 
 const overrides: Record<string, ExerciseOverride> = {
+  "filtered-list": {
+    title: "Real-time filtered list",
+    lede: "A search field filters a list of fruits as the user types. The filtered result is derived directly from state — no extra useState or useMemo needed at this scale.",
+    objectives: [
+      "Declare a query state starting at an empty string",
+      "Bind the input to state with value and onChange",
+      "Derive filtered as FRUITS.filter(...) directly in the render, without additional useState",
+      "Show the result count: '{n} result(s)'",
+      "Show a 'No results' message when filtered is empty",
+      "'clear' button resets query to an empty string",
+    ],
+    hint: "You don't need useState for filtered — it's a value derived from the query state. Calculate it directly in the render with .filter(). Derived state is not stored, it's recalculated.",
+    starter: {
+      "/App.js": `import { useState } from "react";
+
+const FRUITS = [
+  "Apple", "Banana", "Cherry", "Peach", "Grape",
+  "Kiwi", "Lemon", "Mango", "Orange", "Pear",
+  "Pineapple", "Watermelon", "Strawberry", "Melon", "Plum",
+];
+
+export default function App() {
+  // TODO: declare query state with initial value ""
+
+  // TODO: derive filtered from FRUITS using query (no useState)
+
+  return (
+    <div style={{ padding: 24, fontFamily: "system-ui", maxWidth: 320 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+        <input
+          // TODO: bind value and onChange to query state
+          placeholder="Search fruit..."
+          style={{ flex: 1 }}
+        />
+        <button /* TODO: onClick that resets query to "" */>
+          clear
+        </button>
+      </div>
+
+      {/* TODO: show '{n} result(s)' */}
+
+      {/* TODO: show "No results" when filtered is empty */}
+
+      <ul style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
+        {/* TODO: render filtered with key and text */}
+      </ul>
+    </div>
+  );
+}
+`,
+    },
+    solution: {
+      "/App.js": `import { useState } from "react";
+
+const FRUITS = [
+  "Apple", "Banana", "Cherry", "Peach", "Grape",
+  "Kiwi", "Lemon", "Mango", "Orange", "Pear",
+  "Pineapple", "Watermelon", "Strawberry", "Melon", "Plum",
+];
+
+export default function App() {
+  const [query, setQuery] = useState("");
+
+  const filtered = FRUITS.filter((f) =>
+    f.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return (
+    <div style={{ padding: 24, fontFamily: "system-ui", maxWidth: 320 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search fruit..."
+          style={{ flex: 1 }}
+        />
+        <button onClick={() => setQuery("")}>clear</button>
+      </div>
+
+      <p style={{ margin: "0 0 8px", color: "var(--fg-muted)", fontSize: 13 }}>
+        {filtered.length} result(s)
+      </p>
+
+      {filtered.length === 0 && (
+        <p style={{ color: "var(--fg-muted)" }}>No results</p>
+      )}
+
+      <ul style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
+        {filtered.map((fruit) => (
+          <li
+            key={fruit}
+            style={{ padding: "4px 0", borderBottom: "1px solid var(--line)" }}
+          >
+            {fruit}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+`,
+    },
+  },
   counter: {
     title: "Classic counter",
     lede: "A counter with controls to increment, decrement, and reset. The '+3' button must add three units even if pressed several times in a row — use functional updates.",
@@ -1642,6 +1746,7 @@ export const allExercises: Exercise[] = [
   counter,
   autoFocus,
   stopwatch,
+  filteredList,
   todoList,
   formReducer,
   fetchUser,

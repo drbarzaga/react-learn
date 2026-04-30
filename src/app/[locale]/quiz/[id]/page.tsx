@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { QuizPage } from "@/components/QuizPage"
+import { QuizPage } from "@/components/quiz-page"
 import { getContentForLocale } from "@/content/loader"
 import { routing, type Locale } from "@/i18n/routing"
 import type { Metadata } from "next"

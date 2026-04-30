@@ -1,4 +1,4 @@
-import { Playground } from "@/components/Playground"
+import { Playground } from "@/components/playground"
 import type { Concept } from "./types"
 
 export const composicion: Concept[] = [
