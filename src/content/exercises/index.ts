@@ -1,6 +1,7 @@
 import { counter } from "./counter"
 import { autoFocus } from "./auto-focus"
 import { stopwatch } from "./stopwatch"
+import { listaFiltrada } from "./lista-filtrada"
 import { todoList } from "./todo-list"
 import { formReducer } from "./form-reducer"
 import { fetchUser } from "./fetch-user"
@@ -20,6 +21,7 @@ export const allExercises: Exercise[] = [
   counter,
   autoFocus,
   stopwatch,
+  listaFiltrada,
   todoList,
   formReducer,
   fetchUser,
