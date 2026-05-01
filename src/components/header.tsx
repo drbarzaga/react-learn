@@ -14,8 +14,8 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
 import { type EditorThemeId } from "@/types"
-import { EDITOR_THEMES_META, REPOSITORY, STARS_KILO_THRESHOLD } from "@/lib/constants"
-import { MoonIcon, PaletteIcon, SunIcon } from "./svg-icons"
+import { DISCORD_URL, EDITOR_THEMES_META, REPOSITORY, STARS_KILO_THRESHOLD } from "@/lib/constants"
+import { DiscordIcon, MoonIcon, PaletteIcon, SunIcon } from "./svg-icons"
 
 interface HeaderProps {
   onSearchOpen?: () => void
@@ -45,9 +45,9 @@ export function Header({ onSearchOpen }: HeaderProps) {
   return (
     <TooltipProvider delay={400}>
       <header className="relative z-20 flex h-12 shrink-0 items-center justify-between border-b border-[var(--color-line)] bg-[var(--color-bg)] px-3 md:px-6">
+        {/* Left — logo */}
         <div className="flex items-center gap-2">
           <SidebarTrigger className="text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)] md:hidden" />
-
           <Link
             href={href("/")}
             className="flex items-center gap-2 text-[14px] text-[var(--color-fg)] transition-colors hover:text-[var(--color-fg-muted)]"
@@ -57,8 +57,9 @@ export function Header({ onSearchOpen }: HeaderProps) {
           </Link>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-3">
-          {/* Mobile search — icon only */}
+        {/* Right — actions */}
+        <div className="flex items-center gap-1 md:gap-2">
+          {/* Mobile search icon */}
           <button
             type="button"
             onClick={onSearchOpen}
@@ -68,7 +69,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
             <Search className="h-[15px] w-[15px]" strokeWidth={1.8} />
           </button>
 
-          {/* Search trigger */}
+          {/* Desktop search */}
           <button
             type="button"
             onClick={onSearchOpen}
@@ -104,12 +105,13 @@ export function Header({ onSearchOpen }: HeaderProps) {
             </kbd>
           </button>
 
+          {/* GitHub stars */}
           {stars !== null && (
             <Tooltip>
               <TooltipTrigger
                 render={
                   <a
-                    href="https://github.com/drbarzaga/react-dojo"
+                    href={`https://github.com/${REPOSITORY}`}
                     target="_blank"
                     rel="noreferrer"
                     className="flex h-7 items-center gap-1.5 rounded-md px-2 text-[12px] text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
@@ -185,6 +187,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
             )}
           </div>
 
+          {/* Theme toggle */}
           <Tooltip>
             <TooltipTrigger
               render={
@@ -206,6 +209,24 @@ export function Header({ onSearchOpen }: HeaderProps) {
           </Tooltip>
 
           <LocaleSwitcher />
+
+          {/* Discord */}
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <a
+                  href={DISCORD_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={t("joinDiscord")}
+                  className="discord-glow grid h-7 w-7 place-items-center rounded-md text-[#5865F2] transition-colors hover:bg-[var(--color-bg-hover)]"
+                >
+                  <DiscordIcon className="h-[16px] w-[16px]" />
+                </a>
+              }
+            />
+            <TooltipContent>{t("joinDiscord")}</TooltipContent>
+          </Tooltip>
         </div>
       </header>
     </TooltipProvider>

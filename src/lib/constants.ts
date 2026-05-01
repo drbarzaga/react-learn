@@ -9,6 +9,9 @@ export const EDITOR_THEMES_META: Record<EditorThemeId, EditorThemeMeta> = {
 }
 
 export const REPOSITORY = "drbarzaga/react-dojo"
+export const DISCORD_URL = "https://discord.gg/nAjvxeXGn"
+
+export const STARS_KILO_THRESHOLD = 1000
 
 export const STARS_KILO_THRESHOLD = 1000
 
