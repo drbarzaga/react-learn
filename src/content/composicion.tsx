@@ -410,4 +410,134 @@ export default function App() {
       "Importar desde 'react-dom', no desde 'react'.",
     ],
   },
+  {
+    id: "compound-components",
+    label: "Compound Components",
+    kicker: "Patrón · Composición",
+    title: "Componentes que se entienden entre sí",
+    lede: "Compound Components es un patrón donde un componente padre comparte estado implícitamente con sus hijos a través de Context. Los hijos son piezas independientes que saben cómo hablar con el padre — sin props manuales entre ellos. Es la base de Radix UI, shadcn/ui y la mayoría de los sistemas de diseño modernos.",
+    sections: [
+      {
+        heading: "La idea central",
+        body: (
+          <p>
+            En lugar de controlar todo desde el padre con props (<code>activeTab</code>,{" "}
+            <code>onTabChange</code>, <code>tabLabels</code>…), creas un contexto interno que los
+            subcomponentes consumen. El usuario compone las piezas libremente:{" "}
+            <code>{`<Tabs><Tabs.List>…</Tabs.List><Tabs.Panel>…</Tabs.Panel></Tabs>`}</code>. El
+            estado vive en <code>Tabs</code>, pero ningún hijo necesita recibir props explícitas.
+          </p>
+        ),
+      },
+      {
+        heading: "Cómo se construye",
+        body: (
+          <p>
+            Crea un contexto privado. El componente raíz gestiona el estado y provee el contexto.
+            Los subcomponentes lo consumen. Adjunta los subcomponentes como propiedades estáticas
+            del padre (<code>Tabs.List</code>, <code>Tabs.Tab</code>, <code>Tabs.Panel</code>) para
+            que la API sea autodescubrible — el usuario escribe <code>Tabs.</code> y su editor
+            muestra las piezas disponibles.
+          </p>
+        ),
+      },
+    ],
+    playground: (
+      <Playground
+        files={{
+          "/App.js": `import { createContext, useContext, useState } from "react";
+
+// Contexto privado — no se exporta
+const TabsCtx = createContext(null);
+
+function useTabs() {
+  const ctx = useContext(TabsCtx);
+  if (!ctx) throw new Error("useTabs debe usarse dentro de <Tabs>");
+  return ctx;
+}
+
+function Tabs({ defaultTab, children }) {
+  const [active, setActive] = useState(defaultTab);
+  return (
+    <TabsCtx.Provider value={{ active, setActive }}>
+      <div style={{ fontFamily: "system-ui" }}>{children}</div>
+    </TabsCtx.Provider>
+  );
+}
+
+function TabList({ children }) {
+  return (
+    <div style={{ display: "flex", gap: 4, borderBottom: "2px solid var(--line-strong)", paddingBottom: 2 }}>
+      {children}
+    </div>
+  );
+}
+
+function Tab({ id, children }) {
+  const { active, setActive } = useTabs();
+  const isActive = active === id;
+  return (
+    <button
+      onClick={() => setActive(id)}
+      style={{
+        padding: "6px 14px",
+        border: "none",
+        background: "transparent",
+        cursor: "pointer",
+        fontWeight: isActive ? 700 : 400,
+        color: isActive ? "var(--fg)" : "var(--fg-muted)",
+        borderBottom: isActive ? "2px solid var(--fg)" : "2px solid transparent",
+        marginBottom: -2,
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+function TabPanel({ id, children }) {
+  const { active } = useTabs();
+  if (active !== id) return null;
+  return (
+    <div style={{ padding: "16px 0", color: "var(--fg)" }}>
+      {children}
+    </div>
+  );
+}
+
+// Adjunta subcomponentes como propiedades estáticas
+Tabs.List = TabList;
+Tabs.Tab = Tab;
+Tabs.Panel = TabPanel;
+
+export default function App() {
+  return (
+    <Tabs defaultTab="react">
+      <Tabs.List>
+        <Tabs.Tab id="react">React</Tabs.Tab>
+        <Tabs.Tab id="vue">Vue</Tabs.Tab>
+        <Tabs.Tab id="svelte">Svelte</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel id="react">
+        <strong>React</strong> — librería de UI basada en componentes y estado reactivo.
+      </Tabs.Panel>
+      <Tabs.Panel id="vue">
+        <strong>Vue</strong> — framework progresivo con sistema de reactividad propio.
+      </Tabs.Panel>
+      <Tabs.Panel id="svelte">
+        <strong>Svelte</strong> — compilador que elimina el runtime, genera JS mínimo.
+      </Tabs.Panel>
+    </Tabs>
+  );
+}
+`,
+        }}
+      />
+    ),
+    pitfalls: [
+      "El contexto es privado al patrón — no lo expongas globalmente. Cada instancia de Tabs tiene su propio Provider.",
+      "Si el usuario anida dos Tabs, el contexto más cercano gana. Eso suele ser lo correcto, pero verifica que sea intencional.",
+      "Adjuntar subcomponentes como propiedades estáticas (Tabs.List) es convención, no obligatorio — también puedes exportarlos por separado.",
+    ],
+  },
 ]

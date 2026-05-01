@@ -50,7 +50,14 @@ export const categories: Category[] = [
     id: "composition",
     kicker: "V",
     title: "Composición",
-    conceptIds: ["useContext", "createPortal", "lazy", "useId", "useFormStatus"],
+    conceptIds: [
+      "useContext",
+      "createPortal",
+      "lazy",
+      "useId",
+      "useFormStatus",
+      "compound-components",
+    ],
   },
   {
     id: "interviews",
