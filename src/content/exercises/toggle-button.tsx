@@ -4,7 +4,7 @@ export const toggleButton: Exercise = {
   id: "toggle-button",
   label: "toggle button",
   title: "Botón toggle",
-  lede: "Un botón que alterna entre dos estados: 'off' y 'on'. Cambia el color y el texto según el estado. Usa el operador ternario paracondicional.",
+  lede: "Un botón que alterna entre dos estados: 'off' y 'on'. Cambia el color y el texto según el estado. Usa el operador ternario para condicional.",
   difficulty: "basic",
   objectives: [
     "Declara estado isOn con valor inicial false",
