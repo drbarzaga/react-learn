@@ -252,6 +252,8 @@ body {
 
 .star-animate {
   display: inline-block;
+  transform-box: fill-box;
+  transform-origin: center;
   animation: star-wiggle 4s ease-in-out infinite;
 }
 
