@@ -19,36 +19,18 @@ export const actionForm: Exercise = {
   relatedConcepts: ["useActionState", "useFormStatus"],
   dependencies: r19,
   starter: {
-    "/App.js": `import { useState } from "react";
+    "/App.js": `import { useActionState } from "react";
 
-// TODO: reemplaza con useActionState
-// async function registerAction(prevState, formData) { ... }
+// TODO: crea async function registerAction(prevState, formData)
+//   - valida username (mín 3 chars) y email (contiene @)
+//   - retorna { error: "mensaje" } si hay error
+//   - retorna { ok: true, username } si es válido
 
 export default function App() {
   // TODO: const [state, formAction, isPending] = useActionState(registerAction, null)
-
-  // código original con useState (a reemplazar)
-  const [state, setState] = useState(null);
-  const [isPending, setIsPending] = useState(false);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const username = formData.get("username")?.toString().trim();
-    const email = formData.get("email")?.toString().trim();
-
-    setIsPending(true);
-    await new Promise(r => setTimeout(r, 900));
-
-    if (!username || username.length < 3) {
-      setState({ error: "Username: mínimo 3 caracteres." });
-    } else if (!email || !email.includes("@")) {
-      setState({ error: "Email inválido." });
-    } else {
-      setState({ ok: true, username });
-    }
-    setIsPending(false);
-  }
+  const state = null;
+  const formAction = () => {};
+  const isPending = false;
 
   if (state?.ok) {
     return (
@@ -62,7 +44,7 @@ export default function App() {
     <div style={{ padding: 24, maxWidth: 300 }}>
       <h3 style={{ margin: "0 0 16px", fontSize: 15 }}>Crear cuenta</h3>
       {/* TODO: cambia onSubmit por action={formAction} */}
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <input name="username" placeholder="Usuario" disabled={isPending} />
         <input name="email" placeholder="Email" disabled={isPending} />
         {state?.error && (

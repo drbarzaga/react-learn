@@ -27,22 +27,20 @@ export default function App() {
 
   useEffect(() => {
     // TODO: crea un AbortController
+    // TODO: dispara un fetch a jsonplaceholder.typicode.com/users/[userId]
+    // TODO: pásalo al fetch como { signal: ctrl.signal }
+
     setLoading(true);
     setError(null);
 
-    fetch("https://jsonplaceholder.typicode.com/users/" + userId /* TODO: signal */)
-      .then((r) => r.json())
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        // TODO: ignora AbortError
-        setError(err.message);
-        setLoading(false);
-      });
+    // TODO: .then(r => r.json()).then(data => setUser(data), setLoading(false))
+    // TODO: .catch(err => {
+    //   if (err.name === "AbortError") return;
+    //   setError(err.message);
+    //   setLoading(false);
+    // })
 
-    // TODO: cleanup → abort
+    // TODO: en el cleanup, llama ctrl.abort()
   }, [userId]);
 
   return (

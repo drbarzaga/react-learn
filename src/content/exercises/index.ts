@@ -13,6 +13,20 @@ import { useMemoFilter } from "./use-memo-filter"
 import { transitionTabs } from "./transition-tabs"
 import { optimisticLike } from "./optimistic-like"
 import { actionForm } from "./action-form"
+import { toggleButton } from "./toggle-button"
+import { inputControl } from "./input-control"
+import { likeButton } from "./like-button"
+import { tabsComponent } from "./tabs-component"
+import { searchableList } from "./searchable-list"
+import { formValidation } from "./form-validation"
+import { dataTable } from "./data-table"
+import { modalManager } from "./modal-manager"
+import { infiniteScroll } from "./infinite-scroll"
+import { accordionComponent } from "./accordion-component"
+import { dropdownMenu } from "./dropdown-menu"
+import { colorPicker } from "./color-picker"
+import { stepWizard } from "./step-wizard"
+import { countdownTimer } from "./countdown-timer"
 import type { Exercise } from "./types"
 
 export type { Exercise, Difficulty } from "./types"
@@ -33,6 +47,20 @@ export const allExercises: Exercise[] = [
   transitionTabs,
   optimisticLike,
   actionForm,
+  toggleButton,
+  inputControl,
+  likeButton,
+  tabsComponent,
+  searchableList,
+  formValidation,
+  dataTable,
+  modalManager,
+  infiniteScroll,
+  accordionComponent,
+  dropdownMenu,
+  colorPicker,
+  stepWizard,
+  countdownTimer,
 ]
 
 export const exerciseIndex: Record<string, Exercise> = Object.fromEntries(

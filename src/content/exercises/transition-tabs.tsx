@@ -5,7 +5,7 @@ export const transitionTabs: Exercise = {
   label: "transition tabs",
   title: "Tabs sin bloqueo",
   lede: "Tres tabs, una renderiza 4000 items y bloquea el hilo. Al hacer click la UI se congela y la tab activa no responde hasta que termina. Usa useTransition para mantener los clicks responsivos y mostrar un indicador de carga.",
-  difficulty: "intermediate",
+  difficulty: "advanced",
   objectives: [
     "Envuelve setActiveTab en startTransition",
     "Usa isPending para atenuar visualmente la tab que está cargando",
@@ -31,8 +31,7 @@ const TABS = ["inicio", "lista lenta", "ajustes"];
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("inicio");
-  // TODO: usa useTransition para envolver setActiveTab
-  // TODO: usa isPending para mostrar feedback visual
+  // TODO: destructura [isPending, startTransition] de useTransition()
 
   return (
     <div style={{ padding: 24 }}>
@@ -40,10 +39,12 @@ export default function App() {
         {TABS.map(tab => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)} // TODO: envolver en startTransition
+            // TODO: envolver setActiveTab(tab) en startTransition
+            onClick={() => {}}
             style={{
               fontWeight: activeTab === tab ? "bold" : "normal",
-              // TODO: atenúa con opacity cuando isPending y tab !== activeTab
+              // TODO: reduce opacity si isPending y tab !== activeTab
+              transition: "opacity 150ms",
             }}
           >
             {tab}

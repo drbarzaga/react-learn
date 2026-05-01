@@ -7,7 +7,7 @@ export const optimisticLike: Exercise = {
   label: "optimistic like",
   title: "Like optimista",
   lede: "Un post con contador de likes. Al hacer click, el like tarda 800ms en guardarse y la UI no responde hasta que termina. Implementa useOptimistic para que el contador suba al instante y revierta si falla.",
-  difficulty: "basic",
+  difficulty: "advanced",
   objectives: [
     "Crea el estado optimista con useOptimistic a partir de likes",
     "Al hacer click, llama addOptimistic(1) antes de la petición async",
@@ -29,25 +29,11 @@ async function saveLike(liked) {
 export default function App() {
   const [likes, setLikes] = useState(42);
   const [liked, setLiked] = useState(false);
-  const [, startTransition] = useTransition();
-
-  // TODO: crea optimisticLikes y addOptimistic con useOptimistic
-  // updateFn: (currentLikes, delta) => currentLikes + delta
+  // TODO: destructura [isPending, startTransition] de useTransition
+  // TODO: crea optimisticLikes y addOptimistic con useOptimistic(likes, updateFn)
 
   async function handleLike() {
-    const next = !liked;
-    const delta = next ? 1 : -1;
-    // TODO: llama addOptimistic(delta) aquí para respuesta inmediata
-
-    startTransition(async () => {
-      try {
-        await saveLike(next);
-        setLikes(l => l + delta);
-        setLiked(next);
-      } catch {
-        // si falla, useOptimistic revierte automáticamente
-      }
-    });
+    // TODO: implementa handleLike con addOptimistic(delta) y startTransition
   }
 
   return (

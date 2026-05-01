@@ -5,7 +5,7 @@ export const stopwatch: Exercise = {
   label: "stopwatch",
   title: "Cronómetro con intervalos",
   lede: "Construye un cronómetro que puedes iniciar, pausar y resetear. Usa una ref para guardar el id del intervalo — no estado — y limpia siempre en el cleanup para que el timer no quede vivo al desmontar.",
-  difficulty: "basic",
+  difficulty: "intermediate",
   objectives: [
     "Estado elapsed (ms) que empieza en 0",
     "Estado running (boolean) que controla el botón start/pause",
@@ -42,10 +42,12 @@ export default function App() {
         {format(elapsed)}
       </p>
       <div style={{ display: "flex", gap: 8, marginTop: 16, justifyContent: "center" }}>
-        <button onClick={() => setRunning((r) => !r)}>
+        <button onClick={() => {}}>
+          {/* TODO: toggle running state aqui */}
           {running ? "pause" : "start"}
         </button>
-        <button onClick={() => { setElapsed(0); setRunning(false); }}>
+        <button onClick={() => {}}>
+          {/* TODO: resetea elapsed a 0 y pausa */}
           reset
         </button>
       </div>

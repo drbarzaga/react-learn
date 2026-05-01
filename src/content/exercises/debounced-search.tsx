@@ -40,9 +40,8 @@ function HeavyList({ query }) {
 
 export default function App() {
   const [query, setQuery] = useState("");
-
   // TODO: crea 'deferred' a partir de query con useDeferredValue
-  // TODO: 'stale' = query !== deferred
+  // TODO: calcula 'stale' comparando query !== deferred
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>
@@ -53,12 +52,11 @@ export default function App() {
         style={{ width: "100%" }}
       />
       <p style={{ color: "var(--fg-muted)", fontSize: 12, fontFamily: "monospace" }}>
-        {/* muestra 'actualizando...' cuando stale, o 'al día' */}
-        al día
+        {/* TODO: muestra 'actualizando...' cuando stale, sino 'al día' */}
       </p>
       <div>
-        {/* TODO: atenúa con opacity cuando stale; pasa 'deferred' a HeavyList */}
-        <HeavyList query={query} />
+        {/* TODO: pasa 'deferred' en lugar de 'query' a HeavyList; atenúa con opacity cuando stale */}
+        <HeavyList query="" />
       </div>
     </div>
   );
