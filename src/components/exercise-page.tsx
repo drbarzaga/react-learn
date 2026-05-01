@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Lightbulb, BookOpen, CheckCircle2, Circle } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Playground } from "@/components/playground"
@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 import type { Exercise, Difficulty } from "@/content/exercises"
 import { useProgress } from "@/hooks/use-progress"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
+import { useKeyboardNav } from "@/hooks/use-keyboard-nav"
+import { useContent } from "@/providers/content-provider"
 
 interface ExercisePageProps {
   exercise: Exercise
@@ -34,8 +36,13 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
   const t = useTranslations("ExercisePage")
   const { push, href } = useLocaleRouter()
   const [showSolution, setShowSolution] = useState(false)
-  const playgroundHostRef = useRef<HTMLDivElement>(null)
   const { completedExercises, toggleExerciseCompleted } = useProgress()
+  const { allConcepts } = useContent()
+  useKeyboardNav({
+    prev: prev && `/learn/${prev.id}`,
+    next: next && `/learn/${next.id}`,
+    prevFallback: `/${allConcepts[allConcepts.length - 1]?.id}`,
+  })
   const isCompleted = completedExercises.has(exercise.id)
 
   return (
@@ -112,7 +119,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
             </button>
           </div>
         </div>
-        <div ref={playgroundHostRef}>
+        <div>
           {showSolution ? (
             <Playground
               key={`${exercise.id}-sol`}
