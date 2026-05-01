@@ -57,25 +57,9 @@ export function BreadcrumbBar() {
     <div className="shrink-0 border-b border-[var(--color-line)] bg-[var(--color-bg)] px-4 py-2 md:px-6">
       <Breadcrumb>
         <BreadcrumbList className="gap-1 text-[11px] sm:gap-1">
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              render={
-                <a
-                  href={href("/")}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    push("/")
-                  }}
-                />
-              }
-              className="text-[var(--color-fg-faint)] transition-colors hover:text-[var(--color-fg-muted)]"
-            >
-              React Dojo
-            </BreadcrumbLink>
-          </BreadcrumbItem>
           {items.map((item, i) => (
             <span key={i} className="flex items-center gap-1">
-              <BreadcrumbSeparator className="text-[var(--color-fg-faint)]" />
+              {i > 0 && <BreadcrumbSeparator className="text-[var(--color-fg-faint)]" />}
               <BreadcrumbItem>
                 {item.href ? (
                   <BreadcrumbLink

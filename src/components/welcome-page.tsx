@@ -85,37 +85,6 @@ export function WelcomePage() {
               {t("surprise")}
             </Button>
           </div>
-          <div className="flex flex-col items-center gap-1.5">
-            <div className="flex items-center gap-3 text-[11px]">
-              {[
-                { key: "space", label: t("start") },
-                { key: "P", label: t("practice") },
-                { key: "S", label: t("surprise") },
-              ].map(({ key, label }, i) => (
-                <span key={key} className="flex items-center gap-1.5">
-                  {i > 0 && <span className="text-[var(--color-fg-faint)]">·</span>}
-                  <kbd className="rounded-md bg-[var(--color-bg-hover)] px-1.5 py-1 font-mono text-[10px] leading-none text-[var(--color-fg-muted)]">
-                    {key}
-                  </kbd>
-                  <span className="text-[var(--color-fg-faint)]">{label}</span>
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-3 text-[11px]">
-              {[
-                { key: "←", label: t("shortcutPrev") },
-                { key: "→", label: t("shortcutNext") },
-              ].map(({ key, label }, i) => (
-                <span key={key} className="flex items-center gap-1.5">
-                  {i > 0 && <span className="text-[var(--color-fg-faint)]">·</span>}
-                  <kbd className="rounded-md bg-[var(--color-bg-hover)] px-1.5 py-1 font-mono text-[10px] leading-none text-[var(--color-fg-muted)]">
-                    {key}
-                  </kbd>
-                  <span className="text-[var(--color-fg-faint)]">{label}</span>
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </div>

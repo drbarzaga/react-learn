@@ -11,6 +11,18 @@
     "shortcutPrev": "prev",
     "shortcutNext": "next"
   },
+  "ShortcutsModal": {
+    "title": "Keyboard shortcuts",
+    "sectionNavigation": "Navigation",
+    "sectionHome": "Home",
+    "sectionGeneral": "General",
+    "navigate": "Previous / next concept",
+    "search": "Open search",
+    "start": "Start learning",
+    "practice": "Go to practice",
+    "surprise": "Surprise me",
+    "openShortcuts": "Open this panel"
+  },
   "Header": {
     "search": "Search",
     "searchPlaceholder": "Search…",

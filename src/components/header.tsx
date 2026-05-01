@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRef, useState } from "react"
-import { Search, Star } from "lucide-react"
+import { Keyboard, Search, Star } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useTheme } from "@/hooks/use-theme"
 import { useEditorTheme } from "@/hooks/use-editor-theme"
@@ -19,9 +19,10 @@ import { DiscordIcon, MoonIcon, PaletteIcon, SunIcon } from "./svg-icons"
 
 interface HeaderProps {
   onSearchOpen?: () => void
+  onShortcutsOpen?: () => void
 }
 
-export function Header({ onSearchOpen }: HeaderProps) {
+export function Header({ onSearchOpen, onShortcutsOpen }: HeaderProps) {
   const t = useTranslations("Header")
   const { theme, toggle } = useTheme()
   const { editorTheme, setEditorTheme } = useEditorTheme()
@@ -206,6 +207,23 @@ export function Header({ onSearchOpen }: HeaderProps) {
               }
             />
             <TooltipContent>{theme === "dark" ? t("modeLight") : t("modeDark")}</TooltipContent>
+          </Tooltip>
+
+          {/* Keyboard shortcuts */}
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <button
+                  type="button"
+                  onClick={onShortcutsOpen}
+                  aria-label="Keyboard shortcuts"
+                  className="grid h-7 w-7 place-items-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
+                >
+                  <Keyboard className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                </button>
+              }
+            />
+            <TooltipContent>Keyboard shortcuts</TooltipContent>
           </Tooltip>
 
           <LocaleSwitcher />

@@ -6,18 +6,28 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Sidebar } from "@/components/sidebar"
 import { SearchModal } from "@/components/search-modal"
+import { ShortcutsModal } from "@/components/shortcuts-modal"
 import { BreadcrumbBar } from "@/components/breadcrumb-bar"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      const tag = (e.target as HTMLElement)?.tagName
+      const isEditable =
+        tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement)?.isContentEditable
+
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault()
         setSearchOpen((v) => !v)
+        return
+      }
+      if (e.key === "?" && !isEditable) {
+        setShortcutsOpen((v) => !v)
       }
     }
     window.addEventListener("keydown", onKey)
@@ -30,8 +40,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider defaultOpen className="h-svh! flex-col! overflow-hidden">
-      <Header onSearchOpen={() => setSearchOpen(true)} />
+      <Header
+        onSearchOpen={() => setSearchOpen(true)}
+        onShortcutsOpen={() => setShortcutsOpen(true)}
+      />
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
       <div className="flex min-h-0 flex-1">
         <Sidebar />
         <SidebarInset className="flex min-w-0 flex-col overflow-hidden">

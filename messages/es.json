@@ -11,6 +11,18 @@
     "shortcutPrev": "anterior",
     "shortcutNext": "siguiente"
   },
+  "ShortcutsModal": {
+    "title": "Atajos de teclado",
+    "sectionNavigation": "Navegación",
+    "sectionHome": "Inicio",
+    "sectionGeneral": "General",
+    "navigate": "Concepto anterior / siguiente",
+    "search": "Abrir búsqueda",
+    "start": "Comenzar",
+    "practice": "Ir a práctica",
+    "surprise": "Sorpréndeme",
+    "openShortcuts": "Abrir este panel"
+  },
   "Header": {
     "search": "Buscar",
     "searchPlaceholder": "Buscar…",
