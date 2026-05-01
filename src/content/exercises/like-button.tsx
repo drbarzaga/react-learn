@@ -89,10 +89,10 @@ export default function App() {
 
   const handleClick = () => {
     if (isLiked) {
-      setLikes(likes - 1);
+      setLikes((l) => l - 1);
       setIsLiked(false);
     } else {
-      setLikes(likes + 1);
+      setLikes((l) => l + 1);
       setIsLiked(true);
     }
   };
