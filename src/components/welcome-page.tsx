@@ -26,12 +26,11 @@ export function WelcomePage() {
       if (e.metaKey || e.ctrlKey || e.altKey) return
       const tag = (e.target as HTMLElement)?.tagName
       if (
-        tag === "INPUT" ||
-        tag === "TEXTAREA" ||
-        tag === "SELECT" ||
+        ["INPUT", "TEXTAREA", "SELECT"].includes(tag) ||
         (e.target as HTMLElement)?.isContentEditable
-      )
+      ) {
         return
+      }
       if (e.key === " ") {
         e.preventDefault()
         push(`/${allConcepts[0].id}`)
