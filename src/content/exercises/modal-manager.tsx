@@ -10,7 +10,7 @@ export const modalManager: Exercise = {
     "Estado modal: null o { type: string, data: object }",
     "Tres funciones: openConfirm, openAlert, openPrompt",
     "Cada tipo de modal renderiza contenido diferente con estilos propios",
-    "El Modal muestra un backdrop escuro con el contenido centrado",
+    "El Modal muestra un backdrop oscuro con el contenido centrado",
     "Cierra el modal al hacer click en backdrop o presionar Escape",
   ],
   hint: "Usa un ID único para el container del modal. Puedes renderizarlo en el mismo flujo o usar portal si está disponible.",
