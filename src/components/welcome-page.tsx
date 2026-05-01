@@ -24,6 +24,14 @@ export function WelcomePage() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return
+      const tag = (e.target as HTMLElement)?.tagName
+      if (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        (e.target as HTMLElement)?.isContentEditable
+      )
+        return
       if (e.key === " ") {
         e.preventDefault()
         push(`/${allConcepts[0].id}`)
@@ -33,6 +41,7 @@ export function WelcomePage() {
         const random = allConcepts[Math.floor(Math.random() * allConcepts.length)]
         push(`/${random.id}`)
       }
+      if (e.key === "ArrowRight") push(`/${allConcepts[0].id}`)
     }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
