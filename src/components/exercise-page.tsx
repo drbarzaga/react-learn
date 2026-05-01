@@ -105,37 +105,38 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
       <section className="mt-12">
         <div className="mb-2 flex items-center justify-between text-[11px] text-[var(--color-fg-dim)]">
           <span>{showSolution ? t("solution") : t("yourCode")}</span>
-          <button
-            onClick={() => setShowSolution((v) => !v)}
-            className={cn(
-              "text-[11px] transition-colors",
-              showSolution
-                ? "text-[var(--color-fg)]"
-                : "text-[var(--color-fg-dim)] hover:text-[var(--color-fg)]"
-            )}
-          >
-            {showSolution ? t("backToStarter") : t("viewSolution")}
-          </button>
+          <div className="flex flex-col items-end gap-2">
+            <button
+              onClick={() => setShowSolution((v) => !v)}
+              className={cn(
+                "text-[11px] transition-colors",
+                showSolution
+                  ? "text-[var(--color-fg)]"
+                  : "text-[var(--color-fg-dim)] hover:text-[var(--color-fg)]"
+              )}
+            >
+              {showSolution ? t("backToStarter") : t("viewSolution")}
+            </button>
+          </div>
         </div>
-        <div className={showSolution ? "hidden" : ""}>
-          <Playground
-            key={`${exercise.id}-start`}
-            files={exercise.starter}
-            dependencies={exercise.dependencies}
-            exerciseId={exercise.id}
-            enablePersistence
-          />
-        </div>
-        <div className={showSolution ? "" : "hidden"}>
-          <Playground
-            key={`${exercise.id}-sol`}
-            files={exercise.solution}
-            dependencies={exercise.dependencies}
-          />
+        <div>
+          {showSolution ? (
+            <Playground
+              key={`${exercise.id}-sol`}
+              files={exercise.solution}
+              dependencies={exercise.dependencies}
+            />
+          ) : (
+            <Playground
+              key={`${exercise.id}-start`}
+              files={exercise.starter}
+              dependencies={exercise.dependencies}
+            />
+          )}
         </div>
       </section>
 
-      {exercise.hint && (
+      {exercise.hint ? (
         <section className="mt-8">
           <details className="group">
             <summary className="flex cursor-pointer list-none items-center gap-2 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase transition-colors select-none hover:text-[var(--color-fg)]">
@@ -147,9 +148,9 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
             </p>
           </details>
         </section>
-      )}
+      ) : null}
 
-      {exercise.relatedConcepts && exercise.relatedConcepts.length > 0 && (
+      {exercise.relatedConcepts && exercise.relatedConcepts.length > 0 ? (
         <section className="mt-10">
           <h3 className="mb-3 flex items-center gap-2 text-[11px] tracking-[0.14em] text-[var(--color-fg-dim)] uppercase">
             <BookOpen className="h-[13px] w-[13px]" strokeWidth={1.8} />
@@ -171,7 +172,7 @@ export function ExercisePage({ exercise, prev, next }: ExercisePageProps) {
             ))}
           </div>
         </section>
-      )}
+      ) : null}
 
       <nav className="mt-14 flex items-start justify-between gap-8 border-t border-[var(--color-line)] pt-8 text-[14px]">
         {prev ? (
