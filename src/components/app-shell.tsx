@@ -6,6 +6,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Sidebar } from "@/components/sidebar"
 import { SearchModal } from "@/components/search-modal"
+import { BreadcrumbBar } from "@/components/breadcrumb-bar"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -34,6 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-0 flex-1">
         <Sidebar />
         <SidebarInset className="flex min-w-0 flex-col overflow-hidden">
+          <BreadcrumbBar />
           <div id="scroll-area" className="min-h-0 flex-1 overflow-y-auto">
             <div key={pathname} className="page-enter">
               {children}

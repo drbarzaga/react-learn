@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
@@ -12,6 +13,30 @@ export function WelcomePage() {
   const t = useTranslations("WelcomePage")
   const { push } = useLocaleRouter()
   const { allConcepts, allExercises, categories } = useContent()
+
+  const goStart = () => push(`/${allConcepts[0].id}`)
+  const goPractice = () => push(`/learn/${allExercises[0].id}`)
+  const goSurprise = () => {
+    const random = allConcepts[Math.floor(Math.random() * allConcepts.length)]
+    push(`/${random.id}`)
+  }
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      if (e.key === " ") {
+        e.preventDefault()
+        push(`/${allConcepts[0].id}`)
+      }
+      if (e.key === "p" || e.key === "P") push(`/learn/${allExercises[0].id}`)
+      if (e.key === "s" || e.key === "S") {
+        const random = allConcepts[Math.floor(Math.random() * allConcepts.length)]
+        push(`/${random.id}`)
+      }
+    }
+    window.addEventListener("keydown", handler)
+    return () => window.removeEventListener("keydown", handler)
+  }, [allConcepts, allExercises, push])
 
   return (
     <div className="flex min-h-[calc(100vh-84px)] items-center justify-center px-8 py-20">
@@ -34,33 +59,63 @@ export function WelcomePage() {
           <span>{t("categories", { count: categories.length })}</span>
         </div>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button
-            onClick={() => push(`/${allConcepts[0].id}`)}
-            className="gap-2 border-0 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80"
-          >
-            {t("start")}
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => push(`/learn/${allExercises[0].id}`)}
-            className="gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
-          >
-            <Dumbbell className="h-3.5 w-3.5" strokeWidth={1.8} />
-            {t("practice")}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              const random = allConcepts[Math.floor(Math.random() * allConcepts.length)]
-              push(`/${random.id}`)
-            }}
-            className="btn-shimmer gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
-          >
-            <Shuffle className="h-3.5 w-3.5" strokeWidth={1.8} />
-            {t("surprise")}
-          </Button>
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button
+              onClick={goStart}
+              className="gap-2 border-0 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80"
+            >
+              {t("start")}
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
+            </Button>
+            <Button
+              variant="outline"
+              onClick={goPractice}
+              className="gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
+            >
+              <Dumbbell className="h-3.5 w-3.5" strokeWidth={1.8} />
+              {t("practice")}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={goSurprise}
+              className="btn-shimmer gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
+            >
+              <Shuffle className="h-3.5 w-3.5" strokeWidth={1.8} />
+              {t("surprise")}
+            </Button>
+          </div>
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="flex items-center gap-3 text-[11px]">
+              {[
+                { key: "space", label: t("start") },
+                { key: "P", label: t("practice") },
+                { key: "S", label: t("surprise") },
+              ].map(({ key, label }, i) => (
+                <span key={key} className="flex items-center gap-1.5">
+                  {i > 0 && <span className="text-[var(--color-fg-faint)]">·</span>}
+                  <kbd className="rounded-md bg-[var(--color-bg-hover)] px-1.5 py-1 font-mono text-[10px] leading-none text-[var(--color-fg-muted)]">
+                    {key}
+                  </kbd>
+                  <span className="text-[var(--color-fg-faint)]">{label}</span>
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-3 text-[11px]">
+              {[
+                { key: "←", label: t("shortcutPrev") },
+                { key: "→", label: t("shortcutNext") },
+              ].map(({ key, label }, i) => (
+                <span key={key} className="flex items-center gap-1.5">
+                  {i > 0 && <span className="text-[var(--color-fg-faint)]">·</span>}
+                  <kbd className="rounded-md bg-[var(--color-bg-hover)] px-1.5 py-1 font-mono text-[10px] leading-none text-[var(--color-fg-muted)]">
+                    {key}
+                  </kbd>
+                  <span className="text-[var(--color-fg-faint)]">{label}</span>
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

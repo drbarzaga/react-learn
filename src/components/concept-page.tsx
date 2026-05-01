@@ -6,6 +6,8 @@ import { TriangleAlert } from "lucide-react"
 import { type Concept } from "@/content/concepts"
 import { useProgress } from "@/hooks/use-progress"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
+import { useKeyboardNav } from "@/hooks/use-keyboard-nav"
+import { useContent } from "@/providers/content-provider"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 
@@ -19,7 +21,13 @@ export function ConceptPage({ concept, prev, next }: ConceptPageProps) {
   const t = useTranslations("ConceptPage")
   const { push, href } = useLocaleRouter()
   const { markConceptVisited } = useProgress()
+  const { allExercises } = useContent()
   const bottomRef = useRef<HTMLElement>(null)
+  useKeyboardNav({
+    prev: prev && `/${prev.id}`,
+    next: next && `/${next.id}`,
+    nextFallback: `/learn/${allExercises[0]?.id}`,
+  })
 
   useEffect(() => {
     const el = bottomRef.current

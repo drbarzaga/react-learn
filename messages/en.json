@@ -6,7 +6,10 @@
     "categories": "{count} categories",
     "start": "Start",
     "practice": "Practice",
-    "surprise": "Surprise me"
+    "surprise": "Surprise me",
+    "keyboardHint": "navigate between concepts",
+    "shortcutPrev": "prev",
+    "shortcutNext": "next"
   },
   "Header": {
     "search": "Search",
