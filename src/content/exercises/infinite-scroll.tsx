@@ -94,11 +94,15 @@ export default function App() {
     setLoading(true);
     // Simular delay de API
     await new Promise((r) => setTimeout(r, 500));
-    const newItems = generateItems(items.length, LOAD_MORE_COUNT);
-    setItems((prev) => [...prev, ...newItems]);
-    setHasMore(items.length + newItems.length < MAX_ITEMS);
+    setItems((prev) => {
+      const newItems = generateItems(prev.length, LOAD_MORE_COUNT);
+      const nextItems = [...prev, ...newItems];
+      const nextLength = nextItems.length;
+      setHasMore(nextLength < MAX_ITEMS);
+      return nextItems;
+    });
     setLoading(false);
-  }, [loading, hasMore, items.length]);
+  }, [loading, hasMore]);
 
   useEffect(() => {
     if (items.length === 0) {
