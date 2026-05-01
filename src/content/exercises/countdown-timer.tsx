@@ -4,7 +4,7 @@ export const countdownTimer: Exercise = {
   id: "countdown-timer",
   label: "countdown timer",
   title: "Temporizador",
-  lede: "Un temporizador countable. El usuario ingresa segundos y al iniciar cuenta regresivamente. Muestra mm:ss y se detiene en 0.",
+  lede: "Un temporizador de cuenta regresiva. El usuario ingresa segundos y al iniciar cuenta regresivamente. Muestra mm:ss y se detiene en 0.",
   difficulty: "intermediate",
   objectives: [
     "Input para ingresar segundos",
