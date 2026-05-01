@@ -10,6 +10,8 @@ export const EDITOR_THEMES_META: Record<EditorThemeId, EditorThemeMeta> = {
 
 export const REPOSITORY = "drbarzaga/react-dojo"
 
+export const STARS_KILO_THRESHOLD = 1000
+
 export const TIMER_TICK_MS = 1000
 
 export const SIDEBAR_COOKIE_NAME = "sidebar_state"

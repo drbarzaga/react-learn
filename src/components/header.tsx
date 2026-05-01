@@ -7,13 +7,14 @@ import { useTranslations } from "next-intl"
 import { useTheme } from "@/hooks/use-theme"
 import { useEditorTheme } from "@/hooks/use-editor-theme"
 import { useGitHubStars } from "@/hooks/use-github-stars"
+import { useCountUp } from "@/hooks/use-count-up"
 import { Logo } from "@/components/logo"
 import { LocaleSwitcher } from "@/components/locale-switcher"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
 import { type EditorThemeId } from "@/types"
-import { EDITOR_THEMES_META, REPOSITORY } from "@/lib/constants"
+import { EDITOR_THEMES_META, REPOSITORY, STARS_KILO_THRESHOLD } from "@/lib/constants"
 import { MoonIcon, PaletteIcon, SunIcon } from "./svg-icons"
 
 interface HeaderProps {
@@ -25,6 +26,7 @@ export function Header({ onSearchOpen }: HeaderProps) {
   const { theme, toggle } = useTheme()
   const { editorTheme, setEditorTheme } = useEditorTheme()
   const stars = useGitHubStars(REPOSITORY)
+  const animatedStars = useCountUp(stars)
   const [pickerOpen, setPickerOpen] = useState(false)
   const pickerRef = useRef<HTMLDivElement>(null)
   const { href } = useLocaleRouter()
@@ -112,9 +114,11 @@ export function Header({ onSearchOpen }: HeaderProps) {
                     rel="noreferrer"
                     className="flex h-7 items-center gap-1.5 rounded-md px-2 text-[12px] text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
                   >
-                    <Star className="h-[15px] w-[15px] fill-yellow-400 text-yellow-400" />
+                    <Star className="star-animate h-[15px] w-[15px] fill-yellow-400 text-yellow-400" />
                     <span className="font-mono">
-                      {stars >= 1000 ? `${(stars / 1000).toFixed(1)}k` : stars}
+                      {animatedStars >= STARS_KILO_THRESHOLD
+                        ? `${(animatedStars / STARS_KILO_THRESHOLD).toFixed(1)}k`
+                        : animatedStars}
                     </span>
                   </a>
                 }
