@@ -4,7 +4,7 @@ export const searchableList: Exercise = {
   id: "searchable-list",
   label: "searchable list",
   title: "Lista filtrable",
-  lede: "Una lista de items con un input de búsqueda que filtra en tiempo real. UsetoLowerCase() para hacer la búsqueda case-insensitive.",
+  lede: "Una lista de items con un input de búsqueda que filtra en tiempo real. Usa toLowerCase() para hacer la búsqueda case-insensitive.",
   difficulty: "intermediate",
   objectives: [
     "Declara estado search con valor inicial ''",
