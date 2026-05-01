@@ -1515,6 +1515,134 @@ export default function App() {
       />
     ),
   },
+  "compound-components": {
+    kicker: "Pattern · Composition",
+    title: "Components that understand each other",
+    lede: "Compound Components is a pattern where a parent component shares state implicitly with its children through Context. The children are independent pieces that know how to talk to the parent — without manual props between them. It's the foundation of Radix UI, shadcn/ui, and most modern design systems.",
+    sections: [
+      {
+        heading: "The core idea",
+        body: (
+          <p>
+            Instead of controlling everything from the parent with props (<code>activeTab</code>,{" "}
+            <code>onTabChange</code>, <code>tabLabels</code>…), you create an internal context that
+            subcomponents consume. The user composes the pieces freely:{" "}
+            <code>{`<Tabs><Tabs.List>…</Tabs.List><Tabs.Panel>…</Tabs.Panel></Tabs>`}</code>. State
+            lives in <code>Tabs</code>, but no child needs to receive explicit props.
+          </p>
+        ),
+      },
+      {
+        heading: "How it's built",
+        body: (
+          <p>
+            Create a private context. The root component manages state and provides the context.
+            Subcomponents consume it. Attach subcomponents as static properties of the parent (
+            <code>Tabs.List</code>, <code>Tabs.Tab</code>, <code>Tabs.Panel</code>) so the API is
+            self-discoverable — the user types <code>Tabs.</code> and their editor shows the
+            available pieces.
+          </p>
+        ),
+      },
+    ],
+    pitfalls: [
+      "The context is private to the pattern — don't export it globally. Each Tabs instance has its own Provider.",
+      "If the user nests two Tabs, the nearest context wins. That's usually correct, but verify it's intentional.",
+      "Attaching subcomponents as static properties (Tabs.List) is convention, not mandatory — you can also export them separately.",
+    ],
+    playground: (
+      <Playground
+        files={{
+          "/App.js": `import { createContext, useContext, useState } from "react";
+
+// Private context — not exported
+const TabsCtx = createContext(null);
+
+function useTabs() {
+  const ctx = useContext(TabsCtx);
+  if (!ctx) throw new Error("useTabs must be used inside <Tabs>");
+  return ctx;
+}
+
+function Tabs({ defaultTab, children }) {
+  const [active, setActive] = useState(defaultTab);
+  return (
+    <TabsCtx.Provider value={{ active, setActive }}>
+      <div style={{ fontFamily: "system-ui" }}>{children}</div>
+    </TabsCtx.Provider>
+  );
+}
+
+function TabList({ children }) {
+  return (
+    <div style={{ display: "flex", gap: 4, borderBottom: "2px solid var(--line-strong)", paddingBottom: 2 }}>
+      {children}
+    </div>
+  );
+}
+
+function Tab({ id, children }) {
+  const { active, setActive } = useTabs();
+  const isActive = active === id;
+  return (
+    <button
+      onClick={() => setActive(id)}
+      style={{
+        padding: "6px 14px",
+        border: "none",
+        background: "transparent",
+        cursor: "pointer",
+        fontWeight: isActive ? 700 : 400,
+        color: isActive ? "var(--fg)" : "var(--fg-muted)",
+        borderBottom: isActive ? "2px solid var(--fg)" : "2px solid transparent",
+        marginBottom: -2,
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+function TabPanel({ id, children }) {
+  const { active } = useTabs();
+  if (active !== id) return null;
+  return (
+    <div style={{ padding: "16px 0", color: "var(--fg)" }}>
+      {children}
+    </div>
+  );
+}
+
+// Attach subcomponents as static properties
+Tabs.List = TabList;
+Tabs.Tab = Tab;
+Tabs.Panel = TabPanel;
+
+export default function App() {
+  return (
+    <Tabs defaultTab="react">
+      <Tabs.List>
+        <Tabs.Tab id="react">React</Tabs.Tab>
+        <Tabs.Tab id="vue">Vue</Tabs.Tab>
+        <Tabs.Tab id="svelte">Svelte</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel id="react">
+        <strong>React</strong> — UI library based on components and reactive state.
+      </Tabs.Panel>
+      <Tabs.Panel id="vue">
+        <strong>Vue</strong> — progressive framework with its own reactivity system.
+      </Tabs.Panel>
+      <Tabs.Panel id="svelte">
+        <strong>Svelte</strong> — compiler that eliminates the runtime, generates minimal JS.
+      </Tabs.Panel>
+    </Tabs>
+  );
+}
+`,
+        }}
+      />
+    ),
+  },
   useFormStatus: {
     kicker: "Hook · React 19 · react-dom",
     title: "Read the form state from a child",
@@ -2194,7 +2322,14 @@ export const categories: Category[] = [
     id: "composition",
     kicker: "V",
     title: "Composition",
-    conceptIds: ["useContext", "createPortal", "lazy", "useId", "useFormStatus"],
+    conceptIds: [
+      "useContext",
+      "createPortal",
+      "lazy",
+      "useId",
+      "useFormStatus",
+      "compound-components",
+    ],
   },
   {
     id: "interviews",
