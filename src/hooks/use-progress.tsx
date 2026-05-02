@@ -45,6 +45,7 @@ interface ProgressCtx {
   markConceptVisited: (id: string) => void
   toggleExerciseCompleted: (id: string) => void
   saveQuizScore: (id: string, pct: number) => void
+  resetProgress: () => void
 }
 
 const Ctx = createContext<ProgressCtx | null>(null)
@@ -89,6 +90,11 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const resetProgress = useCallback(() => {
+    persist(empty)
+    setData(empty)
+  }, [])
+
   const value = useMemo<ProgressCtx>(
     () => ({
       visitedConcepts: new Set(data.visitedConcepts),
@@ -97,8 +103,9 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       markConceptVisited,
       toggleExerciseCompleted,
       saveQuizScore,
+      resetProgress,
     }),
-    [data, markConceptVisited, toggleExerciseCompleted, saveQuizScore]
+    [data, markConceptVisited, toggleExerciseCompleted, saveQuizScore, resetProgress]
   )
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

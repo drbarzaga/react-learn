@@ -5,12 +5,17 @@ import { Heart, Bug } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Separator } from "@/components/ui/separator"
 import { useContent } from "@/providers/content-provider"
+import { useProgress } from "@/hooks/use-progress"
 import { ReactIcon, GitHubIcon } from "./svg-icons"
 import Link from "next/link"
 
 export function Footer() {
   const t = useTranslations("Footer")
   const { allConcepts, allExercises, allQuizzes } = useContent()
+  const { visitedConcepts, completedExercises, quizScores } = useProgress()
+
+  const hasProgress = visitedConcepts.size > 0
+  const quizzesAttempted = Object.keys(quizScores).length
 
   const links = [
     { label: "react.dev", href: "https://react.dev", Icon: ReactIcon },
@@ -65,11 +70,20 @@ export function Footer() {
       {/* Desktop */}
       <div className="hidden items-center text-[11px] text-[var(--color-fg-faint)] sm:grid sm:grid-cols-3">
         <div className="flex items-center gap-3">
-          <span className="tabular">{t("concepts", { count: allConcepts.length })}</span>
+          <span className="tabular">
+            {hasProgress && `${visitedConcepts.size}/`}
+            {t("concepts", { count: allConcepts.length })}
+          </span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span className="tabular">{t("exercises", { count: allExercises.length })}</span>
+          <span className="tabular">
+            {hasProgress && `${completedExercises.size}/`}
+            {t("exercises", { count: allExercises.length })}
+          </span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span className="tabular">{t("quizzes", { count: allQuizzes.length })}</span>
+          <span className="tabular">
+            {hasProgress && `${quizzesAttempted}/`}
+            {t("quizzes", { count: allQuizzes.length })}
+          </span>
         </div>
 
         <span className="flex items-center justify-center gap-1 select-none">

@@ -1,24 +1,38 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ArrowRight, Dumbbell, Shuffle } from "lucide-react"
 import { useContent } from "@/providers/content-provider"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
+import { useProgress } from "@/hooks/use-progress"
 
 export function WelcomePage() {
   const t = useTranslations("WelcomePage")
   const { push } = useLocaleRouter()
-  const { allConcepts, allExercises, categories } = useContent()
+  const { allConcepts, allExercises, allQuizzes, categories } = useContent()
+  const { visitedConcepts, completedExercises, quizScores, resetProgress } = useProgress()
+  const [resetOpen, setResetOpen] = useState(false)
 
-  const goStart = () => push(`/${allConcepts[0].id}`)
+  const hasProgress = visitedConcepts.size > 0
+  const firstUnvisited = allConcepts.find((c) => !visitedConcepts.has(c.id))
+  const continueTarget = firstUnvisited ?? allConcepts[0]
+  const quizzesAttempted = Object.keys(quizScores).length
+
+  const goContinue = () => push(`/${continueTarget.id}`)
   const goPractice = () => push(`/learn/${allExercises[0].id}`)
   const goSurprise = () => {
     const random = allConcepts[Math.floor(Math.random() * allConcepts.length)]
     push(`/${random.id}`)
+  }
+
+  const handleReset = () => {
+    resetProgress()
+    setResetOpen(false)
   }
 
   useEffect(() => {
@@ -33,7 +47,7 @@ export function WelcomePage() {
       }
       if (e.key === " ") {
         e.preventDefault()
-        push(`/${allConcepts[0].id}`)
+        push(`/${continueTarget.id}`)
       }
       if (e.key === "p" || e.key === "P") push(`/learn/${allExercises[0].id}`)
       if (e.key === "s" || e.key === "S") {
@@ -44,7 +58,7 @@ export function WelcomePage() {
     }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
-  }, [allConcepts, allExercises, push])
+  }, [allConcepts, allExercises, continueTarget, push])
 
   return (
     <div className="flex min-h-[calc(100vh-84px)] items-center justify-center px-8 py-20">
@@ -60,20 +74,44 @@ export function WelcomePage() {
         </p>
 
         <div className="mt-6 flex items-center gap-4 text-[12px] text-[var(--color-fg-dim)]">
-          <span>{t("concepts", { count: allConcepts.length })}</span>
-          <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span>{t("exercises", { count: allExercises.length })}</span>
-          <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span>{t("categories", { count: categories.length })}</span>
+          {hasProgress ? (
+            <>
+              <span>
+                {t("conceptsProgress", {
+                  visited: visitedConcepts.size,
+                  total: allConcepts.length,
+                })}
+              </span>
+              <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
+              <span>
+                {t("exercisesProgress", {
+                  completed: completedExercises.size,
+                  total: allExercises.length,
+                })}
+              </span>
+              <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
+              <span>
+                {t("quizzesProgress", { attempted: quizzesAttempted, total: allQuizzes.length })}
+              </span>
+            </>
+          ) : (
+            <>
+              <span>{t("concepts", { count: allConcepts.length })}</span>
+              <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
+              <span>{t("exercises", { count: allExercises.length })}</span>
+              <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
+              <span>{t("categories", { count: categories.length })}</span>
+            </>
+          )}
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-2">
+        <div className="mt-8 flex flex-col items-center gap-3">
           <div className="flex flex-wrap justify-center gap-3">
             <Button
-              onClick={goStart}
+              onClick={goContinue}
               className="gap-2 border-0 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80"
             >
-              {t("start")}
+              {hasProgress ? t("continue") : t("start")}
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
             </Button>
             <Button
@@ -93,8 +131,48 @@ export function WelcomePage() {
               {t("surprise")}
             </Button>
           </div>
+
+          {hasProgress && (
+            <button
+              type="button"
+              onClick={() => setResetOpen(true)}
+              className="text-[11px] text-[var(--color-fg-faint)] transition-colors hover:text-[var(--color-fg-muted)]"
+            >
+              {t("resetProgress")}
+            </button>
+          )}
         </div>
       </div>
+
+      <Dialog open={resetOpen} onOpenChange={(o) => !o && setResetOpen(false)}>
+        <DialogContent className="max-w-sm border-[var(--color-line-strong)] bg-[var(--color-bg-raise)] p-0">
+          <DialogHeader className="border-b border-[var(--color-line)] px-5 py-4">
+            <DialogTitle className="font-mono text-[14px] text-[var(--color-fg)]">
+              {t("resetTitle")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="px-5 py-4">
+            <p className="text-[13px] leading-relaxed text-[var(--color-fg-muted)]">
+              {t("resetBody")}
+            </p>
+            <div className="mt-5 flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setResetOpen(false)}
+                className="border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
+              >
+                {t("resetCancel")}
+              </Button>
+              <Button
+                onClick={handleReset}
+                className="border-0 bg-red-500/90 text-white hover:bg-red-500"
+              >
+                {t("resetConfirm")}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

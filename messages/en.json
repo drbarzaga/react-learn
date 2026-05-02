@@ -9,7 +9,17 @@
     "surprise": "Surprise me",
     "keyboardHint": "navigate between concepts",
     "shortcutPrev": "prev",
-    "shortcutNext": "next"
+    "shortcutNext": "next",
+    "continue": "Continue",
+    "quizzes": "{count} quizzes",
+    "conceptsProgress": "{visited}/{total} concepts",
+    "exercisesProgress": "{completed}/{total} exercises",
+    "quizzesProgress": "{attempted}/{total} quizzes",
+    "resetProgress": "Reset progress",
+    "resetTitle": "Reset progress",
+    "resetBody": "This will erase all visited concepts, completed exercises, and quiz scores. This action cannot be undone.",
+    "resetCancel": "Cancel",
+    "resetConfirm": "Reset"
   },
   "ShortcutsModal": {
     "title": "Keyboard shortcuts",
