@@ -19,6 +19,7 @@ export const infiniteScroll: Exercise = {
   relatedConcepts: ["useState", "useEffect", "useRef"],
   dependencies: {
     react: "^19.0.0",
+    "react-dom": "^19.0.0",
   },
   starter: {
     "/App.js": `import { useState, useEffect, useRef, useCallback } from "react";
