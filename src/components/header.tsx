@@ -86,24 +86,16 @@ export function Header({ onSearchOpen, onShortcutsOpen }: HeaderProps) {
           >
             <Search className="h-[12px] w-[12px] shrink-0" strokeWidth={1.8} />
             <span className="flex-1 text-left font-mono">{t("searchPlaceholder")}</span>
-            <kbd
-              className="shrink-0 rounded border px-1.5 py-0.5 font-mono text-[10px] leading-4"
-              style={
-                theme === "light"
-                  ? {
-                      background: "rgba(0,0,0,0.05)",
-                      borderColor: "rgba(0,0,0,0.12)",
-                      color: "#a29f97",
-                    }
-                  : {
-                      background: "rgba(255,255,255,0.06)",
-                      borderColor: "rgba(255,255,255,0.1)",
-                      color: "#5c5c61",
-                    }
-              }
-            >
-              ⌘K
-            </kbd>
+            <div className="flex items-center gap-0.5">
+              {["⌘", "K"].map((k) => (
+                <kbd
+                  key={k}
+                  className="rounded border border-[var(--color-line-strong)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 font-mono text-[10px] leading-none text-[var(--color-fg-muted)]"
+                >
+                  {k}
+                </kbd>
+              ))}
+            </div>
           </button>
 
           {/* GitHub stars */}
