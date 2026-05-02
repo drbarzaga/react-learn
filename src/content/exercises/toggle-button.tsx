@@ -12,7 +12,7 @@ export const toggleButton: Exercise = {
     "Cambia el color de fondo: verde cuando on, gris cuando off",
     "Al hacer clic, alterna el estado con setIsOn(!isOn)",
   ],
-  hint: "El operador ternario: condicion ? valorSiTrue : valorSiFalse",
+  hint: "El operador ternario: condición ? valorSiTrue : valorSiFalse",
   relatedConcepts: ["useState"],
   starter: {
     "/App.js": `import { useState } from "react";
