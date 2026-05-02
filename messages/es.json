@@ -5,12 +5,14 @@
     "exercises": "{count} ejercicios",
     "categories": "{count} categorías",
     "start": "Comenzar",
-    "practice": "Practicar"
+    "practice": "Practicar",
+    "surprise": "Sorpréndeme"
   },
   "Header": {
     "search": "Buscar",
     "searchPlaceholder": "Buscar…",
     "supportProject": "Apoya el proyecto",
+    "joinDiscord": "Únete a nuestro Discord",
     "editorTheme": "Tema del editor",
     "switchToLight": "Cambiar a tema claro",
     "switchToDark": "Cambiar a tema oscuro",

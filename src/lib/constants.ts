@@ -9,6 +9,9 @@ export const EDITOR_THEMES_META: Record<EditorThemeId, EditorThemeMeta> = {
 }
 
 export const REPOSITORY = "drbarzaga/react-dojo"
+export const DISCORD_URL = "https://discord.gg/nAjvxeXGn"
+
+export const STARS_KILO_THRESHOLD = 1000
 
 export const TIMER_TICK_MS = 1000
 
@@ -18,3 +21,7 @@ export const SIDEBAR_WIDTH = "16rem"
 export const SIDEBAR_WIDTH_MOBILE = "18rem"
 export const SIDEBAR_WIDTH_ICON = "3rem"
 export const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+
+export const CODE_SAVE_DEBOUNCE_MS = 750
+export const STORAGE_KEY = "react-dojo-code"
+export const THEME_FILE_NAME = "styles.css"

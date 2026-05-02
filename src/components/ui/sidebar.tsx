@@ -29,7 +29,7 @@ import {
   SIDEBAR_KEYBOARD_SHORTCUT,
 } from "@/lib/constants"
 
-type SidebarContextProps = {
+interface SidebarContextProps {
   state: "expanded" | "collapsed"
   open: boolean
   setOpen: (open: boolean) => void

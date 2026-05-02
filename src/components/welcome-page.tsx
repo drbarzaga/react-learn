@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { ArrowRight, Dumbbell } from "lucide-react"
+import { ArrowRight, Dumbbell, Shuffle } from "lucide-react"
 import { useContent } from "@/providers/content-provider"
 import { useLocaleRouter } from "@/hooks/use-locale-router"
 
@@ -34,7 +34,7 @@ export function WelcomePage() {
           <span>{t("categories", { count: categories.length })}</span>
         </div>
 
-        <div className="mt-8 flex gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button
             onClick={() => push(`/${allConcepts[0].id}`)}
             className="gap-2 border-0 bg-[var(--color-fg)] text-[var(--color-bg)] hover:opacity-80"
@@ -49,6 +49,17 @@ export function WelcomePage() {
           >
             <Dumbbell className="h-3.5 w-3.5" strokeWidth={1.8} />
             {t("practice")}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              const random = allConcepts[Math.floor(Math.random() * allConcepts.length)]
+              push(`/${random.id}`)
+            }}
+            className="btn-shimmer gap-2 border-[var(--color-line-strong)] bg-transparent text-[var(--color-fg-muted)] hover:border-[var(--color-fg)] hover:text-[var(--color-fg)]"
+          >
+            <Shuffle className="h-3.5 w-3.5" strokeWidth={1.8} />
+            {t("surprise")}
           </Button>
         </div>
       </div>

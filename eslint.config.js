@@ -27,6 +27,7 @@ export default defineConfig([
       "no-empty": ["error", { allowEmptyCatch: true }],
       // react-refresh rules are designed for Vite; Next.js has its own Fast Refresh mechanism
       "react-refresh/only-export-components": "off",
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
     },
   },
 ])

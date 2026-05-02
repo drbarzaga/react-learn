@@ -4,6 +4,7 @@
 
 ## Type of change
 
+- [ ] New feature
 - [ ] Bug fix
 - [ ] New content (concept / exercise / quiz)
 - [ ] UI/UX improvement
