@@ -11,7 +11,7 @@ import {
 } from "react"
 
 import type { ExerciseFiles } from "@/types/code-persistence"
-import { STORAGE_KEY } from "@/lib/constants"
+import { CODE_STORAGE_KEY } from "@/lib/constants"
 
 interface CodePersistenceData {
   [exerciseId: string]: {
@@ -23,7 +23,7 @@ const empty: CodePersistenceData = {}
 
 function load(): CodePersistenceData {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(CODE_STORAGE_KEY)
     if (!raw) return empty
     return JSON.parse(raw)
   } catch {
@@ -33,7 +33,7 @@ function load(): CodePersistenceData {
 
 function persist(data: CodePersistenceData) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    localStorage.setItem(CODE_STORAGE_KEY, JSON.stringify(data))
   } catch (error) {
     if (error instanceof DOMException && error.name === "QuotaExceededError") {
       console.warn("[React Dojo] localStorage quota exceeded. Code persistence disabled.")

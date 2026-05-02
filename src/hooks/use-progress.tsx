@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react"
 
-const STORAGE_KEY = "react-dojo-progress"
+import { PROGRESS_STORAGE_KEY } from "@/lib/constants"
 
 interface ProgressData {
   visitedConcepts: string[]
@@ -26,7 +26,7 @@ const empty: ProgressData = {
 
 function load(): ProgressData {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(PROGRESS_STORAGE_KEY)
     if (!raw) return empty
     return { ...empty, ...JSON.parse(raw) }
   } catch {
@@ -35,7 +35,7 @@ function load(): ProgressData {
 }
 
 function persist(data: ProgressData) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(data))
 }
 
 interface ProgressCtx {
@@ -60,10 +60,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   const markConceptVisited = useCallback((id: string) => {
     setData((prev) => {
-      if (prev.visitedConcepts.includes(id)) return prev
-      const next = { ...prev, visitedConcepts: [...prev.visitedConcepts, id] }
-      persist(next)
-      return next
+      if (prev.visitedConcepts.includes(id)) {
+        return prev
+      }
+
+      const nextData = { ...prev, visitedConcepts: [...prev.visitedConcepts, id] }
+      persist(nextData)
+      return nextData
     })
   }, [])
 
@@ -83,10 +86,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   const saveQuizScore = useCallback((id: string, pct: number) => {
     setData((prev) => {
-      if ((prev.quizScores[id] ?? -1) >= pct) return prev
-      const next = { ...prev, quizScores: { ...prev.quizScores, [id]: pct } }
-      persist(next)
-      return next
+      if ((prev.quizScores[id] ?? -1) >= pct) {
+        return prev
+      }
+
+      const nextData = { ...prev, quizScores: { ...prev.quizScores, [id]: pct } }
+      persist(nextData)
+      return nextData
     })
   }, [])
 
@@ -113,6 +119,9 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
 export function useProgress(): ProgressCtx {
   const ctx = useContext(Ctx)
-  if (!ctx) throw new Error("useProgress must be used inside ProgressProvider")
+  if (!ctx) {
+    throw new Error("useProgress must be used inside ProgressProvider")
+  }
+
   return ctx
 }
