@@ -19,12 +19,7 @@ export const autoFocus: Exercise = {
     "/App.js": `import { useState, useRef, useEffect } from "react";
 
 export default function App() {
-  // TODO: ref para el input
-  // TODO: ref para contar renders
   const [text, setText] = useState("");
-
-  // TODO: useEffect que enfoca el input al montar
-  // TODO: incrementa el contador de renders en cada render (sin setState)
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>

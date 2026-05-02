@@ -44,29 +44,18 @@ const FRUITS = [
 ];
 
 export default function App() {
-  // TODO: declare query state with initial value ""
-
-  // TODO: derive filtered from FRUITS using query (no useState)
-
   return (
     <div style={{ padding: 24, fontFamily: "system-ui", maxWidth: 320 }}>
       <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
         <input
-          // TODO: bind value and onChange to query state
           placeholder="Search fruit..."
           style={{ flex: 1 }}
         />
-        <button /* TODO: onClick that resets query to "" */>
+        <button>
           clear
         </button>
       </div>
-
-      {/* TODO: show '{n} result(s)' */}
-
-      {/* TODO: show "No results" when filtered is empty */}
-
       <ul style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
-        {/* TODO: render filtered with key and text */}
       </ul>
     </div>
   );
@@ -140,10 +129,6 @@ export default function App() {
       "/App.js": `import { useState } from "react";
 
 export default function App() {
-  // TODO: declare count state with initial value 0
-
-  // TODO: implement handlers for +, −, reset and +3
-
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>
       <p style={{ fontSize: 48, margin: 0, textAlign: "center" }}>
@@ -203,12 +188,7 @@ export default function App() {
       "/App.js": `import { useState, useRef, useEffect } from "react";
 
 export default function App() {
-  // TODO: ref for the input
-  // TODO: ref to count renders
   const [text, setText] = useState("");
-
-  // TODO: useEffect that focuses the input on mount
-  // TODO: increment render counter on each render (no setState)
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>
@@ -299,11 +279,6 @@ function format(ms) {
 export default function App() {
   const [elapsed, setElapsed] = useState(0);
   const [running, setRunning] = useState(false);
-  // TODO: ref to store the interval ID
-
-  // TODO: useEffect that starts / clears the interval based on 'running'
-  //       use setElapsed(e => e + 10) inside setInterval
-
   return (
     <div style={{ padding: 24, fontFamily: "system-ui", textAlign: "center" }}>
       <p style={{ fontSize: 48, margin: 0, fontFamily: "ui-monospace, monospace" }}>
@@ -393,13 +368,10 @@ const initial = { items: [], next: 1 };
 function reducer(state, action) {
   switch (action.type) {
     case "add":
-      // TODO: add an item { id, text, done: false }
       return state;
     case "toggle":
-      // TODO: toggle done for item with action.id
       return state;
     case "remove":
-      // TODO: remove item with action.id
       return state;
     default:
       return state;
@@ -532,13 +504,10 @@ function validate(values) {
 function reducer(state, action) {
   switch (action.type) {
     case "change":
-      // TODO: update values[action.field]
       return state;
     case "blur":
-      // TODO: mark touched[action.field] = true
       return state;
     case "submit":
-      // TODO: mark submitted = true
       return state;
     default:
       return state;
@@ -694,7 +663,6 @@ export default function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // TODO: create an AbortController
     setLoading(true);
     setError(null);
 
@@ -705,12 +673,10 @@ export default function App() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO: ignore AbortError
         setError(err.message);
         setLoading(false);
       });
 
-    // TODO: cleanup → abort
   }, [userId]);
 
   return (
@@ -826,7 +792,6 @@ function useTheme() {
 
 function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("dark");
-  // TODO: memoize { theme, setTheme } with useMemo
   const value = { theme, setTheme };
   return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>;
 }
@@ -959,10 +924,6 @@ function HeavyList({ query }) {
 
 export default function App() {
   const [query, setQuery] = useState("");
-
-  // TODO: create 'deferred' from query with useDeferredValue
-  // TODO: 'stale' = query !== deferred
-
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>
       <input
@@ -1046,7 +1007,6 @@ export default function App() {
     hint: "lazy() only executes the function when the component renders. Once the promise resolves, React caches the module — subsequent opens are instant.",
     starter: {
       "/App.js": `import { useState, Suspense } from "react";
-// TODO: import EditorModal with lazy() + setTimeout to simulate latency
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -1182,7 +1142,6 @@ export default function App() {
   const [items, setItems] = useState(ITEMS);
   const [count, setCount] = useState(0);
 
-  // TODO: wrap in useCallback so memo(Item) works
   const onDelete = (name) => setItems(prev => prev.filter(i => i !== name));
 
   return (
@@ -1270,7 +1229,6 @@ export default function App() {
   const [order, setOrder] = useState("asc");
   const [count, setCount] = useState(0);
 
-  // TODO: wrap in useMemo with [query, order] as deps
   console.log("recalculating list...");
   const filtered = ALL_TASKS
     .filter(t => t.text.includes(query))
@@ -1403,19 +1361,15 @@ const TABS = ["home", "slow list", "settings"];
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home");
-  // TODO: use useTransition to wrap setActiveTab
-  // TODO: use isPending to show visual feedback
-
   return (
     <div style={{ padding: 24 }}>
       <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
         {TABS.map(tab => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)} // TODO: wrap in startTransition
+            onClick={() => setActiveTab(tab)}
             style={{
               fontWeight: activeTab === tab ? "bold" : "normal",
-              // TODO: dim with opacity when isPending and tab !== activeTab
             }}
           >
             {tab}
@@ -1508,13 +1462,11 @@ export default function App() {
   const [liked, setLiked] = useState(false);
   const [, startTransition] = useTransition();
 
-  // TODO: create optimisticLikes and addOptimistic with useOptimistic
   // updateFn: (currentLikes, delta) => currentLikes + delta
 
   async function handleLike() {
     const next = !liked;
     const delta = next ? 1 : -1;
-    // TODO: call addOptimistic(delta) here for immediate response
 
     startTransition(async () => {
       try {
@@ -1636,13 +1588,10 @@ export default function App() {
     starter: {
       "/App.js": `import { useState } from "react";
 
-// TODO: replace with useActionState
 // async function registerAction(prevState, formData) { ... }
 
 export default function App() {
-  // TODO: const [state, formAction, isPending] = useActionState(registerAction, null)
 
-  // original code with useState (to replace)
   const [state, setState] = useState(null);
   const [isPending, setIsPending] = useState(false);
 

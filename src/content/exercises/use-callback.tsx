@@ -33,7 +33,6 @@ export default function App() {
   const [items, setItems] = useState(ITEMS);
   const [count, setCount] = useState(0);
 
-  // TODO: envuelve en useCallback para que memo(Item) funcione
   const onDelete = (name) => setItems(prev => prev.filter(i => i !== name));
 
   return (

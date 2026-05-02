@@ -19,7 +19,6 @@ export const lazyModal: Exercise = {
   relatedConcepts: ["lazy", "Suspense"],
   starter: {
     "/App.js": `import { useState, Suspense } from "react";
-// TODO: importa EditorModal con lazy() + setTimeout para simular latencia
 
 export default function App() {
   const [open, setOpen] = useState(false);
