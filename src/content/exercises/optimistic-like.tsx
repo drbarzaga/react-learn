@@ -29,11 +29,8 @@ async function saveLike(liked) {
 export default function App() {
   const [likes, setLikes] = useState(42);
   const [liked, setLiked] = useState(false);
-  // TODO: destructura [isPending, startTransition] de useTransition
-  // TODO: crea optimisticLikes y addOptimistic con useOptimistic(likes, updateFn)
 
   async function handleLike() {
-    // TODO: implementa handleLike con addOptimistic(delta) y startTransition
   }
 
   return (

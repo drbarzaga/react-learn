@@ -34,7 +34,6 @@ const appStyle = {
 export default function App() {
   const [activeTab, setActiveTab] = useState("home");
 
-  // TODO: calcula el contenido del tab activo
   const activeContent = "";
 
   return (
@@ -44,7 +43,6 @@ export default function App() {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            // TODO: al hacer click, cambia activeTab
             onClick={() => {}}
             style={{
               padding: "8px 16px",

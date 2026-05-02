@@ -32,7 +32,6 @@ export default function App() {
     <div style={appStyle}>
       <p style={{ marginBottom: 24, color: "#71717a" }}>Toggle Button</p>
       <button
-        // TODO: alterna el estado con setIsOn(!isOn)
         onClick={() => {}}
         style={{
           backgroundColor: isOn ? "#22c55e" : "#6b7280",

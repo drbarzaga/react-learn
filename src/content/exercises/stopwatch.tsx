@@ -31,10 +31,6 @@ function format(ms) {
 export default function App() {
   const [elapsed, setElapsed] = useState(0);
   const [running, setRunning] = useState(false);
-  // TODO: ref para guardar el id del intervalo
-
-  // TODO: useEffect que arranque / limpie el intervalo según 'running'
-  //       usa setElapsed(e => e + 10) dentro del setInterval
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui", textAlign: "center" }}>

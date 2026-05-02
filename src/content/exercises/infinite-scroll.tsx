@@ -40,16 +40,11 @@ export default function App() {
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef();
 
-  // TODO: implementa loadMore
-  // TODO: useEffect para cargar iniciales
-  // TODO:IntersectionObserver con callback
-
   // sentinel es el elemento al final que activa la carga
   const lastElementRef = useCallback((node) => {
     if (loading) return;
     if (observerRef.current) observerRef.current.disconnect();
     observerRef.current = new IntersectionObserver((entries) => {
-      // TODO: si entries[0].isIntersecting y hasMore, cargar más
     });
     if (node) observerRef.current.observe(node);
   }, [loading, hasMore]);

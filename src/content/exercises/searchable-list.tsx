@@ -26,9 +26,6 @@ const items = [
 
 export default function App() {
   const [query, setQuery] = useState("");
-  // TODO: declara search y useEffect para debounce
-
-  // TODO: filtra los items
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>

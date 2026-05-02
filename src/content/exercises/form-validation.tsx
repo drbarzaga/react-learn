@@ -26,13 +26,10 @@ export default function App() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-    // TODO: limpia el error cuando el usuario escribe
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: valida name y email, setErrors si hay errores
-    // TODO: setSuccess(true) si no hay errores
   };
 
   return (

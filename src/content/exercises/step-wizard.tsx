@@ -36,19 +36,10 @@ const fieldStyle = {
   color: "#fff",
 };
 
-// TODO: estado step actual
-// TODO: estado formData
-// TODO: handleNext()
-// TODO: handlePrev()
-// TODO: handleChange(field, value)
-
 export default function App() {
-  // TODO: declara estado step (comienza en 0)
-  // TODO: declara estado formData
   const step = 0;
   const formData = {};
 
-  // TODO: calcula isFirst, isLast y canNext
   const isFirst = true;
   const isLast = true;
   const canNext = false;
@@ -73,7 +64,6 @@ export default function App() {
             key={field}
             placeholder={field}
             value={formData[field] || ""}
-            // TODO: handleChange al escribir
             onChange={() => {}}
             style={fieldStyle}
           />

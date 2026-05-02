@@ -106,13 +106,9 @@ const actionRowStyle = {
   gap: 12,
 };
 
-// TODO: implementar Modal con useEffect para Escape
-// TODO: implementar funciones openConfirm, openAlert, openPrompt
-// TODO: closeModal que establezca modal a null
 
 function Modal({ isOpen, children, onClose }) {
   if (!isOpen || !children) return null;
-  // TODO: renderizar backdrop con onClick para cerrar
   return (
     <div style={backdropStyle}>
       {children}
@@ -160,8 +156,6 @@ function PromptModal({ label, onSubmit, onClose }) {
 export default function App() {
   const [modal, setModal] = useState(null);
 
-  // TODO: implementar openConfirm, openAlert, openPrompt que actualicen el estado modal
-  
   return (
     <div style={appStyle}>
       <p style={labelStyle}>Gestor de modales</p>

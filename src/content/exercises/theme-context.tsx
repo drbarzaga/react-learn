@@ -29,14 +29,12 @@ function useTheme() {
 
 function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("dark");
-  // TODO: memoiza { theme, setTheme } con useMemo([theme])
   const value = { theme, setTheme };
   return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>;
 }
 
 const Toolbar = memo(function Toolbar() {
   console.log("render Toolbar");
-  // TODO: destructura setTheme del contexto
   const setTheme = () => {};
   return (
     <button onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}>
@@ -47,7 +45,6 @@ const Toolbar = memo(function Toolbar() {
 
 const Card = memo(function Card() {
   console.log("render Card");
-  // TODO: destructura theme del contexto
   const theme = "dark";
   return (
     <div style={{ padding: 12, border: "1px solid var(--line)", marginTop: 12 }}>
@@ -57,7 +54,6 @@ const Card = memo(function Card() {
 });
 
 export default function App() {
-  // TODO: declara estado tick con setTick
   const tick = 0;
   return (
     <ThemeProvider>

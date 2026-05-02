@@ -36,8 +36,6 @@ export default function App() {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClick = () => {
-    // TODO: si isLiked, decrementa likes y pon isLiked en false
-    // TODO: si no está likeado, incrementa likes y pon isLiked en true
   };
 
   return (

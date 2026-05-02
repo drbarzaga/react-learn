@@ -42,8 +42,6 @@ const displayStyle = {
   marginBottom: 24,
 };
 
-// TODO: implementar estados y funciones
-
 export default function App() {
   const [seconds, setSeconds] = useState(60);
   const [timeRemaining, setTimeRemaining] = useState(60);

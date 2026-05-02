@@ -21,13 +21,11 @@ export const actionForm: Exercise = {
   starter: {
     "/App.js": `import { useActionState } from "react";
 
-// TODO: crea async function registerAction(prevState, formData)
 //   - valida username (mín 3 chars) y email (contiene @)
 //   - retorna { error: "mensaje" } si hay error
 //   - retorna { ok: true, username } si es válido
 
 export default function App() {
-  // TODO: const [state, formAction, isPending] = useActionState(registerAction, null)
   const state = null;
   const formAction = () => {};
   const isPending = false;

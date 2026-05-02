@@ -26,15 +26,11 @@ const FRUTAS = [
 ];
 
 export default function App() {
-  // TODO: declara el estado query con valor inicial ""
-
-  // TODO: deriva filtered de FRUTAS usando query (sin useState)
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui", maxWidth: 320 }}>
       <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
         <input
-          // TODO: vincula value y onChange al estado query
           placeholder="Buscar fruta..."
           style={{ flex: 1 }}
         />
