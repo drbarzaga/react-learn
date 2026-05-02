@@ -38,7 +38,7 @@ export default function App() {
         {TABS.map(tab => (
           <button
             key={tab}
-            onClick={() => {}}
+            onClick={() => setActiveTab(tab)}
             style={{
               fontWeight: activeTab === tab ? "bold" : "normal",
               transition: "opacity 150ms",
