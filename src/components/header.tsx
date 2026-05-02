@@ -16,6 +16,7 @@ import { useLocaleRouter } from "@/hooks/use-locale-router"
 import { type EditorThemeId } from "@/types"
 import { DISCORD_URL, EDITOR_THEMES_META, REPOSITORY, STARS_KILO_THRESHOLD } from "@/lib/constants"
 import { DiscordIcon, MoonIcon, PaletteIcon, SunIcon } from "./svg-icons"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 interface HeaderProps {
   onSearchOpen?: () => void
@@ -25,6 +26,7 @@ interface HeaderProps {
 export function Header({ onSearchOpen, onShortcutsOpen }: HeaderProps) {
   const t = useTranslations("Header")
   const { theme, toggle } = useTheme()
+  const isMobile = useIsMobile()
   const { editorTheme, setEditorTheme } = useEditorTheme()
   const stars = useGitHubStars(REPOSITORY)
   const animatedStars = useCountUp(stars)
@@ -202,21 +204,23 @@ export function Header({ onSearchOpen, onShortcutsOpen }: HeaderProps) {
           </Tooltip>
 
           {/* Keyboard shortcuts */}
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <button
-                  type="button"
-                  onClick={onShortcutsOpen}
-                  aria-label="Keyboard shortcuts"
-                  className="grid h-7 w-7 place-items-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
-                >
-                  <Keyboard className="h-[15px] w-[15px]" strokeWidth={1.8} />
-                </button>
-              }
-            />
-            <TooltipContent>Keyboard shortcuts</TooltipContent>
-          </Tooltip>
+          {!isMobile && (
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={onShortcutsOpen}
+                    aria-label="Keyboard shortcuts"
+                    className="grid h-7 w-7 place-items-center rounded-md text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-fg)]"
+                  >
+                    <Keyboard className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                  </button>
+                }
+              />
+              <TooltipContent>Keyboard shortcuts</TooltipContent>
+            </Tooltip>
+          )}
 
           <LocaleSwitcher />
 

@@ -1,6 +1,5 @@
 import * as React from "react"
-
-const MOBILE_BREAKPOINT = 768
+import { MOBILE_BREAKPOINT } from "@/lib/constants"
 
 function subscribe(cb: () => void) {
   const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
