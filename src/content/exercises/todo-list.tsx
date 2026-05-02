@@ -24,13 +24,10 @@ const initial = { items: [], next: 1 };
 function reducer(state, action) {
   switch (action.type) {
     case "add":
-      // TODO: añade un item { id, text, done: false }
       return state;
     case "toggle":
-      // TODO: alterna done del item con action.id
       return state;
     case "remove":
-      // TODO: elimina el item con action.id
       return state;
     default:
       return state;

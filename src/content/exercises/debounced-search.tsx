@@ -40,8 +40,6 @@ function HeavyList({ query }) {
 
 export default function App() {
   const [query, setQuery] = useState("");
-  // TODO: crea 'deferred' a partir de query con useDeferredValue
-  // TODO: calcula 'stale' comparando query !== deferred
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>

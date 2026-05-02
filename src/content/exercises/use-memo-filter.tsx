@@ -27,8 +27,13 @@ export default function App() {
   const [order, setOrder] = useState("asc");
   const [count, setCount] = useState(0);
 
-  // TODO: envuelve el filtrado + ordenamiento en useMemo([query, order])
-  const filtered = [];
+  console.log("recalculando lista...");
+  const filtered = ALL_TASKS
+    .filter(t => t.text.includes(query))
+    .sort((a, b) => order === "asc"
+      ? a.text.localeCompare(b.text)
+      : b.text.localeCompare(a.text)
+    );
 
   return (
     <div style={{ padding: 24 }}>

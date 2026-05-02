@@ -36,13 +36,10 @@ function validate(values) {
 function reducer(state, action) {
   switch (action.type) {
     case "change":
-      // TODO: actualiza values[action.field]
       return state;
     case "blur":
-      // TODO: marca touched[action.field] = true
       return state;
     case "submit":
-      // TODO: marca submitted = true
       return state;
     default:
       return state;

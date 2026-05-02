@@ -62,7 +62,6 @@ export default function App() {
   const [openItems, setOpenItems] = useState(new Set());
 
   const toggleItem = (id) => {
-    // TODO: usa setOpenItems para alternar el id dentro del Set
   };
 
   return (
@@ -72,7 +71,6 @@ export default function App() {
         <AccordionItem
           key={item.id}
           item={item}
-          // TODO: reemplaza por openItems.has(item.id)
           isOpen={false}
           onToggle={() => toggleItem(item.id)}
         />

@@ -37,20 +37,15 @@ export default function App() {
   const [page, setPage] = useState(0);
   const pageSize = 5;
 
-  // TODO: ordena allData con useMemo según sortCol y sortDir (sortDir ternario)
   const sorted = useMemo(() => {
-    // TODO: implement sort
     return allData;
   }, [sortCol, sortDir]);
 
-  // TODO: calcula la página actual con useMemo (slice del sorted)
   const paginated = useMemo(() => {
-    // TODO: implement pagination
     return sorted;
   }, [sorted, page]);
 
   const handleSort = (col) => {
-    // TODO: si col === sortCol, alterna sortDir (asc → desc); sino, setSortCol(col) y setSortDir("asc")
   };
 
   return (
@@ -81,7 +76,6 @@ export default function App() {
       </table>
       <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
         <button
-          // TODO: decrementa la página sin bajar de 0
           onClick={() => {}}
           disabled={page === 0}
           style={{ padding: "8px 16px", background: "#27272a", color: "#fff", border: "none", borderRadius: 8 }}
@@ -90,7 +84,6 @@ export default function App() {
         </button>
         <span style={{ padding: 8, color: "#71717a" }}>página {page + 1}</span>
         <button
-          // TODO: incrementa la página si hay más resultados
           onClick={() => {}}
           disabled={(page + 1) * pageSize >= allData.length}
           style={{ padding: "8px 16px", background: "#27272a", color: "#fff", border: "none", borderRadius: 8 }}

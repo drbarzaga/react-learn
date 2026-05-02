@@ -37,7 +37,6 @@ export default function App() {
       <p style={labelStyle}>Input controlado</p>
       <input
         value={text}
-        // TODO: actualiza text con e.target.value
         onChange={() => {}}
         placeholder="escribe algo..."
         style={{ padding: 8, fontSize: 16, width: "100%", borderRadius: 8 }}

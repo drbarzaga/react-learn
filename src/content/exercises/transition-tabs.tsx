@@ -31,7 +31,6 @@ const TABS = ["inicio", "lista lenta", "ajustes"];
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("inicio");
-  // TODO: destructura [isPending, startTransition] de useTransition()
 
   return (
     <div style={{ padding: 24 }}>
@@ -39,11 +38,9 @@ export default function App() {
         {TABS.map(tab => (
           <button
             key={tab}
-            // TODO: envolver setActiveTab(tab) en startTransition
             onClick={() => {}}
             style={{
               fontWeight: activeTab === tab ? "bold" : "normal",
-              // TODO: reduce opacity si isPending y tab !== activeTab
               transition: "opacity 150ms",
             }}
           >

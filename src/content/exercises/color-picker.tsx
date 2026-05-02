@@ -44,7 +44,6 @@ export default function App() {
   const [selectedColor, setSelectedColor] = useState("#3b82f6");
 
   const handleColorClick = (color) => {
-    // TODO: actualiza selectedColor con el color recibido
   };
 
   return (
@@ -65,12 +64,10 @@ export default function App() {
         <input
           type="color"
           value={selectedColor}
-          // TODO: actualiza selectedColor con e.target.value
           onChange={() => {}}
           style={{ ...swatchStyle, padding: 0, cursor: "pointer" }}
         />
         <span style={{ color: "#fff", fontFamily: "monospace", fontSize: 14 }}>
-          {/* TODO: muestra selectedColor en mayúsculas */}
         </span>
       </div>
     </div>

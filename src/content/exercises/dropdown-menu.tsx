@@ -58,15 +58,12 @@ export default function App() {
   const menuRef = useRef(null);
 
   const toggleDropdown = () => {
-    // TODO: alterna isOpen
   };
 
   const closeDropdown = () => {
-    // TODO: cierra el menú
   };
 
   useEffect(() => {
-    // TODO: agrega listener para cerrar al hacer click fuera
   }, []);
 
   return (
@@ -82,7 +79,6 @@ export default function App() {
               <div
                 key={opt.id}
                 onClick={() => {
-                  // TODO: registra opt.id en consola y cierra el menú
                 }}
                 style={optionStyle}
                 onMouseEnter={(e) => e.target.style.background = "#3f3f46"}

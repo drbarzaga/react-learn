@@ -19,9 +19,6 @@ export const counter: Exercise = {
     "/App.js": `import { useState } from "react";
 
 export default function App() {
-  // TODO: declara el estado count con valor inicial 0
-
-  // TODO: implementa handlers para +, −, reset y +3
 
   return (
     <div style={{ padding: 24, fontFamily: "system-ui" }}>
