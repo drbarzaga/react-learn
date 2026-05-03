@@ -28,8 +28,8 @@ export function Footer() {
 
   return (
     <footer className="shrink-0 border-t border-[var(--color-line)] px-4 py-3 md:px-6">
-      {/* Mobile */}
-      <div className="flex flex-col gap-2 text-[11px] text-[var(--color-fg-faint)] sm:hidden">
+      {/* Mobile + tablet */}
+      <div className="flex flex-col gap-2 text-[11px] text-[var(--color-fg-faint)] lg:hidden">
         <span className="flex items-center justify-center gap-1 select-none">
           {t("madeWith")} <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" />{" "}
           {t("by")}{" "}
@@ -68,25 +68,25 @@ export function Footer() {
       </div>
 
       {/* Desktop */}
-      <div className="hidden items-center text-[11px] text-[var(--color-fg-faint)] sm:grid sm:grid-cols-3">
+      <div className="relative hidden items-center justify-between text-[11px] text-[var(--color-fg-faint)] lg:flex">
         <div className="flex items-center gap-3">
-          <span className="tabular">
+          <span className="tabular whitespace-nowrap">
             {hasProgress && `${visitedConcepts.size}/`}
             {t("concepts", { count: allConcepts.length })}
           </span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span className="tabular">
+          <span className="tabular whitespace-nowrap">
             {hasProgress && `${completedExercises.size}/`}
             {t("exercises", { count: allExercises.length })}
           </span>
           <Separator orientation="vertical" className="h-3 bg-[var(--color-fg-faint)]" />
-          <span className="tabular">
+          <span className="tabular whitespace-nowrap">
             {hasProgress && `${quizzesAttempted}/`}
             {t("quizzes", { count: allQuizzes.length })}
           </span>
         </div>
 
-        <span className="flex items-center justify-center gap-1 select-none">
+        <span className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 select-none xl:flex">
           {t("madeWith")} <Heart className="h-[11px] w-[11px] fill-red-500 text-red-500" />{" "}
           {t("by")}{" "}
           <Link
@@ -99,7 +99,7 @@ export function Footer() {
           </Link>
         </span>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center gap-2">
           {links.map(({ label, href, Icon }) => (
             <Link
               key={label}
