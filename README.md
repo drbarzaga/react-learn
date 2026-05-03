@@ -3,13 +3,27 @@
 </h1>
 
 <p align="center">
-  <img src="./public/image.png" alt="React Dojo" width="800" />
-</p>
-
-<p align="center">
   React Dojo is an interactive reference for React. Each concept comes with a focused explanation,
   a live playground where you can edit and run code directly in the browser,
   and real coding exercises — no shortcuts, just practice.
+</p>
+
+---
+
+<p align="center">
+  <img src="./public/image-1.png" alt="React Dojo" width="800" />
+</p>
+
+<p align="center">
+  <img src="./public/image-2.png" alt="React Dojo" width="800" />
+</p>
+
+<p align="center">
+  <img src="./public/image-3.png" alt="React Dojo" width="800" />
+</p>
+
+<p align="center">
+  <img src="./public/image-4.png" alt="React Dojo" width="800" />
 </p>
 
 ---
@@ -52,7 +66,9 @@ For bugs or ideas, [open an issue](https://github.com/drbarzaga/react-dojo/issue
 
 ---
 
-## Contributors
+## Thanks to Our Contributors
+
+React Dojo is open source and built by the community. Thanks to everyone who has contributed so far we'd love to have you on board too! 🤝
 
 <a href="https://github.com/drbarzaga/react-dojo/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=drbarzaga/react-dojo" />
